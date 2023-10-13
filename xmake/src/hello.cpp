@@ -13,7 +13,23 @@ int32_t func()
 int main()
 {
     glfwInit();
-    glewInit();
+    glfwWindowHint(GLFW_CONTEXT_VERSION_MAJOR, 3);
+    glfwWindowHint(GLFW_CONTEXT_VERSION_MINOR, 3);
+    glfwWindowHint(GLFW_OPENGL_PROFILE, GLFW_OPENGL_CORE_PROFILE);
+
+    GLFWwindow* window = glfwCreateWindow(800, 600, "LearnOpenGL", nullptr, nullptr);
+    if (!window)
+    {
+        glfwTerminate();
+        return -1;
+    }
+    glfwMakeContextCurrent(window);
+    glewExperimental = GL_TRUE;
+    if (auto err = glewInit() != GLEW_OK)
+    {
+        printf("get gl function error. %s", glewGetErrorString(err));
+        return -1;
+    }
 
 #ifdef DEBUG
     printf("DEBUG\n");
