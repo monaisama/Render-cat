@@ -3,7 +3,6 @@ add_requires('glew', 'glfw', {configs = {shared = true}})
 target('hello')
     set_kind('binary')
     add_files('src/*.cpp')
-    add_defines('TEST')
     add_packages('glew', 'glfw')
 
     if is_mode('debug') then
