@@ -4,6 +4,8 @@ target('hello')
     set_kind('binary')
     add_files('src/*.cpp')
     add_packages('glew', 'glfw')
+    add_deps('kmath')
+    add_includedirs('../math/src')
 
     if is_mode('debug') then
         add_defines('DEBUG')

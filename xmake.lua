@@ -1,3 +1,3 @@
 set_warnings("everything")
 
-includes('xmake')
+includes('math', 'xmake')

@@ -61,14 +61,22 @@
 
         {
             "label": "build-debug",
-            "dependsOn":[ "kiritoren-config-debug",  "kiritoren-generate-intelligence", "kiritoren-showinfo", "kiritoren-build"],
+            "dependsOn":[
+                "kiritoren-config-debug",  // "kiritoren-generate-intelligence",
+                "kiritoren-showinfo",
+                "kiritoren-build"
+            ],
             "dependsOrder": "sequence",
             "problemMatcher": []
         },
 
         {
             "label": "build-release",
-            "dependsOn":[ "kiritoren-config-release",  "kiritoren-generate-intelligence", "kiritoren-showinfo", "kiritoren-build"],
+            "dependsOn":[
+                "kiritoren-config-release",  // "kiritoren-generate-intelligence", 
+                "kiritoren-showinfo",
+                "kiritoren-build"
+            ],
             "dependsOrder": "sequence",
             "group": {
                 "kind": "build",
