@@ -1,0 +1,80 @@
+{
+    // See https://go.microsoft.com/fwlink/?LinkId=733558
+    // for the documentation about the tasks.json format
+    "version": "2.0.0",
+    "tasks": [
+        {
+            "label": "kiritoren-config-debug",
+            "type": "shell",
+            "command": "xmake",
+            "args": [
+                "config",
+                "-vm",
+                "debug"
+            ],
+            "problemMatcher": []
+        },
+
+        {
+            "label": "kiritoren-config-release",
+            "type": "shell",
+            "command": "xmake",
+            "args": [
+                "config",
+                "-vm",
+                "release"
+            ],
+            "problemMatcher": []
+        },
+
+        {
+            "label": "kiritoren-showinfo",
+            "type": "shell",
+            "command": "xmake",
+            "args": [
+                "show"
+            ],
+            "problemMatcher": []
+        }
+
+        {
+            "label": "kiritoren-generate-intelligence",
+            "type": "shell",
+            "command": "xmake",
+            "args": [
+                "project",
+                "-vk",
+                "compile_commands",
+                "${workspaceFolder}/.vscode"
+            ],
+            "problemMatcher": [],
+        },
+        {
+            "label": "kiritoren-build",
+            "type": "shell",
+            "command": "xmake",
+            "args": [
+                "-v"
+            ],
+            "problemMatcher": "$msCompile",
+        },
+
+        {
+            "label": "build-debug",
+            "dependsOn":[ "kiritoren-config-debug",  "kiritoren-generate-intelligence", "kiritoren-showinfo", "kiritoren-build"],
+            "dependsOrder": "sequence",
+            "problemMatcher": []
+        },
+
+        {
+            "label": "build-release",
+            "dependsOn":[ "kiritoren-config-release",  "kiritoren-generate-intelligence", "kiritoren-showinfo", "kiritoren-build"],
+            "dependsOrder": "sequence",
+            "group": {
+                "kind": "build",
+                "isDefault": true
+            },
+            "problemMatcher": []
+        }
+    ]
+}

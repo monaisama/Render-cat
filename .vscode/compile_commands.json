@@ -1,0 +1,6 @@
+[
+{
+  "directory": "e:\\code",
+  "arguments": ["D:\\Program Files\\Microsoft Visual Studio\\2022\\Community\\VC\\Tools\\MSVC\\14.36.32532\\bin\\HostX64\\x64\\cl.exe", "/c", "/nologo", "/Wall", "/Ox", "/DTEST", "/DGLEW_NO_GLU", "/DGLFW_INCLUDE_NONE", "/EHsc", "/IC:\\Users\\kiritoren\\AppData\\Local\\.xmake\\packages\\g\\glew\\2.2.0\\c58d4757d0764e7b9e18e24d91add7ea\\include", "/IC:\\Users\\kiritoren\\AppData\\Local\\.xmake\\packages\\g\\glfw\\3.3.8\\ab30e8976ab44cc9b7332c5831b674ec\\include", "/Fobuild\\.objs\\hello\\windows\\x64\\release\\xmake\\src\\hello.cpp.obj", "xmake\\src\\hello.cpp"],
+  "file": "xmake\\src\\hello.cpp"
+}]
