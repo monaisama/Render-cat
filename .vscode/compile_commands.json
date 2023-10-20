@@ -1,11 +1,11 @@
 [
 {
   "directory": "E:\\code",
-  "arguments": ["D:\\Program Files\\Microsoft Visual Studio\\2022\\Community\\VC\\Tools\\MSVC\\14.36.32532\\bin\\HostX64\\x64\\cl.exe", "/c", "/nologo", "/Zi", "/FS", "/Fdbuild\\windows\\x64\\debug\\compile.kmath.pdb", "/Wall", "/Od", "/DDEBUG", "/EHsc", "/Fobuild\\.objs\\kmath\\windows\\x64\\debug\\math\\src\\kmath.cpp.obj", "math\\src\\kmath.cpp"],
-  "file": "math\\src\\kmath.cpp"
+  "arguments": ["D:\\Program Files\\Microsoft Visual Studio\\2022\\Community\\VC\\Tools\\MSVC\\14.36.32532\\bin\\HostX64\\x64\\cl.exe", "/c", "/nologo", "/Wall", "/Ox", "/Imath\\src", "/DGLEW_NO_GLU", "/DGLFW_INCLUDE_NONE", "/EHsc", "/IC:\\Users\\kiritoren\\AppData\\Local\\.xmake\\packages\\g\\glew\\2.2.0\\c58d4757d0764e7b9e18e24d91add7ea\\include", "/IC:\\Users\\kiritoren\\AppData\\Local\\.xmake\\packages\\g\\glfw\\3.3.8\\ab30e8976ab44cc9b7332c5831b674ec\\include", "/Fobuild\\.objs\\project-cat\\windows\\x64\\release\\project-cat\\src\\main.cpp.obj", "project-cat\\src\\main.cpp"],
+  "file": "project-cat\\src\\main.cpp"
 },
 {
   "directory": "E:\\code",
-  "arguments": ["D:\\Program Files\\Microsoft Visual Studio\\2022\\Community\\VC\\Tools\\MSVC\\14.36.32532\\bin\\HostX64\\x64\\cl.exe", "/c", "/nologo", "/Zi", "/FS", "/Fdbuild\\windows\\x64\\debug\\compile.project-cat.pdb", "/Wall", "/Od", "/Imath\\src", "/DDEBUG", "/DGLEW_NO_GLU", "/DGLFW_INCLUDE_NONE", "/EHsc", "/IC:\\Users\\kiritoren\\AppData\\Local\\.xmake\\packages\\g\\glew\\2.2.0\\c58d4757d0764e7b9e18e24d91add7ea\\include", "/IC:\\Users\\kiritoren\\AppData\\Local\\.xmake\\packages\\g\\glfw\\3.3.8\\ab30e8976ab44cc9b7332c5831b674ec\\include", "/Fobuild\\.objs\\project-cat\\windows\\x64\\debug\\project-cat\\src\\hello.cpp.obj", "project-cat\\src\\hello.cpp"],
-  "file": "project-cat\\src\\hello.cpp"
+  "arguments": ["D:\\Program Files\\Microsoft Visual Studio\\2022\\Community\\VC\\Tools\\MSVC\\14.36.32532\\bin\\HostX64\\x64\\cl.exe", "/c", "/nologo", "/Wall", "/Ox", "/EHsc", "/Fobuild\\.objs\\kmath\\windows\\x64\\release\\math\\src\\kmath.cpp.obj", "math\\src\\kmath.cpp"],
+  "file": "math\\src\\kmath.cpp"
 }]
