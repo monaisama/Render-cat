@@ -10,7 +10,7 @@
                 "UNICODE",
                 "_UNICODE"
             ],
-            "cppStandard": "c++14",
+            "cppStandard": "c++17",
             "compileCommands": "${workspaceFolder}/.vscode/compile_commands.json"
         }
     ],

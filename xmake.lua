@@ -1,4 +1,5 @@
-set_warnings("everything")
+set_warnings('everything')
+set_languages('cxx17')
 
 if is_mode('debug') then 
     add_defines('DEBUG')
