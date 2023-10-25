@@ -69,7 +69,7 @@ void TestRender()
         -0.5f, -0.5f, 0.f,
         0.5f, -0.5f, 0.f,
         0.5f, 0.5f, 0.f,
-        -0.5, 0.5f, 0.f
+        // -0.5, 0.5f, 0.f
     };
 
     static GLuint indices[] = {
@@ -129,8 +129,8 @@ void TestRender()
 
     glBindVertexArray(vao);
     {
-        glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, ebo);
-        glBufferData(GL_ELEMENT_ARRAY_BUFFER, sizeof(indices), indices, GL_STATIC_DRAW);
+        // glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, ebo);
+        // glBufferData(GL_ELEMENT_ARRAY_BUFFER, sizeof(indices), indices, GL_STATIC_DRAW);
         glBindBuffer(GL_ARRAY_BUFFER, vbo);
         glBufferData(GL_ARRAY_BUFFER, sizeof(vertices), vertices, GL_STATIC_DRAW);
         glVertexAttribPointer(0, 3, GL_FLOAT, GL_FALSE, 3 * sizeof(GLfloat), (void*)0);
@@ -140,6 +140,17 @@ void TestRender()
     glDisableVertexAttribArray(0);
     glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, 0);
     glBindBuffer(GL_ARRAY_BUFFER, 0);
+
+    // 好像这样不重新binding是不行的，那同一个vbo（显存数据）怎么能被不同的vao使用或者，怎么其他的什么东西使用呢？
+    // GLuint _test_vao;
+    // glGenVertexArrays(1, &_test_vao);
+    // glBindVertexArray(_test_vao);
+    // {
+    //     glBindBuffer(GL_ARRAY_BUFFER, vbo);
+    //     glEnableVertexAttribArray(0);
+    // }
+    // glBindVertexArray(0);
+    // glDisableVertexAttribArray(0);
 
     // exercise 1
     auto _2vao = bindVBOData(_2vertices, sizeof(_2vertices) / sizeof(GLfloat));
@@ -225,6 +236,9 @@ void TestRender()
     glDeleteShader(_3fragmentShader);
 
     glUseProgram(shaderProgram);
+    glBindVertexArray(vao);
+    glDrawArrays(GL_TRIANGLES, 0, 3);
+    glBindVertexArray(0);
 
     // exercise 1
     glBindVertexArray(_2vao);
