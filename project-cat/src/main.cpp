@@ -41,15 +41,18 @@ int main()
     glViewport(0, 0, 800, 600);
     glfwSetWindowSizeCallback(window, cat_window_resize);
 
+    int32_t count = 1000;
+
     while (!glfwWindowShouldClose(window))
     {
         cat_window_input(window);
 
         glClearColor(0.f, 0.f, 0.f, 1.f);
         glClear(GL_COLOR_BUFFER_BIT);
-        // glPolygonMode(GL_FRONT_AND_BACK, GL_LINE);
+        glPolygonMode(GL_FRONT_AND_BACK, GL_LINE);
 
-        TestRender();
+        if (count-- > 0)
+            TestRender();
 
         glfwPollEvents();
         glfwSwapBuffers(window);
