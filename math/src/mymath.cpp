@@ -1,4 +1,4 @@
-#include "kmath.h"
+#include "mymath.h"
 
 int32_t KPowTest(int32_t n)
 {

@@ -1,4 +1,4 @@
-#include "klog.h"
+#include "log.h"
 
 namespace KLog
 {

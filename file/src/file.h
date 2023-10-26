@@ -6,6 +6,7 @@
 class K_API KFile
 {
 public:
+    KFile();
     bool Open(const std::string& fileName);
     int32_t Read(std::string& content);
     void Close();

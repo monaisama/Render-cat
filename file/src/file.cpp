@@ -1,16 +1,18 @@
-#include "kfile.h"
-#include "klog.h"
+#include "file.h"
+#include "log.h"
+
+KFile::KFile()
+{
+}
 
 bool KFile::Open(const std::string& fileName)
 {
-    KLog::Log("open file.");
-    file = std::ifstream(fileName, std::ios::in);
+    file = std::ifstream(fileName, std::ifstream::in);
     return true;
 }
 
 int32_t KFile::Read(std::string& content)
 {
-    KLog::Log("read file.");
     char cache[1024];
     int32_t count = 0;
     while (file.read(cache, 1024))
@@ -25,7 +27,6 @@ int32_t KFile::Read(std::string& content)
 
 void KFile::Close()
 {
-    KLog::Log("close file.");
     file.close();
 }
 

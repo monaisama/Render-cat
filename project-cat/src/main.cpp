@@ -2,10 +2,11 @@
 #include "GL/glew.h"
 #include "GLFW/glfw3.h"
 
-#include "kmath.h"
+#include "mymath.h"
 #include "test.h"
 
-#include "kfile.h"
+#include "file.h"
+#include "mat/mat.h"
 
 void WindowResize(GLFWwindow* window, int32_t width, int32_t height)
 {
@@ -18,7 +19,7 @@ void WindowInput(GLFWwindow* window)
         glfwSetWindowShouldClose(window, GLFW_TRUE);
 }
 
-void TestRender();
+void TestRender(const KMat& defaultMat, const KMat& blueMat);
 
 int main()
 {
@@ -47,7 +48,9 @@ int main()
     glViewport(0, 0, 800, 600);
     glfwSetWindowSizeCallback(window, WindowResize);
 
-    int32_t count = 1000;
+    KShader defaultVS("default.vs", KShaderType::Vertex);
+    KShader defaultFS("default_color.fs", KShaderType::Fragment), blueFS("blue_color.fs", KShaderType::Fragment);
+    KMat defaultMat(KShaderPair{defaultVS, defaultFS}), blueMat(KShaderPair{defaultVS, blueFS});
 
     while (!glfwWindowShouldClose(window))
     {
@@ -57,19 +60,18 @@ int main()
         glClear(GL_COLOR_BUFFER_BIT);
         glPolygonMode(GL_FRONT_AND_BACK, GL_LINE);
 
-        if (count-- > 0)
-            TestRender();
+        TestRender(defaultMat, blueMat);
 
         glfwPollEvents();
         glfwSwapBuffers(window);
     }
 
     glfwTerminate();
-    std::cout << "project-cat closed." << std::endl;
+    KLog::Log("project-cat closed.");
     return 0;
 }
 
-void TestRender()
+void TestRender(const KMat& defaultMat, const KMat& blueMat)
 {
     static GLfloat vertices[] = {
         -0.5f, -0.5f, 0.f,
@@ -164,56 +166,7 @@ void TestRender()
     auto _2_2_1vao = bindVBOData(_2_2_1vertices, sizeof(_2_2_1vertices) / sizeof(GLfloat));
     auto _2_2_2vao = bindVBOData(_2_2_2vertices, sizeof(_2_2_2vertices) / sizeof(GLfloat));
 
-    auto shaderData = [](const GLchar* const source, uint32_t shaderType) -> GLuint
-    {
-        GLuint shader = glCreateShader(shaderType);
-        glShaderSource(shader, 1, &source, nullptr);
-        glCompileShader(shader);
-        {
-            GLint success;
-            GLchar infoLog[512];
-            glGetShaderiv(shader, GL_COMPILE_STATUS, &success);
-            if (!success)
-            {
-                glGetShaderInfoLog(shader, 512, nullptr, infoLog);
-                std::cout << "ERROR::SHADER::COMPILE_FAILED : " << infoLog << std::endl;
-                return 0;
-            }
-        }
-        return shader;
-    };
-
-    GLuint vertexShader = shaderData(KFile::ReadFile("default.vs").c_str(), GL_VERTEX_SHADER);
-    GLuint fragmentShader = shaderData(KFile::ReadFile("default_color.fs").c_str(), GL_FRAGMENT_SHADER);
-    GLuint _3fragmentShader = shaderData(KFile::ReadFile("blue_color.fs").c_str(), GL_FRAGMENT_SHADER);
-
-    auto programData = [](GLuint vertexShader, GLuint fragmentShader) -> GLuint
-    {
-        GLuint shaderProgram = glCreateProgram();
-        glAttachShader(shaderProgram, vertexShader);
-        glAttachShader(shaderProgram, fragmentShader);
-        glLinkProgram(shaderProgram);
-        {
-            GLint success;
-            GLchar infoLog[512];
-            glGetProgramiv(shaderProgram, GL_LINK_STATUS, &success);
-            if (!success)
-            {
-                glGetProgramInfoLog(shaderProgram, 512, nullptr, infoLog);
-                std::cout << "ERROR::SHADER::PROGRAM::LINK_FAILED : " << infoLog << std::endl;
-                return 0;
-            }
-        }
-        return shaderProgram;
-    };
-
-    GLuint shaderProgram = programData(vertexShader, fragmentShader);
-    GLuint _3shaderProgram = programData(vertexShader, _3fragmentShader);
-    glDeleteShader(vertexShader);
-    glDeleteShader(fragmentShader);
-    glDeleteShader(_3fragmentShader);
-
-    glUseProgram(shaderProgram);
+    defaultMat.Use();
     glBindVertexArray(vao);
     glDrawArrays(GL_TRIANGLES, 0, 3);
     glBindVertexArray(0);
@@ -227,13 +180,12 @@ void TestRender()
     }
     glBindVertexArray(0);
 
-    glUseProgram(shaderProgram);
     // exercise 2
     glBindVertexArray(_2_2_1vao);
     {
         glDrawArrays(GL_TRIANGLES, 0, 3);
     }
-    glUseProgram(_3shaderProgram);
+    blueMat.Use();
     glBindVertexArray(_2_2_2vao);
     {
         glDrawArrays(GL_TRIANGLES, 0, 3);
