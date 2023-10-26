@@ -1,6 +1,7 @@
 #pragma once
 #include <iostream>
 #include "kfile.h"
+#include "klog.h"
 
 void TestCompileConfig()
 {
@@ -11,7 +12,12 @@ void TestCompileConfig()
 
 void TestFunc()
 {
-    KFile file;
-    file.Open("name.txt");
-    file.Close();
+    KFile vsFile;
+    vsFile.Open("default.vs");
+    std::string vsContent;
+    vsFile.Read(vsContent);
+    KLog::Log(vsContent);
+    vsFile.Close();
+
+    KLog::Log(KFile::ReadFile("default_color.fs"));
 }

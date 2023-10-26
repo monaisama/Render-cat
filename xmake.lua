@@ -48,4 +48,4 @@ rule('krule.include.file')
 rule_end()
 
 add_rules('kmode.debug', 'kmode.release')
-includes('math', 'project-cat', 'file', 'log')
+includes('math', 'project-cat', 'file', 'log', 'shader')

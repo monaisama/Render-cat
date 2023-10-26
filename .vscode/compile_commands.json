@@ -1,8 +1,8 @@
 [
 {
   "directory": "e:\\code",
-  "arguments": ["D:\\Program Files\\Microsoft Visual Studio\\2022\\Community\\VC\\Tools\\MSVC\\14.36.32532\\bin\\HostX64\\x64\\cl.exe", "/c", "/nologo", "/Wall", "/Ox", "/std:c++17", "/Icommon\\src", "/DKEXPORT", "/EHsc", "/Fobuild\\.objs\\klog\\windows\\x64\\release\\log\\src\\klog.cpp.obj", "log\\src\\klog.cpp"],
-  "file": "log\\src\\klog.cpp"
+  "arguments": ["D:\\Program Files\\Microsoft Visual Studio\\2022\\Community\\VC\\Tools\\MSVC\\14.36.32532\\bin\\HostX64\\x64\\cl.exe", "/c", "/nologo", "/Wall", "/Ox", "/std:c++17", "/Icommon\\src", "/Ilog\\src", "/DKEXPORT", "/EHsc", "/Fobuild\\.objs\\kmath\\windows\\x64\\release\\math\\src\\kmath.cpp.obj", "math\\src\\kmath.cpp"],
+  "file": "math\\src\\kmath.cpp"
 },
 {
   "directory": "e:\\code",
@@ -11,11 +11,11 @@
 },
 {
   "directory": "e:\\code",
-  "arguments": ["D:\\Program Files\\Microsoft Visual Studio\\2022\\Community\\VC\\Tools\\MSVC\\14.36.32532\\bin\\HostX64\\x64\\cl.exe", "/c", "/nologo", "/Wall", "/Ox", "/std:c++17", "/Icommon\\src", "/Ilog\\src", "/DKEXPORT", "/EHsc", "/Fobuild\\.objs\\kmath\\windows\\x64\\release\\math\\src\\kmath.cpp.obj", "math\\src\\kmath.cpp"],
-  "file": "math\\src\\kmath.cpp"
+  "arguments": ["D:\\Program Files\\Microsoft Visual Studio\\2022\\Community\\VC\\Tools\\MSVC\\14.36.32532\\bin\\HostX64\\x64\\cl.exe", "/c", "/nologo", "/Wall", "/Ox", "/std:c++17", "/Icommon\\src", "/Ilog\\src", "/DKEXPORT", "/EHsc", "/Fobuild\\.objs\\kfile\\windows\\x64\\release\\file\\src\\kfile.cpp.obj", "file\\src\\kfile.cpp"],
+  "file": "file\\src\\kfile.cpp"
 },
 {
   "directory": "e:\\code",
-  "arguments": ["D:\\Program Files\\Microsoft Visual Studio\\2022\\Community\\VC\\Tools\\MSVC\\14.36.32532\\bin\\HostX64\\x64\\cl.exe", "/c", "/nologo", "/Wall", "/Ox", "/std:c++17", "/Icommon\\src", "/Ilog\\src", "/DKEXPORT", "/EHsc", "/Fobuild\\.objs\\kfile\\windows\\x64\\release\\file\\src\\kfile.cpp.obj", "file\\src\\kfile.cpp"],
-  "file": "file\\src\\kfile.cpp"
+  "arguments": ["D:\\Program Files\\Microsoft Visual Studio\\2022\\Community\\VC\\Tools\\MSVC\\14.36.32532\\bin\\HostX64\\x64\\cl.exe", "/c", "/nologo", "/Wall", "/Ox", "/std:c++17", "/Icommon\\src", "/DKEXPORT", "/EHsc", "/Fobuild\\.objs\\klog\\windows\\x64\\release\\log\\src\\klog.cpp.obj", "log\\src\\klog.cpp"],
+  "file": "log\\src\\klog.cpp"
 }]

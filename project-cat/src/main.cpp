@@ -5,6 +5,8 @@
 #include "kmath.h"
 #include "test.h"
 
+#include "kfile.h"
+
 void WindowResize(GLFWwindow* window, int32_t width, int32_t height)
 {
     glViewport(0, 0, width, height);
@@ -181,37 +183,9 @@ void TestRender()
         return shader;
     };
 
-    static const GLchar *vertexShaderSource = " \
-    #version 330 core\n  \
-    layout (location = 0) in vec3 aPos;\n \
-    void main()\n \
-    {\n \
-        gl_Position = vec4(aPos.xyz, 1.0);\n \
-    }\n \
-    \0";
-
-    static const GLchar *fragmentShaderSource = " \
-    #version 330 core\n \
-    out vec4 FragColor;\n \
-    void main()\n \
-    {\n \
-        FragColor = vec4(1.f, 1.f, 1.f, 1.f);\n \
-    }\n \
-    \0";
-    
-    // exercise 3
-    static const GLchar *_3fragmentShaderSource = " \
-    #version 330 core\n \
-    out vec4 FragColor;\n \
-    void main()\n \
-    {\n \
-        FragColor = vec4(0.f, 0.f, 1.f, 1.f);\n \
-    }\n \
-    \0";
-
-    GLuint vertexShader = shaderData(vertexShaderSource, GL_VERTEX_SHADER);
-    GLuint fragmentShader = shaderData(fragmentShaderSource, GL_FRAGMENT_SHADER);
-    GLuint _3fragmentShader = shaderData(_3fragmentShaderSource, GL_FRAGMENT_SHADER);
+    GLuint vertexShader = shaderData(KFile::ReadFile("default.vs").c_str(), GL_VERTEX_SHADER);
+    GLuint fragmentShader = shaderData(KFile::ReadFile("default_color.fs").c_str(), GL_FRAGMENT_SHADER);
+    GLuint _3fragmentShader = shaderData(KFile::ReadFile("blue_color.fs").c_str(), GL_FRAGMENT_SHADER);
 
     auto programData = [](GLuint vertexShader, GLuint fragmentShader) -> GLuint
     {
