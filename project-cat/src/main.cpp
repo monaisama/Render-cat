@@ -3,13 +3,14 @@
 #include "GLFW/glfw3.h"
 
 #include "kmath.h"
+#include "test.h"
 
-void cat_window_resize(GLFWwindow* window, int32_t width, int32_t height)
+void WindowResize(GLFWwindow* window, int32_t width, int32_t height)
 {
     glViewport(0, 0, width, height);
 }
 
-void cat_window_input(GLFWwindow* window)
+void WindowInput(GLFWwindow* window)
 {
     if (glfwGetKey(window, GLFW_KEY_ESCAPE) == GLFW_PRESS)
         glfwSetWindowShouldClose(window, GLFW_TRUE);
@@ -19,6 +20,9 @@ void TestRender();
 
 int main()
 {
+    TestCompileConfig();
+    TestFunc();
+
     glfwInit();
     glfwWindowHint(GLFW_CONTEXT_VERSION_MAJOR, 3);
     glfwWindowHint(GLFW_CONTEXT_VERSION_MINOR, 3);
@@ -39,13 +43,13 @@ int main()
     }
 
     glViewport(0, 0, 800, 600);
-    glfwSetWindowSizeCallback(window, cat_window_resize);
+    glfwSetWindowSizeCallback(window, WindowResize);
 
     int32_t count = 1000;
 
     while (!glfwWindowShouldClose(window))
     {
-        cat_window_input(window);
+        WindowInput(window);
 
         glClearColor(0.f, 0.f, 0.f, 1.f);
         glClear(GL_COLOR_BUFFER_BIT);

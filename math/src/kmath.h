@@ -1,3 +1,5 @@
-#include <stdint.h>
+#pragma once
+#include "compile_header.h"
+#include <cstdint>
 
-__declspec(dllexport) int32_t k_pow(int32_t);
+K_API int32_t KPowTest(int32_t);

@@ -1,6 +1,6 @@
 #include "kmath.h"
 
-int32_t k_pow(int32_t n)
+int32_t KPowTest(int32_t n)
 {
     return n * n;
 }
