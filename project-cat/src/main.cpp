@@ -5,6 +5,7 @@
 #include "mymath.h"
 #include "test.h"
 
+#include "log.h"
 #include "file.h"
 #include "mat/mat.h"
 
@@ -24,7 +25,6 @@ void TestRender(const KMat& defaultMat, const KMat& blueMat);
 int main()
 {
     TestCompileConfig();
-    TestFunc();
 
     glfwInit();
     glfwWindowHint(GLFW_CONTEXT_VERSION_MAJOR, 3);
@@ -34,6 +34,7 @@ int main()
     GLFWwindow* window = glfwCreateWindow(800, 600, "project-cat", nullptr, nullptr);
     if (!window)
     {
+        KLog::Log("glfw window is nullptr. create failed.");
         glfwTerminate();
         return -1;
     }
@@ -41,7 +42,7 @@ int main()
     glewExperimental = GL_TRUE;
     if (auto err = glewInit() != GLEW_OK)
     {
-        printf("get gl function error. %s", glewGetErrorString(err));
+        KLog::Log(err);
         return -1;
     }
 

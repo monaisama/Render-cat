@@ -1,0 +1,5 @@
+target('test')
+    set_kind('binary')
+    add_files('src/*.cpp')
+    add_rules('krule.include.math', 'krule.include.log', 'krule.include.file')
+    add_deps('kmath', 'klog', 'kfile')

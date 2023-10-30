@@ -5,7 +5,14 @@
 
 namespace KLog
 {
+    
+template<class TParam> void Log(TParam p)
+{
+    std::cout << p << std::endl;
+}
+
 K_API void Log(const char*);
 
 K_API void Log(const std::string&);
+
 }

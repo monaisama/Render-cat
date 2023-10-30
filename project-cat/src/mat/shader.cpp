@@ -2,6 +2,8 @@
 #include "file.h"
 #include "log.h"
 
+using namespace KFileUtils;
+
 KShader::KShader(const GLchar* filePath, KShaderType type)
 {
     const GLchar* shaderSource = KFile::ReadFile(filePath).c_str();

@@ -1,13 +1,19 @@
 #include "file.h"
 #include "log.h"
 
-KFile::KFile()
+#include <cstdint>
+
+namespace KFileUtils
 {
+
+int32_t KFileTest::Int() const
+{
+    return ELe + 1;
 }
 
 bool KFile::Open(const std::string& fileName)
 {
-    file = std::ifstream(fileName, std::ifstream::in);
+    file = std::fstream(fileName, std::fstream::in | std::fstream::out);
     return true;
 }
 
@@ -23,6 +29,12 @@ int32_t KFile::Read(std::string& content)
     content.append(cache, 0, file.gcount());
     count += file.gcount();
     return count;
+}
+
+void KFile::Write(const std::string& str)
+{
+    file.write(str.c_str(), str.length());
+    file.flush();
 }
 
 void KFile::Close()
@@ -42,4 +54,6 @@ std::string KFile::ReadFile(const std::string& fileName, int32_t* length)
     file.Close();
 
     return std::move(content);
+}
+
 }
