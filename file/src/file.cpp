@@ -13,6 +13,7 @@ int32_t KFileTest::Int() const
 
 bool KFile::Open(const std::string& fileName)
 {
+    // todo.. 需要判定文件是否存在，并且需要给定选项删除文件里面的内容再写入新的
     file = std::fstream(fileName, std::fstream::in | std::fstream::out);
     return true;
 }

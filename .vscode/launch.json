@@ -7,10 +7,18 @@
         {
             "type": "xmake",
             "request": "launch",
-            "name": "Debug XMake target",
-            "target": "hello",
+            "name": "main",
+            "target": "Target",
+            "cwd": "",
+            "stopAtEntry": true
+        },
+        {
+            "type": "xmake",
+            "request": "launch",
+            "name": "test",
+            "target": "test",
             "cwd": "${workspaceFolder}",
             "stopAtEntry": false
-        }
+        },
     ]
 }

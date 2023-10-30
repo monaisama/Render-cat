@@ -2,6 +2,8 @@
 #include "file.h"
 #include "log.h"
 
+#include "objects/text_object.h"
+
 #include <iostream>
 #include <string>
 
@@ -21,14 +23,34 @@ int main()
 
 #pragma region test file
 
-    // KFile file;
-    // file.Open("default.vs");
-    // std::string content;
-    // file.GetStream() >> content;
-    // file.Close();
+    KFile file;
+    file.Open("default.vs");
+    std::string content;
+    file.GetStream() >> content;
+    file.Close();
 
-    // KLog::Log(content);
+    KLog::Log(content);
     KLog::Log(KFileTest{}.Int());
+
+
+    KTextObject object;
+    for (int32_t i = 0; i < 10; i++)
+    {
+        object.vertexs.push_back(KTextVertex{KVec3f(i, i+1, i+2), KVec3f(i, i-1, i-2)});
+    }
+    KFile testStream;
+    testStream.Open("testObj.txt");
+    testStream.GetStream() << object;
+    testStream.Close();
+
+    KTextObject object1;
+    KFile testStream1;
+    testStream1.Open("testObj.txt");
+    testStream1.GetStream() >> object1;
+    testStream1.Close();
+
+    KLog::Log(object.vertexs.size());
+    KLog::Log(object1.vertexs.size());
 
 #pragma endregion
 
