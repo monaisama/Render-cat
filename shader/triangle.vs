@@ -6,6 +6,6 @@ out vec3 fsColor;
 
 void main()
 {
-    gl_Position = vec4(pos, 1.f);
     fsColor = color;
+    gl_Position = vec4(pos, 1.f);
 }

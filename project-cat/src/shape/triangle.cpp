@@ -11,14 +11,14 @@ void KTriangle::SetupShape()
         0.5f, 0.5f, 0.f,
     };
 
-    // MetaInfo.colors = {
-    //     1.f, 0.f, 0.f,
-    //     0.f, 1.f, 0.f,
-    //     0.f, 0.f, 1.f
-    // };
+    MetaInfo.colors = {
+        1.f, 0.f, 0.f,
+        0.f, 1.f, 0.f,
+        0.f, 0.f, 1.f
+    };
 
-    MetaInfo.Mat.vertexFile = "default.vs";
-    MetaInfo.Mat.fragmentFile = "default_color.fs";
+    MetaInfo.Mat.vertexFile = "triangle.vs";
+    MetaInfo.Mat.fragmentFile = "triangle.fs";
 }
 
 }

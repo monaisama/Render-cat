@@ -21,8 +21,9 @@ struct KMatMeta : IMeta
 class KMat : public KObject
 {
 public:
-    explicit KMat(const KShaderPair& Pair);
-    explicit KMat(const KMatMeta& Meta);
+    explicit KMat(const KShaderPair&);
+    explicit KMat(const KMatMeta&);
+    explicit KMat(const KShader& vertexShader, const KShader& fragmentShader);
     virtual ~KMat();
 
     void Use() const;

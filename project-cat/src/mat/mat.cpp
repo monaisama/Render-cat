@@ -5,13 +5,24 @@ namespace KCore::Shader
 {
 
 KMat::KMat(const KShaderPair& shaders)
+    : KMat(shaders.vertexShader, shaders.fragmentShader)
 {
-    MetaInfo.vertexFile = shaders.vertexShader.GetMeta()->filePath;
-    MetaInfo.fragmentFile = shaders.fragmentShader.GetMeta()->filePath;
+
+}
+
+KMat::KMat(const KMatMeta& meta)
+    : KMat(KShader(meta.vertexFile, KShaderType::Vertex), KShader(meta.fragmentFile, KShaderType::Fragment))
+{
+}
+
+KMat::KMat(const KShader& vertex, const KShader& fragment)
+{
+    MetaInfo.vertexFile = vertex.GetMeta()->filePath;
+    MetaInfo.fragmentFile = fragment.GetMeta()->filePath;
 
     matObjectID = glCreateProgram();
-    glAttachShader(matObjectID, shaders.vertexShader.GetShader());
-    glAttachShader(matObjectID, shaders.fragmentShader.GetShader());
+    glAttachShader(matObjectID, vertex.GetShader());
+    glAttachShader(matObjectID, fragment.GetShader());
     glLinkProgram(matObjectID);
     {
         GLint success;
@@ -19,15 +30,11 @@ KMat::KMat(const KShaderPair& shaders)
         if (!success)
         {
             glGetProgramInfoLog(matObjectID, 512, nullptr, logInfo);
+            KLog::Log("error: link program: ");
             KLog::Log(logInfo);
             glDeleteProgram(matObjectID);
         }
     }
-}
-
-KMat::KMat(const KMatMeta& Meta)
-    : KMat(KShaderPair { KShader(Meta.vertexFile, KShaderType::Vertex), KShader(Meta.vertexFile, KShaderType::Fragment) })
-{
 }
 
 KMat::~KMat()

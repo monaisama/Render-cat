@@ -23,6 +23,9 @@ KShader::KShader(const GLchar* filePath, KShaderType type)
         if (!success)
         {
             glGetShaderInfoLog(shaderObjectID, 512, nullptr, logInfo);
+            KLog::Log(filePath);
+            if (type == KShaderType::Fragment) KLog::Log("fragment");
+            else if (type == KShaderType::Vertex) KLog::Log("vertex");
             KLog::Log(logInfo);
             glDeleteShader(shaderObjectID);
         }

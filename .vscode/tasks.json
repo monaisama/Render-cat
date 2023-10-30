@@ -83,6 +83,17 @@
                 "isDefault": true
             },
             "problemMatcher": []
+        },
+
+        {
+            "label": "copy shader",
+            "command": "xmake",
+            "args": [
+                "build",
+                "-b",
+                "shader"
+            ],
+            "problemMatcher": []
         }
     ]
 }

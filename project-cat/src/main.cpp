@@ -10,6 +10,7 @@
 #include "mat/mat.h"
 #include "shape/primitive.h"
 #include "shape/triangle.h"
+#include "exercise/test_shapes.h"
 
 // 这里直接写在这里省事 嘻嘻
 using namespace KCore::Shader;
@@ -55,12 +56,11 @@ int main()
     glViewport(0, 0, 800, 600);
     glfwSetWindowSizeCallback(window, WindowResize);
 
-    // KShader defaultVS("default.vs", KShaderType::Vertex);
-    // KShader defaultFS("default_color.fs", KShaderType::Fragment), blueFS("blue_color.fs", KShaderType::Fragment);
-    // KMat defaultMat(KShaderPair{defaultVS, defaultFS}), blueMat(KShaderPair{defaultVS, blueFS});
-
     KTriangle triangle;
     triangle.Setup();
+
+    _2Triangles excrise1;
+    excrise1.Setup();
     while (!glfwWindowShouldClose(window))
     {
         WindowInput(window);
@@ -71,6 +71,7 @@ int main()
 
         // TestRender(defaultMat, blueMat);
         triangle.Render();
+        excrise1.Render();
 
         glfwPollEvents();
         glfwSwapBuffers(window);
@@ -202,7 +203,7 @@ void TestRender(const KMat& defaultMat, const KMat& blueMat)
     }
     glBindVertexArray(0);
 
-    KTriangle triangle;
-    triangle.Setup();
-    triangle.Render();
+    // KTriangle triangle;
+    // triangle.Setup();
+    // triangle.Render();
 }

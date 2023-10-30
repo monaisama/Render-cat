@@ -56,7 +56,7 @@ void KPrimitive::InnerGenGLObject()
         glEnableVertexAttribArray(0);
         if (bHasColor)
         {
-            glVertexAttribPointer(1, 3, GL_FLOAT, GL_FALSE, sizeof(float) * stride, (void*)(3));
+            glVertexAttribPointer(1, 3, GL_FLOAT, GL_FALSE, sizeof(float) * stride, (void*)(3 * sizeof(float)));
             glEnableVertexAttribArray(1);
         }
     }
