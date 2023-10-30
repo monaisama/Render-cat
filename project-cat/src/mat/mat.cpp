@@ -37,6 +37,23 @@ KMat::KMat(const KShader& vertex, const KShader& fragment)
     }
 }
 
+void KMat::SetBool(const std::string& name, bool value) const
+{
+    SetInt(name, static_cast<int32_t>(value));
+}
+void KMat::SetFloat(const std::string& name, float value) const
+{
+    glUniform1f(glGetUniformLocation(matObjectID, name.c_str()), value);
+}
+void KMat::SetInt(const std::string& name, int32_t value) const
+{
+    glUniform1i(glGetUniformLocation(matObjectID, name.c_str()), value);
+}
+void KMat::SetVec3f(const std::string& name, KMath::KVec3f value) const
+{
+    glUniform3f(glGetUniformLocation(matObjectID, name.c_str()), value.x, value.y, value.z);
+}
+
 KMat::~KMat()
 {
     if (glIsProgram(matObjectID) != GL_FALSE)

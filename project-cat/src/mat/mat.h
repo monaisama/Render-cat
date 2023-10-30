@@ -2,6 +2,7 @@
 #include "core/core.h"
 
 #include "shader.h"
+#include "vecs/vec3.h"
 
 namespace KCore::Shader
 {
@@ -29,6 +30,10 @@ public:
     void Use() const;
 
     virtual const KMatMeta* GetMeta() const override { return &MetaInfo; }
+    void SetBool(const std::string &name, bool value) const;
+    void SetFloat(const std::string &name, float value) const;
+    void SetInt(const std::string &name, int32_t value) const;
+    void SetVec3f(const std::string &name, KMath::KVec3f value) const;
 
 protected:
     GLuint matObjectID;

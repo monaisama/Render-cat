@@ -74,16 +74,21 @@ void KPrimitive::InnerLoadShader()
 
 void KPrimitive::Render()
 {
+    RenderPhase(ERenderPhase::Begin);
     if (mat) // 这里是否一定不再判定default mat
         mat->Use();
+    RenderPhase(ERenderPhase::AfterSetMat);
     glBindVertexArray(RenderInfo.vao);
     {
+        RenderPhase(ERenderPhase::AfterBinding);
         if (RenderInfo.bUseEBO)
             glDrawElements(GL_TRIANGLES, RenderInfo.count, GL_UNSIGNED_INT, 0);
         else
             glDrawArrays(GL_TRIANGLES, 0, RenderInfo.count);
     }
     glBindVertexArray(0);
+
+    RenderPhase(ERenderPhase::Finish);
 }
 
 KPrimitive::~KPrimitive()

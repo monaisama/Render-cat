@@ -32,7 +32,15 @@ public:
     virtual const KShapeMeta* GetMeta() const override { return &MetaInfo; }
     
 protected:
+    enum class ERenderPhase : uint8_t
+    {
+        Begin,
+        AfterSetMat,
+        AfterBinding,
+        Finish,
+    };
     virtual void SetupShape() { } // none
+    virtual void RenderPhase(ERenderPhase phase) { }
 
 protected:
     KCore::Shader::KMat* mat;

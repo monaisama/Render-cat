@@ -57,8 +57,11 @@ int main()
     KTriangle triangle;
     triangle.Setup();
 
-    _2Triangles excrise1;
+    K_2Triangles excrise1;
     excrise1.Setup();
+
+    KExcriseShape shape;
+    shape.Setup();
     while (!glfwWindowShouldClose(window))
     {
         WindowInput(window);
@@ -69,6 +72,7 @@ int main()
 
         triangle.Render();
         excrise1.Render();
+        shape.Render();
 
         glfwPollEvents();
         glfwSwapBuffers(window);
