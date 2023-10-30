@@ -23,11 +23,7 @@ int main()
 
 #pragma region test file
 
-    KFile file;
-    file.Open("default.vs");
-    std::string content;
-    file.GetStream() >> content;
-    file.Close();
+    std::string content = KFile::ReadFile("default.vs");
 
     KLog::Log(content);
     KLog::Log(KFileTest{}.Int());

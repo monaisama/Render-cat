@@ -8,9 +8,9 @@
             "type": "xmake",
             "request": "launch",
             "name": "main",
-            "target": "Target",
-            "cwd": "",
-            "stopAtEntry": true
+            "target": "project-cat",
+            "cwd": "${workspaceFolder}",
+            "stopAtEntry": false
         },
         {
             "type": "xmake",

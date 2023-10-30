@@ -4,10 +4,16 @@
 
 using namespace KFileUtils;
 
+namespace KCore::Shader
+{
+
 KShader::KShader(const GLchar* filePath, KShaderType type)
 {
-    const GLchar* shaderSource = KFile::ReadFile(filePath).c_str();
-    shaderType = static_cast<GLenum>(type);
+    MetaInfo.filePath = filePath;
+    MetaInfo.type = type;
+
+    std::string content = KFile::ReadFile(filePath); // 这里不能让string 销毁掉
+    const GLchar* shaderSource = content.data();
     shaderObjectID = glCreateShader(GetGLShaderType());
     glShaderSource(shaderObjectID, 1, &shaderSource, nullptr);
     glCompileShader(shaderObjectID);
@@ -23,6 +29,15 @@ KShader::KShader(const GLchar* filePath, KShaderType type)
     }
 }
 
+KShader::KShader(const std::string& filePath, KShaderType type)
+    : KShader(filePath.c_str(), type)
+{}
+
+KShader::KShader(const KShaderMeta& Meta)
+    : KShader(Meta.filePath, Meta.type)
+{
+}
+
 KShader::~KShader()
 {
     if (glIsShader(shaderObjectID) != GL_FALSE)
@@ -34,7 +49,4 @@ GLuint KShader::GetShader() const
     return shaderObjectID;
 }
 
-GLenum KShader::GetGLShaderType() const
-{
-    return shaderType;
 }

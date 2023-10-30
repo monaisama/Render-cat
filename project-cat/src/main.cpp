@@ -8,6 +8,12 @@
 #include "log.h"
 #include "file.h"
 #include "mat/mat.h"
+#include "shape/primitive.h"
+#include "shape/triangle.h"
+
+// 这里直接写在这里省事 嘻嘻
+using namespace KCore::Shader;
+using namespace KCore::Shape;
 
 void WindowResize(GLFWwindow* window, int32_t width, int32_t height)
 {
@@ -49,10 +55,12 @@ int main()
     glViewport(0, 0, 800, 600);
     glfwSetWindowSizeCallback(window, WindowResize);
 
-    KShader defaultVS("default.vs", KShaderType::Vertex);
-    KShader defaultFS("default_color.fs", KShaderType::Fragment), blueFS("blue_color.fs", KShaderType::Fragment);
-    KMat defaultMat(KShaderPair{defaultVS, defaultFS}), blueMat(KShaderPair{defaultVS, blueFS});
+    // KShader defaultVS("default.vs", KShaderType::Vertex);
+    // KShader defaultFS("default_color.fs", KShaderType::Fragment), blueFS("blue_color.fs", KShaderType::Fragment);
+    // KMat defaultMat(KShaderPair{defaultVS, defaultFS}), blueMat(KShaderPair{defaultVS, blueFS});
 
+    KTriangle triangle;
+    triangle.Setup();
     while (!glfwWindowShouldClose(window))
     {
         WindowInput(window);
@@ -61,7 +69,8 @@ int main()
         glClear(GL_COLOR_BUFFER_BIT);
         glPolygonMode(GL_FRONT_AND_BACK, GL_LINE);
 
-        TestRender(defaultMat, blueMat);
+        // TestRender(defaultMat, blueMat);
+        triangle.Render();
 
         glfwPollEvents();
         glfwSwapBuffers(window);
@@ -129,26 +138,26 @@ void TestRender(const KMat& defaultMat, const KMat& blueMat)
         return vao;
     };
 
-    GLuint vao;
-    glGenVertexArrays(1, &vao);
-    GLuint vbo;
-    glGenBuffers(1, &vbo);
-    GLuint ebo;
-    glGenBuffers(1, &ebo);
+    // GLuint vao;
+    // glGenVertexArrays(1, &vao);
+    // GLuint vbo;
+    // glGenBuffers(1, &vbo);
+    // GLuint ebo;
+    // glGenBuffers(1, &ebo);
 
-    glBindVertexArray(vao);
-    {
-        // glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, ebo);
-        // glBufferData(GL_ELEMENT_ARRAY_BUFFER, sizeof(indices), indices, GL_STATIC_DRAW);
-        glBindBuffer(GL_ARRAY_BUFFER, vbo);
-        glBufferData(GL_ARRAY_BUFFER, sizeof(vertices), vertices, GL_STATIC_DRAW);
-        glVertexAttribPointer(0, 3, GL_FLOAT, GL_FALSE, 3 * sizeof(GLfloat), (void*)0);
-        glEnableVertexAttribArray(0);
-    }
-    glBindVertexArray(0);
-    glDisableVertexAttribArray(0);
-    glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, 0);
-    glBindBuffer(GL_ARRAY_BUFFER, 0);
+    // glBindVertexArray(vao);
+    // {
+    //     // glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, ebo);
+    //     // glBufferData(GL_ELEMENT_ARRAY_BUFFER, sizeof(indices), indices, GL_STATIC_DRAW);
+    //     glBindBuffer(GL_ARRAY_BUFFER, vbo);
+    //     glBufferData(GL_ARRAY_BUFFER, sizeof(vertices), vertices, GL_STATIC_DRAW);
+    //     glVertexAttribPointer(0, 3, GL_FLOAT, GL_FALSE, 3 * sizeof(GLfloat), (void*)0);
+    //     glEnableVertexAttribArray(0);
+    // }
+    // glBindVertexArray(0);
+    // glDisableVertexAttribArray(0);
+    // glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, 0);
+    // glBindBuffer(GL_ARRAY_BUFFER, 0);
 
     // 好像这样不重新binding是不行的，那同一个vbo（显存数据）怎么能被不同的vao使用或者，怎么其他的什么东西使用呢？
     // GLuint _test_vao;
@@ -168,9 +177,9 @@ void TestRender(const KMat& defaultMat, const KMat& blueMat)
     auto _2_2_2vao = bindVBOData(_2_2_2vertices, sizeof(_2_2_2vertices) / sizeof(GLfloat));
 
     defaultMat.Use();
-    glBindVertexArray(vao);
-    glDrawArrays(GL_TRIANGLES, 0, 3);
-    glBindVertexArray(0);
+    // glBindVertexArray(vao);
+    // glDrawArrays(GL_TRIANGLES, 0, 3);
+    // glBindVertexArray(0);
 
     // exercise 1
     glBindVertexArray(_2vao);
@@ -192,4 +201,8 @@ void TestRender(const KMat& defaultMat, const KMat& blueMat)
         glDrawArrays(GL_TRIANGLES, 0, 3);
     }
     glBindVertexArray(0);
+
+    KTriangle triangle;
+    triangle.Setup();
+    triangle.Render();
 }

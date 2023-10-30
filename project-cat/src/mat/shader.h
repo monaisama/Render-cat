@@ -1,8 +1,8 @@
 #pragma once
-#include <cstdint>
-#include <string>
-#include "GL/glew.h"
-#include "GLFW/glfw3.h"
+#include "core/core.h"
+
+namespace KCore::Shader
+{
 
 enum class KShaderType : uint32_t
 {
@@ -11,18 +11,31 @@ enum class KShaderType : uint32_t
     // other 细分着色？
 };
 
-class KShader
+struct KShaderMeta : IMeta
+{
+    std::string filePath;
+    KShaderType type;
+};
+
+class KShader : public KObject
 {
 public:
+    explicit KShader(const std::string&, KShaderType);
     explicit KShader(const GLchar*, KShaderType);
-    ~KShader();
+    explicit KShader(const KShaderMeta& Meta);
+    virtual ~KShader();
 
     GLuint GetShader() const;
-    GLenum GetGLShaderType() const;
+    GLenum GetGLShaderType() const { return static_cast<GLenum>(MetaInfo.type); }
+
+    virtual const KShaderMeta* GetMeta() const override { return &MetaInfo; }
 
 protected:
     GLuint shaderObjectID;
-    GLenum shaderType;
 
     GLchar logInfo[512];
+
+    KShaderMeta MetaInfo;
 };
+
+}

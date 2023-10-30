@@ -1,10 +1,10 @@
 #pragma once
-#include <GL/glew.h>
-#include <GLFW/glfw3.h>
-#include <string>
-#include <vector>
+#include "core/core.h"
 
 #include "shader.h"
+
+namespace KCore::Shader
+{
 
 struct KShaderPair
 {
@@ -12,16 +12,29 @@ struct KShaderPair
     KShader fragmentShader;
 };
 
-class KMat
+struct KMatMeta : IMeta
+{
+    std::string vertexFile;
+    std::string fragmentFile;
+};
+
+class KMat : public KObject
 {
 public:
-    KMat(const KShaderPair& Pair);
-    ~KMat();
+    explicit KMat(const KShaderPair& Pair);
+    explicit KMat(const KMatMeta& Meta);
+    virtual ~KMat();
 
     void Use() const;
+
+    virtual const KMatMeta* GetMeta() const override { return &MetaInfo; }
 
 protected:
     GLuint matObjectID;
 
     GLchar logInfo[512];
+
+    KMatMeta MetaInfo;
 };
+
+}
