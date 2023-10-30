@@ -87,7 +87,6 @@ void KPrimitive::Render()
             glDrawArrays(GL_TRIANGLES, 0, RenderInfo.count);
     }
     glBindVertexArray(0);
-
     RenderPhase(ERenderPhase::Finish);
 }
 

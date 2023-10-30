@@ -25,8 +25,6 @@ void WindowInput(GLFWwindow* window)
         glfwSetWindowShouldClose(window, GLFW_TRUE);
 }
 
-void TestRender(const KMat& defaultMat, const KMat& blueMat);
-
 int main()
 {
     TestCompileConfig();
