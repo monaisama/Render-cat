@@ -24,12 +24,17 @@ this_is_file.txt
 ###### file
 写一些简单的文件操作
 
-
 ###### log
 log操作
 
 ###### math
 自定义数学库
+
+###### shader
+放一些shader
+
+###### test
+一个测试工程保持简单，用于在编译不过或者执行错误的时候，小的调试工程。
 
 ###### project-cat
 主项目
