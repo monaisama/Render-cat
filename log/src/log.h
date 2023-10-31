@@ -31,7 +31,7 @@ void Log(const std::string& format, const Args&... args)
         int32_t count = backIndex - index - 1;
         if (count > 0)
         {
-            int32_t paramIndex = atoi(format.substr(index + 1, count).c_str());
+            int32_t paramIndex = std::stoi(format.substr(index + 1, count));
             ret << format.substr(offset, index - offset);
             std::invoke(params[paramIndex], ret);
         }
