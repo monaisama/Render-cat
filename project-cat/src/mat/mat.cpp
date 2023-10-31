@@ -30,8 +30,7 @@ KMat::KMat(const KShader& vertex, const KShader& fragment)
         if (!success)
         {
             glGetProgramInfoLog(matObjectID, 512, nullptr, logInfo);
-            KLog::Log("error: link program: ");
-            KLog::Log(logInfo);
+            KLog::LogError("shader program link failed. info: {0}", logInfo);
             glDeleteProgram(matObjectID);
         }
     }

@@ -3,7 +3,7 @@
 
 void TestCompileConfig()
 {
-#if KDEBUG
+#if defined(KDEBUG)
     std::cout << "debug_mode open." << std::endl;
 #endif
 }

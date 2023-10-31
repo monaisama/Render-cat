@@ -37,7 +37,7 @@ int main()
     GLFWwindow* window = glfwCreateWindow(800, 600, "project-cat", nullptr, nullptr);
     if (!window)
     {
-        KLog::Log("glfw window is nullptr. create failed.");
+        KLog::LogError("glfw window created failed.");
         glfwTerminate();
         return -1;
     }
@@ -45,7 +45,7 @@ int main()
     glewExperimental = GL_TRUE;
     if (auto err = glewInit() != GLEW_OK)
     {
-        KLog::Log(err);
+        KLog::LogError("GlewInit Failed. errorcode: {0}", err);
         return -1;
     }
 

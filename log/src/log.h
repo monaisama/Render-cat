@@ -2,17 +2,67 @@
 #include "compile_header.h"
 #include <iostream>
 #include <string>
+#include <sstream>
+#include <array>
+#include <functional>
 
 namespace KLog
 {
     
-template<class TParam> void Log(TParam p)
+template<class... Args>
+void Log(const std::string& format, const Args&... args)
 {
-    std::cout << p << std::endl;
+    std::array<std::function<void(std::stringstream&)>, sizeof...(Args)> params
+    {
+        [&args](std::stringstream& outs)
+        {
+            outs << std::boolalpha << args << std::noboolalpha;
+        }...
+    };
+
+    std::stringstream ret;
+    int32_t index = format.find_first_of('{');
+    int32_t offset = 0;
+    while (index != -1)
+    {
+        int32_t backIndex = format.find_first_of('}', index);
+        if (backIndex == -1 || (index != 0 && format[index - 1] == '\\'))
+            break;
+        int32_t count = backIndex - index - 1;
+        if (count > 0)
+        {
+            int32_t paramIndex = atoi(format.substr(index + 1, count).c_str());
+            ret << format.substr(offset, index - offset);
+            std::invoke(params[paramIndex], ret);
+        }
+        else
+            ret << format.substr(offset, backIndex - offset + 1);
+        offset = backIndex + 1;
+        index = format.find_first_of('{', offset);
+    }
+    ret << format.substr(offset);
+
+    std::cout << ret.str() << std::endl;
+}
+    
+template<class TParam>
+void Log(const TParam& p)
+{
+    Log("{0}", p);
 }
 
-K_API void Log(const char*);
+template<class... Args>
+void LogError(const std::string& format, const Args&... args)
+{
+    std::cout << "ERROR: ";
+    Log(format, std::forward<const Args>(args)...);
+}
 
-K_API void Log(const std::string&);
+template<class... Args>
+void LogWarning(const std::string& format, const Args&... args)
+{
+    std::cout << "WARNING: ";
+    Log(format, std::forward<const Args>(args)...);
+}
 
 }
