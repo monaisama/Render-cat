@@ -52,8 +52,23 @@ float_t operator""km(long double value)
     return value * 1000;
 }
 
+template<class T, size_t N>
+size_t Size(const T(&)[N])
+{
+    return N;
+}
+
 int main()
 {
+    using array_t = int32_t(&)[5];
+    using array_p = int32_t(*)[5];
+    int32_t arr[] = {1,2,3,4,6};
+    array_t a1 = arr;
+    array_p p1 = &arr;
+    KLog::Log(Size(*p1));
+
+    return 0;
+
     std::string_view sView;
     std::string ss;
     char* charptr = nullptr;
