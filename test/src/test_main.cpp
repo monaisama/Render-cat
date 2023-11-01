@@ -9,6 +9,8 @@
 #include <string>
 #include <array>
 #include <any>
+#include <optional>
+#include <string_view>
 
 using namespace KMath;
 using namespace KFileUtils;
@@ -33,8 +35,37 @@ void ArgsFunc(Args... args)
     std::cout << ia << std::endl;
 }
 
+std::optional<std::string> TestOptional(bool bUse = true)
+{
+    if (bUse)
+        return "string";
+    return {};
+}
+
 int main()
 {
+    std::string_view sView;
+    std::string ss;
+    char* charptr = nullptr;
+    {
+        std::string str { "hello view" };
+        sView = str;
+        ss = str;
+        charptr = const_cast<char*>(str.c_str());
+    }
+    // std::cout << sView.data();
+    KLog::Log(sView.data());
+    KLog::Log(charptr);
+    KLog::Log(nullptr);
+    KLog::Log(ss);
+    // std::cout << charptr;
+    KLog::Log("");
+
+    KLog::Log(TestOptional(true).value_or("empty"));
+    KLog::Log(TestOptional(false).value_or("empty"));
+
+    return 0;
+
     KLog::Log("failed");
     KLog::LogError("error");
     KLog::LogError("start {0} - {1} middle\{} {0} {2} bool {3} logend", -1, 100.1f, "hello log", true);

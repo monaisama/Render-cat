@@ -5,6 +5,8 @@
 #include <sstream>
 #include <array>
 #include <functional>
+#include <string_view>
+#include <type_traits>
 
 namespace KLog
 {
@@ -16,6 +18,14 @@ void Log(const std::string& format, const Args&... args)
     {
         [&args](std::stringstream& outs)
         {
+            if constexpr (std::is_pointer<Args>::value) // 如果这里是nullptr, 直接输出会crash，需要做一个判定
+            {
+                if (args == nullptr)
+                {
+                    outs << nullptr;
+                    return;
+                }
+            }
             outs << std::boolalpha << args << std::noboolalpha;
         }...
     };
