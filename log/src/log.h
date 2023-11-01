@@ -18,13 +18,11 @@ void Log(const std::string& format, const Args&... args)
     {
         [&args](std::stringstream& outs)
         {
-            if constexpr (std::is_pointer<Args>::value) // 如果这里是nullptr, 直接输出会crash，需要做一个判定
+            // 如果这里是nullptr, 直接输出会crash，需要做一个判定
+            if constexpr (std::is_pointer<Args>::value) if (args == nullptr)
             {
-                if (args == nullptr)
-                {
-                    outs << nullptr;
-                    return;
-                }
+                outs << nullptr;
+                return;
             }
             outs << std::boolalpha << args << std::noboolalpha;
         }...
@@ -59,6 +57,22 @@ template<class TParam>
 void Log(const TParam& p)
 {
     Log("{0}", p);
+}
+
+template<class... Args>
+void LogSimple(const Args&... args) // todo.. 这里怎么将函数名重载到Log
+{
+    (void) std::initializer_list {
+        ([&args](){
+            if constexpr (std::is_pointer<Args>::value) if (args == nullptr)
+            {
+                std::cout << nullptr << " ";
+                return;
+            }
+            std::cout << std::boolalpha << args << std::noboolalpha << " ";
+        }() ,0)...
+    };
+    std::cout << std::endl;
 }
 
 template<class... Args>

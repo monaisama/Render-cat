@@ -42,6 +42,16 @@ std::optional<std::string> TestOptional(bool bUse = true)
     return {};
 }
 
+int32_t operator""km(uint64_t value)
+{
+    return static_cast<int32_t>(value * 1000);
+}
+
+float_t operator""km(long double value)
+{
+    return value * 1000;
+}
+
 int main()
 {
     std::string_view sView;
@@ -63,6 +73,12 @@ int main()
 
     KLog::Log(TestOptional(true).value_or("empty"));
     KLog::Log(TestOptional(false).value_or("empty"));
+
+    using namespace std::string_literals;
+    using namespace std::string_view_literals;
+    // "hello"s
+
+    KLog::LogSimple(12km, 12.01km);
 
     return 0;
 
