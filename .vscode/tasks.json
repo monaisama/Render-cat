@@ -90,7 +90,7 @@
             "command": "xmake",
             "args": [
                 "build",
-                "-b",
+                "-vb",
                 "shaders"
             ],
             "problemMatcher": []
@@ -101,7 +101,7 @@
             "command": "xmake",
             "args": [
                 "build",
-                "-b",
+                "-vb",
                 "textures"
             ],
             "problemMatcher": []
@@ -112,7 +112,7 @@
             "command": "xmake",
             "args": [
                 "build",
-                "-b",
+                "-vb",
                 "resources"
             ],
             "problemMatcher": []

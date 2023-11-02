@@ -30,8 +30,9 @@ log操作
 ###### math
 自定义数学库
 
-###### shader
-放一些shader
+###### resource
+* shader 放一些shader
+* texture 放一些用到的图片（only png）
 
 ###### test
 一个测试工程保持简单，用于在编译不过或者执行错误的时候，小的调试工程。

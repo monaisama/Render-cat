@@ -29,12 +29,17 @@ void WindowInput(GLFWwindow* window)
 
 void TestTex()
 {
-    // uint8_t *data = stbi_load
+    int32_t width, height, channels;
+    std::string_view path { "texture/namei_1.png" };
+    uint8_t *data = stbi_load(path.data(), &width, &height, &channels, 0);
+    KLog::Log("load pic success path: {0} width: {1} height: {2} channels: {3} size: {4}",
+        path, width, height, channels, sizeof(data) / sizeof(uint8_t));
 }
 
 int main()
 {
     TestCompileConfig();
+    TestTex();
 
     glfwInit();
     glfwWindowHint(GLFW_CONTEXT_VERSION_MAJOR, 3);
