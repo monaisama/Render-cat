@@ -38,3 +38,8 @@ log操作
 
 ###### project-cat
 主项目
+
+##### 参考资料
+* [Computer Graphics through OpenGL](./book/Computer%20Graphics%20through%20OpenGL_%20From%20Theory%20to%20Experiments%20(2nd%20ed.)%20[Guha%202014-08-06].pdf)
+* [LearnOpenGL](https://www.learnopengl.com)
+* [OpenGL Step by Step](https://ogldev.org/)
