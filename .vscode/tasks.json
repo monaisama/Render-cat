@@ -86,12 +86,34 @@
         },
 
         {
-            "label": "copy shader",
+            "label": "copy shaders",
             "command": "xmake",
             "args": [
                 "build",
                 "-b",
-                "shader"
+                "shaders"
+            ],
+            "problemMatcher": []
+        },
+
+        {
+            "label": "copy textures",
+            "command": "xmake",
+            "args": [
+                "build",
+                "-b",
+                "textures"
+            ],
+            "problemMatcher": []
+        },
+
+        {
+            "label": "copy resources",
+            "command": "xmake",
+            "args": [
+                "build",
+                "-b",
+                "resources"
             ],
             "problemMatcher": []
         }

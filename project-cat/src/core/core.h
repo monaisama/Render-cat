@@ -6,6 +6,10 @@
 #include <cstdint>
 #include <vector>
 #include <array>
+#include <optional>
+#include <string_view>
+#include <functional>
+#include <algorithm>
 
 namespace KCore
 {

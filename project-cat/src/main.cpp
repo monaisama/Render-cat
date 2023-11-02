@@ -10,6 +10,8 @@
 #include "shape/triangle.h"
 #include "exercise/test_shapes.h"
 
+#include "3rd/image.h"
+
 // 这里直接写在这里省事 嘻嘻
 using namespace KCore::Shader;
 using namespace KCore::Shape;
@@ -23,6 +25,11 @@ void WindowInput(GLFWwindow* window)
 {
     if (glfwGetKey(window, GLFW_KEY_ESCAPE) == GLFW_PRESS)
         glfwSetWindowShouldClose(window, GLFW_TRUE);
+}
+
+void TestTex()
+{
+    // uint8_t *data = stbi_load
 }
 
 int main()
@@ -60,6 +67,9 @@ int main()
 
     KExcriseShape shape;
     shape.Setup();
+
+
+
     while (!glfwWindowShouldClose(window))
     {
         WindowInput(window);

@@ -1,10 +1,11 @@
 add_requires('glew', 'glfw', {configs = {shared = true}})
+add_requires('stb')
 
 target('project-cat')
     set_kind('binary')
     add_files('src/**.cpp', 'src/**/**.cpp')
     add_includedirs('src/')
     add_headerfiles('src/**.h')
-    add_packages('glew', 'glfw')
+    add_packages('glew', 'glfw', 'stb')
     add_deps('kmath', 'kfile', 'klog')
     add_rules('krule.include.math', 'krule.include.log', 'krule.include.file')

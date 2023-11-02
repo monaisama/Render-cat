@@ -1,6 +1,7 @@
 #include "shader.h"
 #include "file.h"
 #include "log.h"
+#include <string_view>
 
 using namespace KFileUtils;
 
@@ -9,10 +10,14 @@ namespace KCore::Shader
 
 KShader::KShader(const GLchar* filePath, KShaderType type)
 {
-    MetaInfo.filePath = filePath;
+    std::string_view path = filePath;
+    if (!path.starts_with("shaders")) // cxx20
+        MetaInfo.filePath = std::string{"shaders/"}.append(filePath);
+    else
+        MetaInfo.filePath = filePath;
     MetaInfo.type = type;
 
-    std::string content = KFile::ReadFile(filePath); // 这里不能让string 销毁掉
+    std::string content = KFile::ReadFile(MetaInfo.filePath); // 这里不能让string 销毁掉
     const GLchar* shaderSource = content.data();
     shaderObjectID = glCreateShader(GetGLShaderType());
     glShaderSource(shaderObjectID, 1, &shaderSource, nullptr);
