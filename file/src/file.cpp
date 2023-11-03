@@ -18,10 +18,10 @@ bool KFile::Open(const std::string& fileName)
     return true;
 }
 
-int32_t KFile::Read(std::string& content)
+size_t KFile::Read(std::string& content)
 {
     char cache[1024];
-    int32_t count = 0;
+    size_t count = 0;
     while (file.read(cache, 1024))
     {
         content.append(cache, 0, file.gcount());

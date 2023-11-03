@@ -11,6 +11,9 @@
 #include <any>
 #include <optional>
 #include <string_view>
+#include <type_traits>
+
+#include <concepts>
 
 using namespace KMath;
 using namespace KFileUtils;
@@ -58,8 +61,48 @@ size_t Size(const T(&)[N])
     return N;
 }
 
+// class Noncopyable
+// {
+// public:
+//     Noncopyable(const Noncopyable&) = delete;
+//     Noncopyable& operator=(const Noncopyable&) = delete;
+// };
+
+// class Nonmoveable
+// {
+// public:
+//     Nonmoveable(Nonmoveable&&) = delete;
+//     Nonmoveable& operator=(Nonmoveable&&) = delete;
+// };
+
+// #define GEN_SINGLETON_CODE(Type) \
+//     public: \
+//         static Type& GetInstance() \
+//         { \
+//             static Type instance; \
+//             return instance; \
+//         } \
+//         \
+//     private: \
+//         Type() = default; \
+
+// template<class T>
+// class TestSingleton : public Noncopyable, public Nonmoveable
+// {
+//     static_assert(std::is_copy_assignable_v<T> && std::is_move_assignable_v<T>,  "error: T need not assignable and moveable");
+// public:
+//     int32_t Number() const { return -100000; }
+// };
+
+// class Single : public TestSingleton<Single>
+// {
+//     GEN_SINGLETON_CODE(Single)
+// };
+
 int main()
 {
+    // KLog::Log(Single::GetInstance().Number());
+
     using array_t = int32_t(&)[5];
     using array_p = int32_t(*)[5];
     int32_t arr[] = {1,2,3,4,6};

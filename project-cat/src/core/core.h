@@ -10,6 +10,7 @@
 #include <string_view>
 #include <functional>
 #include <algorithm>
+#include <type_traits>
 
 namespace KCore
 {

@@ -1,4 +1,4 @@
-set_warnings('everything')
+set_warnings('everything') -- , 'error')
 set_languages('cxx20')
 
 -- common includes
@@ -50,3 +50,4 @@ rule_end()
 add_rules('kmode.debug', 'kmode.release')
 includes('math', 'project-cat', 'file', 'log')
 includes('resource')
+includes('test')

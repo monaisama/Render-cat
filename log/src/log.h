@@ -52,12 +52,6 @@ void Log(const std::string& format, const Args&... args)
 
     std::cout << ret.str() << std::endl;
 }
-    
-template<class TParam>
-void Log(const TParam& p)
-{
-    Log("{0}", p);
-}
 
 template<class... Args>
 void LogSimple(const Args&... args) // todo.. 这里怎么将函数名重载到Log
@@ -73,6 +67,24 @@ void LogSimple(const Args&... args) // todo.. 这里怎么将函数名重载到L
         }() ,0)...
     };
     std::cout << std::endl;
+}
+
+template<class... Args>
+void LogSimpleError(const Args&... args)
+{
+    LogSimple("ERROR:", std::forward<const Args>(args)...);
+}
+
+template<class... Args>
+void LogSimpleWarning(const Args&... args)
+{
+    LogSimple("WARNING:", std::forward<const Args>(args)...);
+}
+
+template<class TParam>
+void Log(const TParam& p)
+{
+    LogSimple(p);
 }
 
 template<class... Args>

@@ -20,8 +20,10 @@ class K_API KFile
 {
 public:
     KFile() = default;
+    KFile(const KFile&) = delete;
+    KFile(KFile&&) = delete;
     bool Open(const std::string& fileName);
-    int32_t Read(std::string& content);
+    size_t Read(std::string& content);
     void Write(const std::string& str);
     void Close();
 
