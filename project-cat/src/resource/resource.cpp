@@ -2,7 +2,6 @@
 #include "mat/mat.h"
 #include "mat/shader.h"
 #include "mat/texture.h"
-// #include "3rd/image.h"
 #include <filesystem>
 #include "log.h"
 

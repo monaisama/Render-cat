@@ -17,6 +17,8 @@
 
 #include "patterns.h"
 
+#include "test_header.h"
+
 using namespace KMath;
 using namespace KFileUtils;
 
@@ -131,6 +133,11 @@ void TestSingleTon::TemplateFunc(std::string p)
 int main()
 {
     // KLog::Log(Single::GetInstance().Number());
+
+    tfunc<int32_t>(100);
+    func();
+
+    return 0;
 
     std::string_view sv1{"helloworld"};
     std::string s1{"helloworld."};

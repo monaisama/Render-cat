@@ -10,6 +10,7 @@
 #include "shape/triangle.h"
 #include "exercise/test_shapes.h"
 
+// #include "resource/resource.h"
 #include "3rd/image.h"
 
 // 这里直接写在这里省事 嘻嘻
