@@ -6,7 +6,7 @@
 #include <string_view>
 #include <string>
 #include <map>
-// #include "3rd/image.h"
+#include "3rd/image.h"
 
 namespace KCore
 {
