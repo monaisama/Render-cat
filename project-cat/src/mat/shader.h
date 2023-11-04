@@ -1,7 +1,8 @@
 #pragma once
 #include "core/core.h"
+#include "core/asset.h"
 
-namespace KCore::Shader
+namespace KCore
 {
 
 enum class KShaderType : uint32_t
@@ -17,7 +18,7 @@ struct KShaderMeta : IMeta
     KShaderType type;
 };
 
-class KShader : public KObject
+class KShader : public KAsset
 {
 public:
     explicit KShader(const std::string&, KShaderType);

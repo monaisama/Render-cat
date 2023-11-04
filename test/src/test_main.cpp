@@ -15,6 +15,8 @@
 
 #include <concepts>
 
+#include "patterns.h"
+
 using namespace KMath;
 using namespace KFileUtils;
 
@@ -99,9 +101,64 @@ size_t Size(const T(&)[N])
 //     GEN_SINGLETON_CODE(Single)
 // };
 
+class TestSingleTon final
+{
+    GEN_SINGLETON_CODE(TestSingleTon)
+
+public:
+    int32_t GetNumber() const { static int32_t counter{}; return counter++; }
+
+    template<class T>
+    // requires std::is_integral_v<T>
+    void TemplateFunc(T p)
+    {
+        throw std::exception("error no support func.");
+    }
+};
+
+template<>
+void TestSingleTon::TemplateFunc(int32_t p)
+{
+    KLog::LogSimple(p);
+}
+
+template<>
+void TestSingleTon::TemplateFunc(std::string p)
+{
+    KLog::LogSimple(p);
+}
+
 int main()
 {
     // KLog::Log(Single::GetInstance().Number());
+
+    std::string_view sv1{"helloworld"};
+    std::string s1{"helloworld."};
+
+    std::string_view sv2{s1};
+    KLog::LogSimple("string_view equals test.", sv1 == sv2);
+
+    try
+    {
+        using namespace std::string_literals;
+        TestSingleTon::GetInstance().TemplateFunc(100);
+        TestSingleTon::GetInstance().TemplateFunc("hellotemplate"s);
+        TestSingleTon::GetInstance().TemplateFunc(1.f);
+    } catch(std::exception e)
+    {
+        KLog::LogSimple("error happens: ->", e.what());
+    }
+
+    return 0;
+
+    int32_t counter = 100;
+    while(counter--)
+    {
+        KLog::Log(TestSingleTon::GetInstance().GetNumber());
+    }
+
+    // TestSingleTon single(TestSingleTon::GetInstance());
+    // TestSingleTon single(TestSingleTon{TestSingleTon::GetInstance()});
 
     using array_t = int32_t(&)[5];
     using array_p = int32_t(*)[5];

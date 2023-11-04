@@ -1,6 +1,6 @@
 #include "primitive.h"
 
-namespace KCore::Shape
+namespace KCore
 {
 
 KPrimitive::KPrimitive()
@@ -69,7 +69,7 @@ void KPrimitive::InnerGenGLObject()
 
 void KPrimitive::InnerLoadShader()
 {
-    mat = new KCore::Shader::KMat(GetMeta()->Mat);
+    mat = new KCore::KMat(GetMeta()->Mat);
 }
 
 void KPrimitive::Render()

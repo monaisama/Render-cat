@@ -1,9 +1,10 @@
 #pragma once
 #include "core/core.h"
+#include "core/asset.h"
 
 #include "mat/mat.h"
 
-namespace KCore::Shape
+namespace KCore
 {
 
 // todo.. 这里的meta也没搞太清楚 瞎写的
@@ -14,13 +15,13 @@ struct KShapeMeta : IMeta
     std::vector<float> colors;
     std::vector<int32_t> indices;
 
-    KCore::Shader::KMatMeta Mat;
+    KCore::KMatMeta Mat;
 };
 
 /* 
 * 定义顶点，颜色，matrial，render 等等
 */
-class KPrimitive : public KObject
+class KPrimitive : public KAsset
 {
 public:
     KPrimitive();
@@ -43,7 +44,7 @@ protected:
     virtual void RenderPhase(ERenderPhase phase) { }
 
 protected:
-    KCore::Shader::KMat* mat;
+    KCore::KMat* mat;
 
     KShapeMeta MetaInfo;
 

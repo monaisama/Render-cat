@@ -1,7 +1,7 @@
 #include "mat.h"
 #include "log.h"
 
-namespace KCore::Shader
+namespace KCore
 {
 
 KMat::KMat(const KShaderPair& shaders)

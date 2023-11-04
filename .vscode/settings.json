@@ -52,6 +52,10 @@
         "any": "cpp",
         "array": "cpp",
         "sstream": "cpp",
-        "optional": "cpp"
+        "optional": "cpp",
+        "algorithm": "cpp",
+        "map": "cpp",
+        "xtree": "cpp",
+        "filesystem": "cpp"
     }
 }

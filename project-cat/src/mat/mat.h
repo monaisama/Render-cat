@@ -4,7 +4,7 @@
 #include "shader.h"
 #include "vecs/vec3.h"
 
-namespace KCore::Shader
+namespace KCore
 {
 
 struct KShaderPair
@@ -19,7 +19,7 @@ struct KMatMeta : IMeta
     std::string fragmentFile;
 };
 
-class KMat : public KObject
+class KMat : public KAsset
 {
 public:
     explicit KMat(const KShaderPair&);

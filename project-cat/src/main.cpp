@@ -13,8 +13,7 @@
 #include "3rd/image.h"
 
 // 这里直接写在这里省事 嘻嘻
-using namespace KCore::Shader;
-using namespace KCore::Shape;
+using namespace KCore;
 
 void WindowResize(GLFWwindow* window, int32_t width, int32_t height)
 {

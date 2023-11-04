@@ -1,6 +1,6 @@
 #include "triangle.h"
 
-namespace KCore::Shape
+namespace KCore
 {
 
 void KTriangle::SetupShape()

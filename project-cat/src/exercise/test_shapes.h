@@ -5,7 +5,6 @@
 #include <cmath>
 
 using namespace KCore;
-using namespace KCore::Shape;
 
 class K_2Triangles : public KPrimitive
 {

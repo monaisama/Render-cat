@@ -2,7 +2,6 @@
 
 #include "GL/glew.h"
 #include <string>
-#include <iostream>
 #include <cstdint>
 #include <vector>
 #include <array>
@@ -24,7 +23,7 @@ class KObject
 public:
     virtual const IMeta* GetMeta() const { return nullptr; }
 
-    ~KObject() { }
+    virtual ~KObject() { }
 };
 
 }

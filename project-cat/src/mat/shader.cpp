@@ -5,7 +5,7 @@
 
 using namespace KFileUtils;
 
-namespace KCore::Shader
+namespace KCore
 {
 
 KShader::KShader(const GLchar* filePath, KShaderType type)

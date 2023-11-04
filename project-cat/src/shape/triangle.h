@@ -2,7 +2,7 @@
 
 #include "primitive.h"
 
-namespace KCore::Shape
+namespace KCore
 {
 
 class KTriangle : public KPrimitive
