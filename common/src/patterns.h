@@ -18,3 +18,4 @@
         TypeName& operator=(TypeName&&) = delete; \
     private: \
         TypeName() = default; \
+

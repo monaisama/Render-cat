@@ -10,7 +10,7 @@
 
 namespace KLog
 {
-    
+
 template<class... Args>
 void Log(const std::string& format, const Args&... args)
 {
@@ -19,7 +19,7 @@ void Log(const std::string& format, const Args&... args)
         [&args](std::stringstream& outs)
         {
             // 如果这里是nullptr, 直接输出会crash，需要做一个判定
-            if constexpr (std::is_pointer<Args>::value) if (args == nullptr)
+            if constexpr (std::is_pointer_v<Args>) if (args == nullptr)
             {
                 outs << nullptr;
                 return;

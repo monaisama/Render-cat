@@ -30,4 +30,23 @@ KMatMeta MakeMetaMat(const KShaderMeta& shader1, const KShaderMeta& shader2)
     return meta;
 }
 
+KTextureMeta MakeMetaTexture(std::string_view filepath, ETextureSampleType sampleType, ETextureWrapMode wrapMode, EColorType colorType)
+{
+    KTextureMeta meta;
+    if (filepath.starts_with("textures"))
+        meta.filePath = filepath;
+    else
+        meta.filePath = std::string{"textures/"}.append(filepath);
+    meta.type = ETextureType::Texture2d;
+    meta.bAutoMipmap = false;
+    meta.sampleTypeMag = sampleType;
+    meta.sampleTypeMin = sampleType;
+    meta.wrapMode = wrapMode;
+    meta.storageColorType = colorType;
+    meta.mipmapLevel = 0;
+    if (meta.wrapMode == ETextureWrapMode::ClampToBorder)
+        meta.borderColor = KColor::white;
+    return meta;
+}
+
 }

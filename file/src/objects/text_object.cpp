@@ -18,13 +18,13 @@ std::fstream& operator<<(std::fstream& out, const KTextVertex& vertex)
 
 std::fstream& operator<<(std::fstream& out, const KVec3f& vec3f)
 {
-    out << vec3f.x << " " << vec3f.y << " " << vec3f.z << std::endl;
+    out << vec3f.X() << " " << vec3f.Y() << " " << vec3f.Z() << std::endl;
     return out;
 }
 
 std::fstream& operator>>(std::fstream& in, KVec3f& vec3f)
 {
-    in >> vec3f.x >> vec3f.y >> vec3f.z;
+    in >> vec3f.X() >> vec3f.Y() >> vec3f.Z();
     return in;
 }
 

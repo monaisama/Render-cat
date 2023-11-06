@@ -38,7 +38,7 @@ void KMat::SetInt(const std::string& name, int32_t value) const
 }
 void KMat::SetVec3f(const std::string& name, KMath::KVec3f value) const
 {
-    glUniform3f(glGetUniformLocation(matObjectID, name.c_str()), value.x, value.y, value.z);
+    glUniform3f(glGetUniformLocation(matObjectID, name.c_str()), value.X(), value.Y(), value.Z());
 }
 
 KMat::~KMat()

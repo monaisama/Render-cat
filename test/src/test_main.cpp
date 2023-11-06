@@ -1,5 +1,6 @@
 #include <functional>
 #include "vecs/vec3.h"
+#include "vecs/vec4.h"
 #include "file.h"
 #include "log.h"
 
@@ -21,6 +22,16 @@
 
 using namespace KMath;
 using namespace KFileUtils;
+
+#define test_cxxfeature 0
+#define test_math 1
+#define test_file 0
+#define test_log 0
+#define test_initializelist 0
+#define test_temp 1
+#define test_arraytype 0
+#define test_stringview 0
+#define test_singleton 0
 
 template<class... Args>
 void ArgsFunc(Args... args)
@@ -132,19 +143,12 @@ void TestSingleTon::TemplateFunc(std::string p)
 
 int main()
 {
-    // KLog::Log(Single::GetInstance().Number());
+#if test_temp
+    // tfunc<int32_t>(100);
+    // func();
+#endif
 
-    tfunc<int32_t>(100);
-    func();
-
-    return 0;
-
-    std::string_view sv1{"helloworld"};
-    std::string s1{"helloworld."};
-
-    std::string_view sv2{s1};
-    KLog::LogSimple("string_view equals test.", sv1 == sv2);
-
+#if test_singleton
     try
     {
         using namespace std::string_literals;
@@ -156,8 +160,6 @@ int main()
         KLog::LogSimple("error happens: ->", e.what());
     }
 
-    return 0;
-
     int32_t counter = 100;
     while(counter--)
     {
@@ -166,15 +168,23 @@ int main()
 
     // TestSingleTon single(TestSingleTon::GetInstance());
     // TestSingleTon single(TestSingleTon{TestSingleTon::GetInstance()});
+#endif
 
+#if test_arraytype
     using array_t = int32_t(&)[5];
     using array_p = int32_t(*)[5];
     int32_t arr[] = {1,2,3,4,6};
     array_t a1 = arr;
     array_p p1 = &arr;
     KLog::Log(Size(*p1));
+#endif
 
-    return 0;
+#if test_stringview
+    std::string_view sv1{"helloworld"};
+    std::string s1{"helloworld."};
+
+    std::string_view sv2{s1};
+    KLog::LogSimple("string_view equals test.", sv1 == sv2);
 
     std::string_view sView;
     std::string ss;
@@ -201,15 +211,15 @@ int main()
     // "hello"s
 
     KLog::LogSimple(12km, 12.01km);
+#endif
 
-    return 0;
-
+#if test_log
     KLog::Log("failed");
     KLog::LogError("error");
     KLog::LogError("start {0} - {1} middle\{} {0} {2} bool {3} logend", -1, 100.1f, "hello log", true);
+#endif
 
-    return 0;
-
+#if test_cxxfeature
     int32_t a = 10;
     std::reference_wrapper<int32_t>  ra = a;
     ra.get() = 100;
@@ -233,17 +243,19 @@ int main()
     ArgsFunc(1, 2, 3, 10.111f);
 
     KLog::Log("{0} {1}", 100, -1);
+#endif
 
-#pragma region test for Vec
-
+#if test_math
     KVec3f vec1, vec2(1.f, 2.f, 3.f);
 
     vec1 += vec2;
-    std::cout << vec1.x << " " << vec1.y << " " << vec1.z << std::endl;
+    std::cout << vec1.X() << " " << vec1.Y() << " " << vec1.Z() << std::endl;
 
-#pragma endregion
+    KVec4 vec(1.f, 1.f, 1.f, 2.f);
+    KLog::LogSimple(vec.XYZW()[0], vec.XYZW()[1], vec.XYZW()[2], vec.XYZW()[3]);
+#endif
 
-#pragma region test file
+#if test_file
 
     std::string content = KFile::ReadFile("default.vs");
 
@@ -269,8 +281,7 @@ int main()
 
     KLog::Log(object.vertexs.size());
     KLog::Log(object1.vertexs.size());
-
-#pragma endregion
+#endif
 
     return 0;
 }

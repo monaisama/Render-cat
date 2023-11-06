@@ -12,6 +12,8 @@
 
 #include "resource/resources.h"
 #include "3rd/image.h"
+#include "utils/utils.h"
+#include "mat/texture.h"
 
 // 这里直接写在这里省事 嘻嘻
 using namespace KCore;
@@ -29,13 +31,8 @@ void WindowInput(GLFWwindow* window)
 
 void TestTex()
 {
-    int32_t width, height, channels;
-    std::string_view path { "textures/namei_1.png" };
-    uint8_t *data = stbi_load(path.data(), &width, &height, &channels, 0);
-    if (data)
-        KLog::LogSimple(path, width, height, channels, sizeof(data) / sizeof(uint8_t));
-    else
-        KLog::LogSimpleError("Load Image Error", path);
+    auto texture = KResources::GetInstance().Load<KTexture, KTextureMeta>(
+        KUtils::MakeMetaTexture("namei_1.png", ETextureSampleType::Nearest, ETextureWrapMode::ClampToBorder, EColorType::rgb));
 }
 
 int main()

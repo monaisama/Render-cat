@@ -70,22 +70,28 @@ std::shared_ptr<KMat> KResources::Load(const KMatMeta& meta)
 }
 
 template<>
-std::shared_ptr<KTexture> KResources::Load(std::string_view filePath)
-{
-    throw std::exception("not support yet.");
-
-    if (!Validate(filePath))
-        return nullptr;
-        
-    if (auto asset = TryFindResource(filePath))
-        return std::dynamic_pointer_cast<KTexture>(asset);
-    return nullptr;
-}
-
-template<>
 std::shared_ptr<KTexture> KResources::Load(const KTextureMeta& meta)
 {
-    return Load<KTexture>(meta.filePath);
+    if (!Validate(meta.filePath))
+        return nullptr;
+    if (auto asset = TryFindResource(meta.filePath))
+        return std::dynamic_pointer_cast<KTexture>(asset);
+    
+    int32_t width, height, channels;
+    uint8_t* data = stbi_load(meta.filePath.c_str(), &width, &height, &channels, 0);
+    struct Guarded {uint8_t* data; Guarded(uint8_t* data): data(data) { } ~Guarded() { stbi_image_free(data); }} guard{data};
+    if (!data)
+    {
+        KLog::LogSimpleError("load texture data failed.", meta.filePath);
+        return nullptr;
+    }
+    auto tex = std::make_shared<KTexture>(meta, 
+        KTexture::TextureRawData{
+            data, width, height, static_cast<uint8_t>(channels)
+    });
+
+    assets[meta.filePath] = tex;
+    return tex;
 }
 
 std::shared_ptr<KAsset> KResources::TryFindResource(std::string_view filePath)

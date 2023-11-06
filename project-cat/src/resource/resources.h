@@ -8,6 +8,7 @@
 #include <map>
 #include "3rd/image.h"
 #include "mat/mat.h"
+#include "mat/texture.h"
 
 namespace KCore
 {
@@ -40,4 +41,6 @@ protected:
 };
 
 template<> std::shared_ptr<KMat> KResources::Load(const KMatMeta&);
+template<> std::shared_ptr<KTexture> KResources::Load(const KTextureMeta&);
+
 }
