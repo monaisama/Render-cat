@@ -78,6 +78,7 @@ std::shared_ptr<KTexture> KResources::Load(const KTextureMeta& meta)
         return std::dynamic_pointer_cast<KTexture>(asset);
     
     int32_t width, height, channels;
+    stbi_set_flip_vertically_on_load(true);
     uint8_t* data = stbi_load(meta.filePath.c_str(), &width, &height, &channels, 0);
     struct Guarded {uint8_t* data; Guarded(uint8_t* data): data(data) { } ~Guarded() { stbi_image_free(data); }} guard{data};
     if (!data)

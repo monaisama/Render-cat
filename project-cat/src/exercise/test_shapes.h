@@ -12,16 +12,41 @@ class KExample : public KPrimitive
 protected:
     virtual void SetupShape() override
     {
-        MetaInfo.vertexs = {
-            0.f, 0.6f, 0.f,
-            0.6f, -0.6f, 0.f,
-            -0.6f, -0.6f, 0.f
+        metaInfo.vertexs = {
+            -1.f, -1.f, 0.f,
+            -1.f, 1.f, 0.f,
+            1.f, -1.f, 0.f,
+            1.f, 1.f, 0.f
         };
 
-        MetaInfo.Mat = KUtils::MakeMetaMat(
-            KUtils::MakeMetaShader("default.vs", KShaderType::Vertex),
-            KUtils::MakeMetaShader("default_color.fs", KShaderType::Fragment)
+        metaInfo.indices = {
+            0, 1, 2,
+            1, 2, 3
+        };
+
+        metaInfo.corrds = {
+            0.f, 0.f,
+            0.f, 1.f,
+            1.f, 0.f,
+            1.f, 1.f,
+        };
+
+        metaInfo.mat = KUtils::MakeMetaMat(
+            KUtils::MakeMetaShader("default_texture.vs", KShaderType::Vertex),
+            KUtils::MakeMetaShader("default_texture.fs", KShaderType::Fragment)
         );
+
+        metaInfo.texs = {
+            KUtils::MakeMetaTexture("namei_1.png",
+            ETextureSampleType::Nearest,
+            ETextureWrapMode::Repeat,
+            EColorType::rgb),
+
+            KUtils::MakeMetaTexture("namei_2.png",
+            ETextureSampleType::Nearest,
+            ETextureWrapMode::Repeat,
+            EColorType::rgb)
+        };
     }
 };
 
@@ -30,26 +55,26 @@ class K_2Triangles : public KPrimitive
 protected:
     virtual void SetupShape() override
     {
-        MetaInfo.vertexs = {
+        metaInfo.vertexs = {
             -0.5f, -0.5f, 0.f,
             0.5f, -0.5f, 0.f,
             0.5f, 0.5f, 0.f,
             -0.5, 0.5f, 0.f
         };
 
-        MetaInfo.colors = {
+        metaInfo.colors = {
             1.f, 0.f, 0.f,
             0.f, 1.f, 0.f,
             0.f, 0.f, 1.f,
             1.f, 1.f, 1.f
         };
 
-        MetaInfo.indices = {
+        metaInfo.indices = {
             0,1,2,
             0,2,3
         };
 
-        MetaInfo.Mat = KUtils::MakeMetaMat(
+        metaInfo.mat = KUtils::MakeMetaMat(
             KUtils::MakeMetaShader("triangle.vs", KShaderType::Vertex),
             KUtils::MakeMetaShader("triangle.fs", KShaderType::Fragment)
         );
@@ -60,7 +85,7 @@ protected:
         switch (phase)
         {
             case ERenderPhase::AfterSetMat:
-                mat->SetBool("offset", 0.f);
+                mat->SetFloat("offset", 0.f);
                 break;
             default:
                 break;
@@ -73,26 +98,26 @@ class KExcriseShape : public KPrimitive
 protected:
     virtual void SetupShape() override
     {
-        MetaInfo.vertexs = {
+        metaInfo.vertexs = {
             -0.5f, -0.5f, 0.f,
             0.5f, -0.5f, 0.f,
             0.5f, 0.5f, 0.f,
             -0.5, 0.5f, 0.f
         };
 
-        MetaInfo.colors = {
+        metaInfo.colors = {
             1.f, 0.f, 0.f,
             0.f, 1.f, 0.f,
             0.f, 0.f, 1.f,
             1.f, 1.f, 1.f
         };
 
-        MetaInfo.indices = {
+        metaInfo.indices = {
             0,1,2,
             0,2,3
         };
 
-        MetaInfo.Mat = KUtils::MakeMetaMat(
+        metaInfo.mat = KUtils::MakeMetaMat(
             KUtils::MakeMetaShader("triangle.vs", KShaderType::Vertex),
             KUtils::MakeMetaShader("triangle.fs", KShaderType::Fragment)
         );

@@ -10,11 +10,11 @@ KTexture::KTexture(const KTextureMeta& meta, const KTexture::TextureRawData& dat
 
     if (metaInfo.type != ETextureType::Texture2d)
     {
-        KLog::LogSimpleError("not support texture type", static_cast<GLenum>(metaInfo.type));
+        KLog::LogSimpleError("not support texture type", GetTextureType());
         return;
     }
 
-    GLenum textureType = static_cast<GLenum>(metaInfo.type);
+    GLenum textureType = GetTextureType();
 
     glGenTextures(1, &textureID);
     glBindTexture(textureType, textureID);

@@ -3,6 +3,7 @@
 #include "core/asset.h"
 
 #include "mat/mat.h"
+#include "mat/texture.h"
 
 namespace KCore
 {
@@ -13,9 +14,11 @@ struct KShapeMeta : IMeta
     // 也许后面应该是资源个是啥的
     std::vector<float> vertexs;
     std::vector<float> colors;
+    std::vector<float> corrds;
     std::vector<int32_t> indices;
 
-    KMatMeta Mat;
+    KMatMeta mat;
+    std::vector<KTextureMeta> texs;
 };
 
 /* 
@@ -30,7 +33,7 @@ public:
 
     virtual ~KPrimitive();
 
-    virtual const KShapeMeta* GetMeta() const override { return &MetaInfo; }
+    virtual const KShapeMeta* GetMeta() const override { return &metaInfo; }
     
 protected:
     enum class ERenderPhase : uint8_t
@@ -45,8 +48,9 @@ protected:
 
 protected:
     std::shared_ptr<KMat> mat;
+    std::vector<std::shared_ptr<KTexture>> texs;
 
-    KShapeMeta MetaInfo;
+    KShapeMeta metaInfo;
 
 private:
     struct
@@ -57,7 +61,7 @@ private:
 
         bool bUseEBO;
         uint32_t count;
-    } RenderInfo;
+    } renderInfo;
 
     void InnerLoadShader();
     void InnerGenGLObject();

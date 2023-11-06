@@ -29,16 +29,9 @@ void WindowInput(GLFWwindow* window)
         glfwSetWindowShouldClose(window, GLFW_TRUE);
 }
 
-void TestTex()
-{
-    auto texture = KResources::GetInstance().Load<KTexture, KTextureMeta>(
-        KUtils::MakeMetaTexture("namei_1.png", ETextureSampleType::Nearest, ETextureWrapMode::ClampToBorder, EColorType::rgb));
-}
-
 int main()
 {
     TestCompileConfig();
-    TestTex();
 
     glfwInit();
     glfwWindowHint(GLFW_CONTEXT_VERSION_MAJOR, 3);
@@ -81,12 +74,13 @@ int main()
 
         glClearColor(0.f, 0.f, 0.f, 1.f);
         glClear(GL_COLOR_BUFFER_BIT);
-        glPolygonMode(GL_FRONT_AND_BACK, GL_LINE);
+        
+        glPolygonMode(GL_FRONT_AND_BACK, GL_FILL);
+        example.Render();
 
+        glPolygonMode(GL_FRONT_AND_BACK, GL_LINE);
         triangle.Render();
-        example.Render();
         excrise1.Render();
-        example.Render();
         shape.Render();
 
         glfwPollEvents();

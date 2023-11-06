@@ -59,6 +59,9 @@ public:
     KTexture(const KTextureMeta&, const TextureRawData& data);
     virtual const KTextureMeta* GetMeta() const override { return &metaInfo; }
 
+    GLenum GetTextureType() const { return static_cast<GLenum>(GetMeta()->type); }
+    GLuint GetTexture() const { return textureID; }
+
     virtual ~KTexture();
 
 protected:
