@@ -19,10 +19,10 @@ public:
         ele.xyzw.w = w;
     }
 
-    TELE X() const { return ele.xyzw.x; }
-    TELE Y() const { return ele.xyzw.y; }
-    TELE Z() const { return ele.xyzw.z; }
-    TELE W() const { return ele.xyzw.w; }
+    const TELE& X() const { return ele.xyzw.x; }
+    const TELE& Y() const { return ele.xyzw.y; }
+    const TELE& Z() const { return ele.xyzw.z; }
+    const TELE& W() const { return ele.xyzw.w; }
 
     TELE& X() { return ele.xyzw.x; }
     TELE& Y() { return ele.xyzw.y; }
@@ -35,8 +35,6 @@ protected:
     union
     {
         struct { TELE x, y, z, w; } xyzw;
-
-        struct { TELE r, g, b, a; } rgba;
 
         TELE arr[4];
     } ele;

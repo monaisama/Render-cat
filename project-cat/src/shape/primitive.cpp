@@ -45,6 +45,7 @@ void KPrimitive::InnerGenGLObject()
     renderInfo.bUseEBO = GetMeta()->indices.size() > 0;
     bool bHasColor = GetMeta()->colors.size() > 0;
     bool bHasTex = GetMeta()->corrds.size() > 0;
+
     glGenBuffers(1, &renderInfo.vbo);
     if (renderInfo.bUseEBO)
         glGenBuffers(1, &renderInfo.ebo);
@@ -65,24 +66,22 @@ void KPrimitive::InnerGenGLObject()
         uint32_t location = 0, offset = 0;
         glVertexAttribPointer(location, 3, GL_FLOAT, GL_FALSE, sizeof(float) * stride, (void*)offset);
         glEnableVertexAttribArray(location);
-        offset += 3;
-        location++;
+        offset += 3; location++;
         if (bHasColor)
         {
             glVertexAttribPointer(location, 3, GL_FLOAT, GL_FALSE, sizeof(float) * stride, (void*)(offset * sizeof(float)));
             glEnableVertexAttribArray(location);
-            offset += 3;
-            location++;
+            location++; offset += 3;
         }
         if (bHasTex)
         {
             glVertexAttribPointer(location, 2, GL_FLOAT, GL_FALSE, sizeof(float) * stride, (void*)(offset * sizeof(float)));
             glEnableVertexAttribArray(location);
-            location++;
-            offset += 2;
+            location++; offset += 2;
         }
     }
     glBindVertexArray(0);
+    
     uint32_t location = 0;
     glDisableVertexAttribArray(location++);
     if (bHasColor) glDisableVertexAttribArray(location++);

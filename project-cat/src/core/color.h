@@ -26,10 +26,10 @@ public:
     KColor() = default;
     KColor(float r, float g, float b, float a = 1.f): KMath::KVec4<float>(r, g, b, a) { }
 
-    float R() const { return X(); }
-    float G() const { return Y(); }
-    float B() const { return Z(); }
-    float A() const { return W(); }
+    const float& R() const { return X(); }
+    const float& G() const { return Y(); }
+    const float& B() const { return Z(); }
+    const float& A() const { return W(); }
     
     float& R() { return X(); }
     float& G() { return Y(); }

@@ -35,9 +35,9 @@ public:
         return *this;
     }
 
-    TELE X() const { return ele.xyz.x; }
-    TELE Y() const { return ele.xyz.y; }
-    TELE Z() const { return ele.xyz.z; }
+    const TELE& X() const { return ele.xyz.x; }
+    const TELE& Y() const { return ele.xyz.y; }
+    const TELE& Z() const { return ele.xyz.z; }
 
     TELE& X() { return ele.xyz.x; }
     TELE& Y() { return ele.xyz.y; }
@@ -49,8 +49,6 @@ public:
     union
     {
         struct { TELE x, y, z; } xyz;
-
-        struct { TELE r, g, b; } rgb;
 
         TELE arr[3];
     } ele;
