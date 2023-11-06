@@ -3,8 +3,27 @@
 #include "shape/primitive.h"
 #include "GLFW/glfw3.h"
 #include <cmath>
+#include "utils/utils.h"
 
 using namespace KCore;
+
+class KExample : public KPrimitive
+{
+protected:
+    virtual void SetupShape() override
+    {
+        MetaInfo.vertexs = {
+            0.f, 0.6f, 0.f,
+            0.6f, -0.6f, 0.f,
+            -0.6f, -0.6f, 0.f
+        };
+
+        MetaInfo.Mat = KUtils::MakeMetaMat(
+            KUtils::MakeMetaShader("default.vs", KShaderType::Vertex),
+            KUtils::MakeMetaShader("default_color.fs", KShaderType::Fragment)
+        );
+    }
+};
 
 class K_2Triangles : public KPrimitive
 {
@@ -30,8 +49,22 @@ protected:
             0,2,3
         };
 
-        MetaInfo.Mat.vertexFile = "triangle.vs";
-        MetaInfo.Mat.fragmentFile = "triangle.fs";
+        MetaInfo.Mat = KUtils::MakeMetaMat(
+            KUtils::MakeMetaShader("triangle.vs", KShaderType::Vertex),
+            KUtils::MakeMetaShader("triangle.fs", KShaderType::Fragment)
+        );
+    }
+
+    virtual void RenderPhase(ERenderPhase phase) override
+    {
+        switch (phase)
+        {
+            case ERenderPhase::AfterSetMat:
+                mat->SetBool("offset", 0.f);
+                break;
+            default:
+                break;
+        }
     }
 };
 
@@ -59,8 +92,10 @@ protected:
             0,2,3
         };
 
-        MetaInfo.Mat.vertexFile = "triangle.vs";
-        MetaInfo.Mat.fragmentFile = "triangle.fs";
+        MetaInfo.Mat = KUtils::MakeMetaMat(
+            KUtils::MakeMetaShader("triangle.vs", KShaderType::Vertex),
+            KUtils::MakeMetaShader("triangle.fs", KShaderType::Fragment)
+        );
     }
 
     virtual void RenderPhase(ERenderPhase phase)

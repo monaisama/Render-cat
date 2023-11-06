@@ -21,22 +21,21 @@ struct KShaderMeta : IMeta
 class KShader : public KAsset
 {
 public:
-    explicit KShader(const std::string&, KShaderType);
-    explicit KShader(const GLchar*, KShaderType);
-    explicit KShader(const KShaderMeta& Meta);
+    KShader(const KShaderMeta&, const std::string&);
+
     virtual ~KShader();
 
     GLuint GetShader() const;
-    GLenum GetGLShaderType() const { return static_cast<GLenum>(MetaInfo.type); }
+    GLenum GetGLShaderType() const { return static_cast<GLenum>(metaInfo.type); }
 
-    virtual const KShaderMeta* GetMeta() const override { return &MetaInfo; }
+    virtual const KShaderMeta* GetMeta() const override { return &metaInfo; }
 
 protected:
     GLuint shaderObjectID;
 
     GLchar logInfo[512];
 
-    KShaderMeta MetaInfo;
+    KShaderMeta metaInfo;
 };
 
 }

@@ -10,7 +10,7 @@
 #include "shape/triangle.h"
 #include "exercise/test_shapes.h"
 
-#include "resource/resource.h"
+#include "resource/resources.h"
 #include "3rd/image.h"
 
 // 这里直接写在这里省事 嘻嘻
@@ -69,6 +69,9 @@ int main()
     KTriangle triangle;
     triangle.Setup();
 
+    KExample example;
+    example.Setup();
+
     K_2Triangles excrise1;
     excrise1.Setup();
 
@@ -84,7 +87,9 @@ int main()
         glPolygonMode(GL_FRONT_AND_BACK, GL_LINE);
 
         triangle.Render();
+        example.Render();
         excrise1.Render();
+        example.Render();
         shape.Render();
 
         glfwPollEvents();

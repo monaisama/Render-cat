@@ -4,25 +4,13 @@
 namespace KCore
 {
 
-KMat::KMat(const KShaderPair& shaders)
-    : KMat(shaders.vertexShader, shaders.fragmentShader)
+KMat::KMat(const KMatMeta& meta, const KShaderPair& pair)
 {
-
-}
-
-KMat::KMat(const KMatMeta& meta)
-    : KMat(KShader(meta.vertexFile, KShaderType::Vertex), KShader(meta.fragmentFile, KShaderType::Fragment))
-{
-}
-
-KMat::KMat(const KShader& vertex, const KShader& fragment)
-{
-    MetaInfo.vertexFile = vertex.GetMeta()->filePath;
-    MetaInfo.fragmentFile = fragment.GetMeta()->filePath;
+    metaInfo = meta;
 
     matObjectID = glCreateProgram();
-    glAttachShader(matObjectID, vertex.GetShader());
-    glAttachShader(matObjectID, fragment.GetShader());
+    glAttachShader(matObjectID, pair.vertexShader->GetShader());
+    glAttachShader(matObjectID, pair.fragmentShader->GetShader());
     glLinkProgram(matObjectID);
     {
         GLint success;

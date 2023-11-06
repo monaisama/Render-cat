@@ -1,4 +1,5 @@
 #include "primitive.h"
+#include "resource/resources.h"
 
 namespace KCore
 {
@@ -69,7 +70,7 @@ void KPrimitive::InnerGenGLObject()
 
 void KPrimitive::InnerLoadShader()
 {
-    mat = new KCore::KMat(GetMeta()->Mat);
+    mat = KResources::GetInstance().Load<KMat, KMatMeta>(MetaInfo.Mat);
 }
 
 void KPrimitive::Render()
@@ -92,11 +93,6 @@ void KPrimitive::Render()
 
 KPrimitive::~KPrimitive()
 {
-    if (mat)
-    {
-        // collect mat
-        delete mat; // todo: should modify using shaderlib to collect
-    }
     glDeleteVertexArrays(1, &RenderInfo.vao);
     glDeleteBuffers(1, &RenderInfo.vbo);
     if (RenderInfo.bUseEBO)

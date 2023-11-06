@@ -8,16 +8,10 @@ using namespace KFileUtils;
 namespace KCore
 {
 
-KShader::KShader(const GLchar* filePath, KShaderType type)
+KShader::KShader(const KShaderMeta& meta, const std::string& content)
 {
-    std::string_view path = filePath;
-    if (!path.starts_with("shaders")) // cxx20
-        MetaInfo.filePath = std::string{"shaders/"}.append(filePath);
-    else
-        MetaInfo.filePath = filePath;
-    MetaInfo.type = type;
-
-    std::string content = KFile::ReadFile(MetaInfo.filePath); // 这里不能让string 销毁掉
+    metaInfo = meta;
+    
     const GLchar* shaderSource = content.data();
     shaderObjectID = glCreateShader(GetGLShaderType());
     glShaderSource(shaderObjectID, 1, &shaderSource, nullptr);
@@ -29,19 +23,10 @@ KShader::KShader(const GLchar* filePath, KShaderType type)
         {
             glGetShaderInfoLog(shaderObjectID, 512, nullptr, logInfo);
             KLog::LogError("Shader compile failed. filePath: {0}, type: {1}, info: {2}",
-                filePath, type == KShaderType::Fragment ? "fragment" : "vertex", logInfo);
+                metaInfo.filePath, metaInfo.type == KShaderType::Fragment ? "fragment" : "vertex", logInfo);
             glDeleteShader(shaderObjectID);
         }
     }
-}
-
-KShader::KShader(const std::string& filePath, KShaderType type)
-    : KShader(filePath.c_str(), type)
-{}
-
-KShader::KShader(const KShaderMeta& Meta)
-    : KShader(Meta.filePath, Meta.type)
-{
 }
 
 KShader::~KShader()

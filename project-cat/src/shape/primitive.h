@@ -15,7 +15,7 @@ struct KShapeMeta : IMeta
     std::vector<float> colors;
     std::vector<int32_t> indices;
 
-    KCore::KMatMeta Mat;
+    KMatMeta Mat;
 };
 
 /* 
@@ -44,7 +44,7 @@ protected:
     virtual void RenderPhase(ERenderPhase phase) { }
 
 protected:
-    KCore::KMat* mat;
+    std::shared_ptr<KMat> mat;
 
     KShapeMeta MetaInfo;
 

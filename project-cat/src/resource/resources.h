@@ -7,13 +7,14 @@
 #include <string>
 #include <map>
 #include "3rd/image.h"
+#include "mat/mat.h"
 
 namespace KCore
 {
 
-class KResouces : public KObject
+class KResources : public KObject
 {
-    GEN_SINGLETON_CODE(KResouces)
+    GEN_SINGLETON_CODE(KResources)
 
 public:
     template<class T>
@@ -25,13 +26,18 @@ public:
 
     template<class TAsset, class TMeta>
     requires std::is_base_of_v<KAsset, TAsset> && std::is_base_of_v<IMeta, TMeta>
-    std::shared_ptr<TAsset> Load(TMeta& meta)
+    std::shared_ptr<TAsset> Load(const TMeta& meta)
     {
         throw std::exception("no support type.");
     }
 
 protected:
+    bool Validate(std::string_view);
+
+protected:
     std::shared_ptr<KAsset> TryFindResource(std::string_view filePath); // 路径查找所有
     std::map<std::string, std::shared_ptr<KAsset>> assets;
 };
+
+template<> std::shared_ptr<KMat> KResources::Load(const KMatMeta&);
 }
