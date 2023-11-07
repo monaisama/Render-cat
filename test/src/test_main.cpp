@@ -24,9 +24,9 @@ using namespace KMath;
 using namespace KFileUtils;
 
 #define test_cxxfeature 0
-#define test_math 1
+#define test_math 0
 #define test_file 0
-#define test_log 0
+#define test_log 1
 #define test_initializelist 0
 #define test_temp 1
 #define test_arraytype 0
@@ -217,6 +217,8 @@ int main()
     KLog::Log("failed");
     KLog::LogError("error");
     KLog::LogError("start {0} - {1} middle\{} {0} {2} bool {3} logend", -1, 100.1f, "hello log", true);
+
+    KLog::Log(std::is_std_array<std::array<int32_t, 10>>);
 #endif
 
 #if test_cxxfeature
