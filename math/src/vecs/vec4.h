@@ -9,35 +9,30 @@ template<class TELE>
 requires std::is_arithmetic_v<TELE>
 class KVec4
 {
+    using KReal = TELE;
 public:
     KVec4() = default;
-    KVec4(TELE x, TELE y, TELE z, TELE w)
-    {
-        ele.xyzw.x = x;
-        ele.xyzw.y = y;
-        ele.xyzw.z = z;
-        ele.xyzw.w = w;
-    }
+    KVec4(KReal x, KReal y, KReal z, KReal w) : x(x), y(y), z(z), w(w) { }
 
-    const TELE& X() const { return ele.xyzw.x; }
-    const TELE& Y() const { return ele.xyzw.y; }
-    const TELE& Z() const { return ele.xyzw.z; }
-    const TELE& W() const { return ele.xyzw.w; }
+    const KReal& X() const { return x; }
+    const KReal& Y() const { return y; }
+    const KReal& Z() const { return z; }
+    const KReal& W() const { return w; }
 
-    TELE& X() { return ele.xyzw.x; }
-    TELE& Y() { return ele.xyzw.y; }
-    TELE& Z() { return ele.xyzw.z; }
-    TELE& W() { return ele.xyzw.w; }
+    KReal& X() { return x; }
+    KReal& Y() { return y; }
+    KReal& Z() { return z; }
+    KReal& W() { return w; }
 
-    const TELE* XYZW() const { return ele.arr; }
+    const KReal* XYZW() const { return xyzw; }
 
 protected:
     union
     {
-        struct { TELE x, y, z, w; } xyzw;
+        struct { KReal x, y, z, w; };
 
-        TELE arr[4];
-    } ele;
+        KReal xyzw[4];
+    };
 };
 
 }

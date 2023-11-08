@@ -9,14 +9,10 @@ template<class TELE>
 requires std::is_arithmetic_v<TELE>
 class KVec3
 {
+    using KReal = TELE;
 public:
     KVec3() = default;
-    KVec3(TELE x, TELE y, TELE z)
-    {
-        ele.xyz.x = x;
-        ele.xyz.y = y;
-        ele.xyz.z = z;
-    }
+    KVec3(KReal x, KReal y, KReal z) : x(x), y(y), z(z) { }
 
     KVec3 operator+(const KVec3& other)
     {
@@ -35,23 +31,23 @@ public:
         return *this;
     }
 
-    const TELE& X() const { return ele.xyz.x; }
-    const TELE& Y() const { return ele.xyz.y; }
-    const TELE& Z() const { return ele.xyz.z; }
+    const KReal& X() const { return x; }
+    const KReal& Y() const { return y; }
+    const KReal& Z() const { return z; }
 
-    TELE& X() { return ele.xyz.x; }
-    TELE& Y() { return ele.xyz.y; }
-    TELE& Z() { return ele.xyz.z; }
+    KReal& X() { return x; }
+    KReal& Y() { return y; }
+    KReal& Z() { return z; }
 
-    const TELE* XYZ() const { return ele.arr; }
+    const KReal* XYZ() const { return xyz; }
 
 public:
     union
     {
-        struct { TELE x, y, z; } xyz;
+        struct { KReal x, y, z; };
 
-        TELE arr[3];
-    } ele;
+        KReal xyz[3];
+    };
 };
 
 using KVec3f = KVec3<float>;
