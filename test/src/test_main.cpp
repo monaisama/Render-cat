@@ -266,7 +266,7 @@ int main()
     KVec2i c1 { 1, 1 }, c2 { 1, -1};
     KVec2i c3 = c1 ^ c2;
     std::cout << c3 << c1 << c2;
-    KLog::LogSimple(c3);
+    KLog::LogSimple(c1 | c2);
     KLog::LogSimple(
         "test for vec2 method: \n",
         c1 == c2,
