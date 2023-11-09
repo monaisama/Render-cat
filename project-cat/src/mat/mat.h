@@ -2,7 +2,7 @@
 #include "core/core.h"
 
 #include "shader.h"
-#include "vecs/vec3.h"
+#include "vec.h"
 
 namespace KCore
 {

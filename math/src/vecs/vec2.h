@@ -32,60 +32,58 @@ public:
     KReal& X() { return x; }
     KReal& Y() { return y; }
 
-    const KReal* XY() { return xy; }
+    const KReal* XY() const { return xy; }
 
-    KVec2 operator+(const KVec2& rhs) { return KVec2 { x + rhs.x, y + rhs.y }; }
+    KVec2 operator+(const KVec2& rhs) const { return KVec2 { x + rhs.x, y + rhs.y }; }
     KVec2& operator+=(const KVec2& rhs) { x += rhs.x; y += rhs.y; return *this; }
     
-    KVec2 operator-(const KVec2& rhs) { return KVec2 { x - rhs.x, y - rhs.y }; }
+    KVec2 operator-(const KVec2& rhs) const { return KVec2 { x - rhs.x, y - rhs.y }; }
     KVec2& operator-=(const KVec2& rhs) { x -= rhs.x; y -= rhs.y; return *this; }
 
     KVec2& operator-() { return *this *= -1; }
 
     template<class TValue> requires std::is_arithmetic_v<TValue>
-    KVec2 operator*(TValue v)
+    KVec2 operator*(TValue value) const
     {
-        KReal value = static_cast<KReal>(v);
-        return KVec2 { value * x, value * y };
+        return KVec2 { static_cast<KReal>(value * x), static_cast<KReal>(value * y) };
     }
     template<class TValue> requires std::is_arithmetic_v<TValue>
-    KVec2& operator*=(TValue v)
+    KVec2& operator*=(TValue value)
     {
-        KReal value = static_cast<KReal>(v);
-        x *= value;
-        y *= value;
+        x = static_cast<KReal>(x * value);
+        y = static_cast<KReal>(y * value);
         return *this;
     }
 
     template<class TValue> requires std::is_arithmetic_v<TValue>
-    KVec2 operator/(TValue v)
+    KVec2 operator/(TValue value) const
     {
-        KReal value = static_cast<KReal>(v);
-        if (KMath::EqualsZero(value))
-        {
-            KLog::LogSimpleError("divide zero error.");
-            return KVec2::zero;
-        }
-        return *this * (1 / value);
-    }
-    template<class TValue> requires std::is_arithmetic_v<TValue>
-    KVec2& operator/=(TValue v)
-    {
-        KReal value = static_cast<KReal>(v);
-        if (KMath::EqualsZero(value))
+        if (EqualsZero(value))
         {
             KLog::LogSimpleError("divide zero error.");
             return *this;
         }
-        return *this *= (1 / value);
+        return KVec2 { static_cast<KReal>(x / value), static_cast<KReal>(y / value) };
+    }
+    template<class TValue> requires std::is_arithmetic_v<TValue>
+    KVec2& operator/=(TValue value)
+    {
+        if (EqualsZero(value))
+        {
+            KLog::LogSimpleError("divide zero error.");
+            return *this;
+        }
+        x = static_cast<KReal>(x / value);
+        y = static_cast<KReal>(y / value);
+        return *this;
     }
 
-    bool operator==(const KVec2& rhs) { return KMath::Equals(x, rhs.x) && KMath::Equals(y, rhs.y); }
-    bool operator!=(const KVec2& rhs) { return !(*this == rhs); }
+    bool operator==(const KVec2& rhs) const { return Equals(x, rhs.x) && Equals(y, rhs.y); }
+    bool operator!=(const KVec2& rhs) const { return !(*this == rhs); }
 
     // 点乘
-    float operator|(const KVec2& rhs) { return static_cast<float>(x * rhs.x, y * rhs.y); }
-    static float Dot(const KVec2& lhs, const KVec2& rhs) { return lhs | rhs; }
+    KReal operator|(const KVec2& rhs) const { return x * rhs.x + y * rhs.y; }
+    static KReal Dot(const KVec2& lhs, const KVec2& rhs) { return lhs | rhs; }
 
     // 叉乘
     /*[x1, y1] X [x2, y2] = ([x1, 0] + [0, y1]) X ([x2, 0] + [0, y2])
@@ -95,7 +93,7 @@ public:
     * 0 + x1y2_k - y1x2_k + 0
     * 得到 [x1y2, -y1x2]
     */
-    KVec2 operator^(const KVec2& rhs) { return KVec2 { x * rhs.y, -y * rhs.x}; }
+    KVec2 operator^(const KVec2& rhs) const { return KVec2 { x * rhs.y, -y * rhs.x}; }
     static KVec2 Cross(const KVec2& lhs, const KVec2& rhs) { return lhs ^ rhs; }
 
     KVec2& Normalize()
@@ -105,20 +103,13 @@ public:
             KLog::LogSimpleWarning("maybe loss of precision warning.");
         }
         float length = Length();
-        if (KMath::NearlyZero(length))
+        if (NearlyZero(length))
             return *this;
         return *this /= length;
     }
 
-    float Length()
-    {
-        return sqrt(static_cast<float>(SqrtLength()));
-    }
-
-    KReal SqrtLength()
-    {
-        return x * x + y * y;
-    }
+    float Length() const { return sqrt(static_cast<float>(SqrtLength())); }
+    KReal SqrtLength() const { return x * x + y * y; }
 
 protected:
     friend std::ostream& operator<<(std::ostream& out, const KVec2& rhs)

@@ -3,8 +3,6 @@
 #include "file.h"
 #include "log.h"
 
-#include "objects/text_object.h"
-
 #include <iostream>
 #include <string>
 #include <array>
@@ -261,18 +259,21 @@ int main()
 
     KLog::LogSimple(KVec2i::right.X(), KVec2i::right.Y());
 
-    // KLog::LogSimple(KVec2hi::Up.X(), KVec2hi::Right.Y());
+    KLog::LogSimple(KVec3f::up, KVec3i::right);
 
     KVec2f c1 { 10, 10 }, c2 { 10, -10};
     KLog::LogSimple(
         "test for vec2 method: \n",
         c1 == c2,
+        c1 == c1,
         c1 != c2,
         c1 ^ c2,
         c1 | c2,
         c1 * 10,
         c2 * 10,
         c1 + c2,
+        -c1,
+        KVec2f::Dot(c1, c2),
         // c1 *= 10,
         // c2 *= 10,
         c1 + c2,
@@ -286,6 +287,25 @@ int main()
     );
 
     KLog::LogSimple(c1.Normalize(), c2.Normalize());
+
+    KVec3i cf1 {-10, 10, 10}, cf2 {10, 10, 10};
+    KLog::LogSimple(
+        "test vec3 start: \n",
+        cf1 == cf2,
+        cf1 == cf1,
+        cf1 != cf2,
+        cf1 + cf2,
+        cf1 - cf2,
+        cf1 / 10,
+        cf2 * 100.f,
+        cf1 | cf2,
+        KVec3i::Cross(cf1, cf2),
+        cf1.Length(),
+        cf2.SqrtLength(),
+        "\ntest vec3 end."
+    );
+
+    KLog::LogSimple(cf1.Normalize(), cf2.Normalize());
 
 #endif
 
