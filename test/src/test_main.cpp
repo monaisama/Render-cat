@@ -247,7 +247,7 @@ int main()
 #endif
 
 #if test_math
-    KVec3f vec1, vec2(1.f, 2.f, 3.f);
+    KVec3f vec1{}, vec2(1.f, 2.f, 3.f);
 
     vec1 += vec2;
     std::cout << vec1.X() << " " << vec1.Y() << " " << vec1.Z() << std::endl;
