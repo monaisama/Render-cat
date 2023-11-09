@@ -31,7 +31,7 @@ template<class TFloat>
 requires std::is_floating_point_v<TFloat>
 inline bool NearlyEquals(TFloat lhs, TFloat rhs, float error = epsilon)
 {
-    return Abs(lhs - rhs) < error;
+    return Abs(lhs - rhs) < static_cast<TFloat>(error);
 }
 
 template<class TFloat>
@@ -50,7 +50,7 @@ inline bool Equals(TNumber lhs, TNumber rhs)
     else if constexpr (std::is_integral_v<TNumber>)
         return lhs == rhs;
     else
-        throw std::exception("not support type in mymath::Equals()");
+        throw std::exception("not support type in mymath::Equals");
 }
 
 template<class TNumber>
