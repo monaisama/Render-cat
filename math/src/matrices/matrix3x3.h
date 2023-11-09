@@ -60,17 +60,17 @@ public:
     }
 
     // 左乘一个变换的向量（变换到矩阵代表的空间中）
-    template<class TValue> requires std::is_arithmetic_v<TValue>
-    KVec3<TValue> operator*(const KVec3<TValue>& vec) const
+    template<class TValue = TReal> requires std::is_arithmetic_v<TValue>
+    KVec3<TValue> operator*(const KVec3<TValue>& rhs) const
     {
         return KVec3<TValue> {
-            static_cast<TValue>(vec.X() * m11 + vec.Y() * m21 + vec.Z() * m31),
-            static_cast<TValue>(vec.X() * m12 + vec.Y() * m22 + vec.Z() * m32),
-            static_cast<TValue>(vec.X() * m13 + vec.Y() * m23 + vec.Z() * m33)
+            static_cast<TValue>(rhs.X() * m11 + rhs.Y() * m21 + rhs.Z() * m31),
+            static_cast<TValue>(rhs.X() * m12 + rhs.Y() * m22 + rhs.Z() * m32),
+            static_cast<TValue>(rhs.X() * m13 + rhs.Y() * m23 + rhs.Z() * m33)
         };
     }
 
-    template<class TValue> requires std::is_arithmetic_v<TValue>
+    template<class TValue = TReal> requires std::is_arithmetic_v<TValue>
     KVec3<TValue> TransformVector(const KVec3<TValue>& vec) const
     {
         return *this * vec;
