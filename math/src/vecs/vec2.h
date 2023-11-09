@@ -60,22 +60,24 @@ public:
     template<class TValue> requires std::is_arithmetic_v<TValue>
     KVec2 operator/(TValue v)
     {
-        if (KMath::EqualsZero(v))
+        KReal value = static_cast<KReal>(v);
+        if (KMath::EqualsZero(value))
         {
             KLog::LogSimpleError("divide zero error.");
             return KVec2::zero;
         }
-        return *this * (1.f / v);
+        return *this * (1 / value);
     }
     template<class TValue> requires std::is_arithmetic_v<TValue>
     KVec2& operator/=(TValue v)
     {
-        if (KMath::EqualsZero(v))
+        KReal value = static_cast<KReal>(v);
+        if (KMath::EqualsZero(value))
         {
             KLog::LogSimpleError("divide zero error.");
             return *this;
         }
-        return *this *= (1.f / v);
+        return *this *= (1 / value);
     }
 
     bool operator==(const KVec2& rhs) { return KMath::Equals(x, rhs.x) && KMath::Equals(y, rhs.y); }
@@ -98,6 +100,10 @@ public:
 
     KVec2& Normalize()
     {
+        if constexpr (std::is_integral_v<KReal>)
+        {
+            KLog::LogSimpleWarning("maybe loss of precision warning.");
+        }
         float length = Length();
         if (KMath::NearlyZero(length))
             return *this;
