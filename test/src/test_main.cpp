@@ -309,7 +309,11 @@ int main()
         "\ntest vec3 end."
     );
 
+    KLog::LogSimple(Distance(cf1, cf2), Distance(c1, c2));
+
     KLog::LogSimple(cf1.Normalize(), cf2.Normalize());
+
+    KLog::LogSimple(KMath::Distance(KVec3f{0,0,1}, KVec3f{1,0,0}), KMath::Distance(KVec2i{0,1}, KVec2i{1,0}));
 
 #endif
 
