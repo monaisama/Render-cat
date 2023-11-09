@@ -93,6 +93,7 @@ public:
     * 0 + x1y2_k - y1x2_k + 0
     * 得到 [x1y2, -y1x2]
     */
+    // 在三维中才有意义，这里得值要慎用
     KVec2 operator^(const KVec2& rhs) const { return KVec2 { x * rhs.y, -y * rhs.x}; }
     static KVec2 Cross(const KVec2& lhs, const KVec2& rhs) { return lhs ^ rhs; }
 

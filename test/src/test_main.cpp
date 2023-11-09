@@ -283,6 +283,8 @@ int main()
         c2.SqrtLength(),
         // c1.Normalize(),
         // c2.Normalize(),
+        KVec2i{0,1} ^ KVec2i{1,0},
+        KVec2i{1,0} ^ KVec2i{0,1},
         "\nend test vec2 method."
     );
 
@@ -302,6 +304,8 @@ int main()
         KVec3i::Cross(cf1, cf2),
         cf1.Length(),
         cf2.SqrtLength(),
+        KVec3i{0,0,1} ^ KVec3i{0,1,0},
+        KVec3i{0,1,0} ^ KVec3i{0,0,1},
         "\ntest vec3 end."
     );
 
