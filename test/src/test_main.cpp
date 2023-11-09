@@ -261,6 +261,8 @@ int main()
 
     KLog::LogSimple(KVec2i::Right.X(), KVec2i::Right.Y());
 
+    // KLog::LogSimple(KVec2hi::Up.X(), KVec2hi::Right.Y());
+
 #endif
 
 #if test_file
