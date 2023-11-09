@@ -2,6 +2,7 @@
 #include "vec.h"
 #include "file.h"
 #include "log.h"
+#include "matrix.h"
 
 #include <iostream>
 #include <string>
@@ -314,6 +315,21 @@ int main()
     KLog::LogSimple(cf1.Normalize(), cf2.Normalize());
 
     KLog::LogSimple(KMath::Distance(KVec3f{0,0,1}, KVec3f{1,0,0}), KMath::Distance(KVec2i{0,1}, KVec2i{1,0}));
+
+    KLog::LogSimple(KMatrix3f::identity, KMatrix3i::zero);
+
+    KLog::LogSimple(RotateVector<float>(KVec3f::up, 90));
+    KLog::LogSimple(RotateVector<float>(KVec3f::up, -90));
+    KLog::LogSimple(RotateVector<float>(KVec3f::right, 90));
+    KLog::LogSimple(RotateVector<float>(KVec3f::forward, 90));
+
+    KLog::LogSimple(
+        "test matrix start: \n",
+        KMatrix3f::identity.TransformVector(KVec3f { 1.f, 1.f, 1.f}),
+        "\n",
+        KMatrix3f::identity * RotateVector<float>(KVec3f::up, 90),
+        "\ntest matrix end."
+    );
 
 #endif
 

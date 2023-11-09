@@ -8,11 +8,10 @@
 namespace KMath
 {
 
-template<class TELE>
-requires std::is_arithmetic_v<TELE>
+template<class TReal>
+requires std::is_arithmetic_v<TReal>
 class KVec2
 {
-    using KReal = TELE;
 public:
     K_API static const KVec2 up;
     K_API static const KVec2 right;
@@ -20,19 +19,19 @@ public:
 
 public:
     KVec2() = default;
-    KVec2(KReal x, KReal y) : x(x), y(y) { }
+    KVec2(TReal x, TReal y) : x(x), y(y) { }
     KVec2(const KVec2&) = default;
     KVec2(KVec2&&) = default;
     KVec2& operator=(const KVec2&) = default;
     KVec2& operator=(KVec2&&) = default;
 
-    const KReal& X() const { return x; }
-    const KReal& Y() const { return y; }
+    const TReal& X() const { return x; }
+    const TReal& Y() const { return y; }
 
-    KReal& X() { return x; }
-    KReal& Y() { return y; }
+    TReal& X() { return x; }
+    TReal& Y() { return y; }
 
-    const KReal* XY() const { return xy; }
+    const TReal* XY() const { return xy; }
 
     KVec2 operator+(const KVec2& rhs) const { return KVec2 { x + rhs.x, y + rhs.y }; }
     KVec2& operator+=(const KVec2& rhs) { x += rhs.x; y += rhs.y; return *this; }
@@ -45,13 +44,13 @@ public:
     template<class TValue> requires std::is_arithmetic_v<TValue>
     KVec2 operator*(TValue value) const
     {
-        return KVec2 { static_cast<KReal>(value * x), static_cast<KReal>(value * y) };
+        return KVec2 { static_cast<TReal>(value * x), static_cast<TReal>(value * y) };
     }
     template<class TValue> requires std::is_arithmetic_v<TValue>
     KVec2& operator*=(TValue value)
     {
-        x = static_cast<KReal>(x * value);
-        y = static_cast<KReal>(y * value);
+        x = static_cast<TReal>(x * value);
+        y = static_cast<TReal>(y * value);
         return *this;
     }
 
@@ -63,7 +62,7 @@ public:
             KLog::LogSimpleError("divide zero error.");
             return *this;
         }
-        return KVec2 { static_cast<KReal>(x / value), static_cast<KReal>(y / value) };
+        return KVec2 { static_cast<TReal>(x / value), static_cast<TReal>(y / value) };
     }
     template<class TValue> requires std::is_arithmetic_v<TValue>
     KVec2& operator/=(TValue value)
@@ -73,8 +72,8 @@ public:
             KLog::LogSimpleError("divide zero error.");
             return *this;
         }
-        x = static_cast<KReal>(x / value);
-        y = static_cast<KReal>(y / value);
+        x = static_cast<TReal>(x / value);
+        y = static_cast<TReal>(y / value);
         return *this;
     }
 
@@ -82,8 +81,8 @@ public:
     bool operator!=(const KVec2& rhs) const { return !(*this == rhs); }
 
     // 点乘
-    KReal operator|(const KVec2& rhs) const { return x * rhs.x + y * rhs.y; }
-    static KReal Dot(const KVec2& lhs, const KVec2& rhs) { return lhs | rhs; }
+    TReal operator|(const KVec2& rhs) const { return x * rhs.x + y * rhs.y; }
+    static TReal Dot(const KVec2& lhs, const KVec2& rhs) { return lhs | rhs; }
 
     // 叉乘
     /*[x1, y1] X [x2, y2] = ([x1, 0] + [0, y1]) X ([x2, 0] + [0, y2])
@@ -99,7 +98,7 @@ public:
 
     KVec2& Normalize()
     {
-        if constexpr (std::is_integral_v<KReal>)
+        if constexpr (std::is_integral_v<TReal>)
         {
             KLog::LogSimpleWarning("maybe loss of precision warning.");
         }
@@ -110,7 +109,7 @@ public:
     }
 
     float Length() const { return sqrt(static_cast<float>(SqrtLength())); }
-    KReal SqrtLength() const { return x * x + y * y; }
+    TReal SqrtLength() const { return x * x + y * y; }
 
 protected:
     friend std::ostream& operator<<(std::ostream& out, const KVec2& rhs)
@@ -122,9 +121,9 @@ protected:
 protected:
     union
     {
-        struct { KReal x, y; };
+        struct { TReal x, y; };
 
-        KReal xy[2];
+        TReal xy[2];
     };
 };
 

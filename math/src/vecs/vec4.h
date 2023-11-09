@@ -5,33 +5,32 @@
 namespace KMath
 {
 
-template<class TELE>
-requires std::is_arithmetic_v<TELE>
+template<class TReal>
+requires std::is_arithmetic_v<TReal>
 class KVec4
 {
-    using KReal = TELE;
 public:
     KVec4() = default;
-    KVec4(KReal x, KReal y, KReal z, KReal w) : x(x), y(y), z(z), w(w) { }
+    KVec4(TReal x, TReal y, TReal z, TReal w) : x(x), y(y), z(z), w(w) { }
 
-    const KReal& X() const { return x; }
-    const KReal& Y() const { return y; }
-    const KReal& Z() const { return z; }
-    const KReal& W() const { return w; }
+    const TReal& X() const { return x; }
+    const TReal& Y() const { return y; }
+    const TReal& Z() const { return z; }
+    const TReal& W() const { return w; }
 
-    KReal& X() { return x; }
-    KReal& Y() { return y; }
-    KReal& Z() { return z; }
-    KReal& W() { return w; }
+    TReal& X() { return x; }
+    TReal& Y() { return y; }
+    TReal& Z() { return z; }
+    TReal& W() { return w; }
 
-    const KReal* XYZW() const { return xyzw; }
+    const TReal* XYZW() const { return xyzw; }
 
 protected:
     union
     {
-        struct { KReal x, y, z, w; };
+        struct { TReal x, y, z, w; };
 
-        KReal xyzw[4];
+        TReal xyzw[4];
     };
 };
 

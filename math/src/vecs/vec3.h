@@ -9,11 +9,10 @@ namespace KMath
 {
 
 // 左手坐标系，并且z轴向上，x轴向前，y轴向右(按照面向来说)
-template<class TELE>
-requires std::is_arithmetic_v<TELE>
+template<class TReal>
+requires std::is_arithmetic_v<TReal>
 class KVec3
 {
-    using KReal = TELE;
 public:
     K_API static const KVec3 up; // z
     K_API static const KVec3 right; // y
@@ -22,21 +21,21 @@ public:
 
 public:
     KVec3() = default;
-    KVec3(KReal x, KReal y, KReal z) : x(x), y(y), z(z) { }
+    KVec3(TReal x, TReal y, TReal z) : x(x), y(y), z(z) { }
     KVec3(const KVec3&) = default;
     KVec3(KVec3&&) = default;
     KVec3& operator=(const KVec3&) = default;
     KVec3& operator=(KVec3&&) = default;
 
-    const KReal& X() const { return x; }
-    const KReal& Y() const { return y; }
-    const KReal& Z() const { return z; }
+    const TReal& X() const { return x; }
+    const TReal& Y() const { return y; }
+    const TReal& Z() const { return z; }
 
-    KReal& X() { return x; }
-    KReal& Y() { return y; }
-    KReal& Z() { return z; }
+    TReal& X() { return x; }
+    TReal& Y() { return y; }
+    TReal& Z() { return z; }
 
-    const KReal* XYZ() const { return xyz; }
+    const TReal* XYZ() const { return xyz; }
     
     KVec3 operator+(const KVec3& rhs) const { return KVec3 { x + rhs.x, y + rhs.y, z + rhs.z }; }
     KVec3& operator+=(const KVec3& rhs) { x += rhs.x; y += rhs.y; z += rhs.z; return *this; }
@@ -50,17 +49,17 @@ public:
     KVec3 operator*(TValue value) const
     {
         return KVec3 {
-            static_cast<KReal>(value * x),
-            static_cast<KReal>(value * y),
-            static_cast<KReal>(value * z)
+            static_cast<TReal>(value * x),
+            static_cast<TReal>(value * y),
+            static_cast<TReal>(value * z)
         };
     }
     template<class TValue> requires std::is_arithmetic_v<TValue>
     KVec3& operator*=(TValue value)
     {
-        x = static_cast<KReal>(value * x);
-        y = static_cast<KReal>(value * y);
-        z = static_cast<KReal>(value * z);
+        x = static_cast<TReal>(value * x);
+        y = static_cast<TReal>(value * y);
+        z = static_cast<TReal>(value * z);
         return *this;
     }
     template<class TValue> requires std::is_arithmetic_v<TValue>
@@ -72,9 +71,9 @@ public:
             return *this;
         }
         return KVec3 {
-            static_cast<KReal>(x / value),
-            static_cast<KReal>(y / value),
-            static_cast<KReal>(z / value)
+            static_cast<TReal>(x / value),
+            static_cast<TReal>(y / value),
+            static_cast<TReal>(z / value)
         };
     }
     template<class TValue> requires std::is_arithmetic_v<TValue>
@@ -85,9 +84,9 @@ public:
             KLog::LogSimpleError("divide zero error.");
             return *this;
         }
-        x = static_cast<KReal>(x / value);
-        y = static_cast<KReal>(y / value);
-        z = static_cast<KReal>(z / value);
+        x = static_cast<TReal>(x / value);
+        y = static_cast<TReal>(y / value);
+        z = static_cast<TReal>(z / value);
         return *this;
     }
 
@@ -95,8 +94,8 @@ public:
     bool operator!=(const KVec3& rhs) const { return !(*this == rhs); }
 
     // 点乘
-    KReal operator|(const KVec3& rhs) const { return x * rhs.x + y * rhs.y + z * rhs.z; }
-    static KReal Dot(const KVec3& lhs, const KVec3& rhs) { return lhs | rhs; }
+    TReal operator|(const KVec3& rhs) const { return x * rhs.x + y * rhs.y + z * rhs.z; }
+    static TReal Dot(const KVec3& lhs, const KVec3& rhs) { return lhs | rhs; }
 
     // 叉乘 推导类似vec2 也是用分配率展开，然后根据ijk三个轴消除
     KVec3 operator^(const KVec3& rhs) const
@@ -111,7 +110,7 @@ public:
 
     KVec3& Normalize()
     {
-        if constexpr (std::is_integral_v<KReal>)
+        if constexpr (std::is_integral_v<TReal>)
         {
             KLog::LogSimpleWarning("maybe loss of presion warning.");
         }
@@ -122,7 +121,7 @@ public:
     }
 
     float Length() const { return sqrt(static_cast<float>(SqrtLength())); }
-    KReal SqrtLength() const { return x * x + y * y + z * z; }
+    TReal SqrtLength() const { return x * x + y * y + z * z; }
 
 protected:
     friend std::ostream& operator<<(std::ostream& out, const KVec3& rhs)
@@ -134,9 +133,9 @@ protected:
 public:
     union
     {
-        struct { KReal x, y, z; };
+        struct { TReal x, y, z; };
 
-        KReal xyz[3];
+        TReal xyz[3];
     };
 };
 

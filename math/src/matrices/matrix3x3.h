@@ -1,0 +1,107 @@
+#pragma once
+
+#include "compile_header.h"
+#include "vec.h"
+#include <iostream>
+
+namespace KMath
+{
+
+// 矩阵使用行向量，也就是说需要向量左乘矩阵来变换
+template<class TReal>
+requires std::is_arithmetic_v<TReal>
+class KMatrix3x3
+{
+public:
+    K_API static const KMatrix3x3 identity;
+    K_API static const KMatrix3x3 zero;
+
+public:
+    KMatrix3x3() = default;
+    KMatrix3x3(const KVec3<TReal>& p, const KVec3<TReal>& q, const KVec3<TReal>& r)
+        : p (p), q(q), r(r)
+    { }
+    KMatrix3x3(const KMatrix3x3&) = default;
+    KMatrix3x3(KMatrix3x3&&) = default;
+    KMatrix3x3& operator=(const KMatrix3x3&) = default;
+    KMatrix3x3& operator=(KMatrix3x3&&) = default;
+
+    template<class TValue> requires std::is_arithmetic_v<TValue>
+    KMatrix3x3 operator*(TValue value) const
+    {
+        return KMatrix3x3 { p * value, q * value, r * value };
+    }
+    template<class TValue> requires std::is_arithmetic_v<TValue>
+    KMatrix3x3& operator*=(TValue value)
+    {
+        p *= value; q *= value; r *= value;
+        return *this;
+    }
+
+    KMatrix3x3 operator*(const KMatrix3x3& rhs) const
+    {
+        KMatrix3x3 ret;
+        for (int32_t i = 0; i < 3; ++i)
+        {
+            for (int32_t j = 0; j < 3; ++j)
+            {
+                // row i coll j
+                ret.matrix[i][j] =
+                    matrix[i][0] * rhs.matrix[0][j] +
+                    matrix[i][1] * rhs.matrix[1][j] +
+                    matrix[i][2] * rhs.matrix[2][j];
+            }
+        }
+        return ret;
+    }
+    KMatrix3x3& operator*=(const KMatrix3x3& rhs)
+    {
+        return *this = *this * rhs;
+    }
+
+    // 左乘一个变换的向量（变换到矩阵代表的空间中）
+    template<class TValue> requires std::is_arithmetic_v<TValue>
+    KVec3<TValue> operator*(const KVec3<TValue>& vec) const
+    {
+        return KVec3<TValue> {
+            static_cast<TValue>(vec.X() * m11 + vec.Y() * m21 + vec.Z() * m31),
+            static_cast<TValue>(vec.X() * m12 + vec.Y() * m22 + vec.Z() * m32),
+            static_cast<TValue>(vec.X() * m13 + vec.Y() * m23 + vec.Z() * m33)
+        };
+    }
+
+    template<class TValue> requires std::is_arithmetic_v<TValue>
+    KVec3<TValue> TransformVector(const KVec3<TValue>& vec) const
+    {
+        return *this * vec;
+    }
+
+protected:
+    friend std::ostream& operator<<(std::ostream& out, const KMatrix3x3& rhs)
+    {
+        out << rhs.p << "\n";
+        out << rhs.q << "\n";
+        out << rhs.r << "\n";
+        return out;
+    }
+
+protected:
+    union
+    {
+        struct
+        {
+            TReal m11, m12, m13;
+            TReal m21, m22, m23;
+            TReal m31, m32, m33;
+        };
+
+        struct
+        {
+            KVec3<TReal> p, q, r;
+        };
+
+        TReal matrix[3][3];
+    };
+};
+
+}
