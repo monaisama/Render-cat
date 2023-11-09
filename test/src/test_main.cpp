@@ -25,7 +25,7 @@ using namespace KFileUtils;
 #define test_file 0
 #define test_log 0
 #define test_initializelist 0
-#define test_temp 1
+#define test_temp 0
 #define test_arraytype 0
 #define test_stringview 0
 #define test_singleton 0
@@ -57,12 +57,12 @@ std::optional<std::string> TestOptional(bool bUse = true)
     return {};
 }
 
-int32_t operator""km(uint64_t value)
+int32_t operator""_km(uint64_t value)
 {
     return static_cast<int32_t>(value * 1000);
 }
 
-float_t operator""km(long double value)
+float_t operator""_km(long double value)
 {
     return value * 1000;
 }
@@ -193,8 +193,8 @@ int main()
         charptr = const_cast<char*>(str.c_str());
     }
     // std::cout << sView.data();
-    KLog::Log(sView.data());
-    KLog::Log(charptr);
+    // KLog::Log(sView.data());
+    // KLog::Log(charptr);
     KLog::Log(nullptr);
     KLog::Log(ss);
     // std::cout << charptr;
@@ -207,7 +207,7 @@ int main()
     using namespace std::string_view_literals;
     // "hello"s
 
-    KLog::LogSimple(12km, 12.01km);
+    KLog::LogSimple(12_km, 12.01_km);
 #endif
 
 #if test_log
@@ -316,25 +316,6 @@ int main()
     KLog::Log(content);
     KLog::Log(KFileTest{}.Int());
 
-
-    KTextObject object;
-    for (int32_t i = 0; i < 10; i++)
-    {
-        object.vertexs.push_back(KTextVertex{KVec3f(i, i+1, i+2), KVec3f(i, i-1, i-2)});
-    }
-    KFile testStream;
-    testStream.Open("testObj.txt");
-    testStream.GetStream() << object;
-    testStream.Close();
-
-    KTextObject object1;
-    KFile testStream1;
-    testStream1.Open("testObj.txt");
-    testStream1.GetStream() >> object1;
-    testStream1.Close();
-
-    KLog::Log(object.vertexs.size());
-    KLog::Log(object1.vertexs.size());
 #endif
 
     return 0;
