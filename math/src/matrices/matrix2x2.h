@@ -8,6 +8,7 @@ namespace KMath
 
 // 行向量
 template<class TReal>
+requires std::is_arithmetic_v<TReal>
 class KMatrix2x2
 {
 public:
