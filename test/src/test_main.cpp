@@ -257,11 +257,36 @@ int main()
 
     KVec2f c21 { 100.1f, -10.2f};
     KLog::LogSimple(c21.X(), c21.Y());
-    KLog::LogSimple(KVec2f::Up.X(), KVec2f::Up.Y());
+    KLog::LogSimple(KVec2f::up.X(), KVec2f::up.Y());
 
-    KLog::LogSimple(KVec2i::Right.X(), KVec2i::Right.Y());
+    KLog::LogSimple(KVec2i::right.X(), KVec2i::right.Y());
 
     // KLog::LogSimple(KVec2hi::Up.X(), KVec2hi::Right.Y());
+
+    KVec2i c1 { 1, 1 }, c2 { 1, -1};
+    KVec2i c3 = c1 ^ c2;
+    std::cout << c3 << c1 << c2;
+    KLog::LogSimple(c3);
+    KLog::LogSimple(
+        "test for vec2 method: \n",
+        c1 == c2,
+        c1 != c2,
+        c1 ^ c1,
+        c1 | c2,
+        c1 * 10,
+        c2 * 10,
+        c1 + c2,
+        c1 *= 10,
+        c2 *= 10,
+        c1 + c2,
+        c1.Length(),
+        c2.Length(),
+        c1.SqrtLength(),
+        c2.SqrtLength(),
+        c1.Normalize(),
+        c2.Normalize(),
+        "\nend test vec2 method."
+    );
 
 #endif
 

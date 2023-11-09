@@ -9,7 +9,7 @@
 namespace KMath
 {
 
-inline constexpr float epsilon = 1e-6;
+inline constexpr float epsilon = 1e-6f;
 
 inline constexpr float pi = 3.141593f;
 
@@ -31,14 +31,14 @@ template<class TFloat>
 requires std::is_floating_point_v<TFloat>
 inline bool NearlyEquals(TFloat lhs, TFloat rhs, float error = epsilon)
 {
-    return Abs(lhs - rhs) < epsilon;
+    return Abs(lhs - rhs) < error;
 }
 
 template<class TFloat>
 requires std::is_floating_point_v<TFloat>
 inline bool NearlyZero(TFloat lhs, float error = epsilon)
 {
-    return lhs < static_cast<TFloat>(epsilon);
+    return lhs < static_cast<TFloat>(error);
 }
 
 template<class TNumber>

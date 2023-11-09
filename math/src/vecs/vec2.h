@@ -3,6 +3,7 @@
 #include "mymath.h"
 #include "log.h"
 #include <type_traits>
+#include <iostream>
 
 namespace KMath
 {
@@ -13,9 +14,9 @@ class KVec2
 {
     using KReal = TELE;
 public:
-    K_API static const KVec2 Up;
-    K_API static const KVec2 Right;
-    K_API static const KVec2 Zero;
+    K_API static const KVec2 up;
+    K_API static const KVec2 right;
+    K_API static const KVec2 zero;
 
 public:
     KVec2() = default;
@@ -33,11 +34,13 @@ public:
 
     const KReal* XY() { return xy; }
 
-    KVec2 operator+(const KVec2& other) { return KVec2 { x + other.x, y + other.y }; }
-    KVec2& operator+=(const KVec2& other) { x += other.x; y += other.y; return *this; }
+    KVec2 operator+(const KVec2& rhs) { return KVec2 { x + rhs.x, y + rhs.y }; }
+    KVec2& operator+=(const KVec2& rhs) { x += rhs.x; y += rhs.y; return *this; }
     
-    KVec2 operator-(const KVec2& other) { return KVec2 { x - other.x, y - other.y }; }
-    KVec2& operator-=(const KVec2& other) { x -= other.x; y -= other.y; return *this; }
+    KVec2 operator-(const KVec2& rhs) { return KVec2 { x - rhs.x, y - rhs.y }; }
+    KVec2& operator-=(const KVec2& rhs) { x -= rhs.x; y -= rhs.y; return *this; }
+
+    KVec2& operator-() { return *this *= -1; }
 
     template<class TValue> requires std::is_arithmetic_v<TValue>
     KVec2 operator*(TValue v)
@@ -60,23 +63,26 @@ public:
         if (KMath::EqualsZero(v))
         {
             KLog::LogSimpleError("divide zero error.");
-            return;
+            return KVec2::zero;
         }
         return *this * (1.f / v);
     }
     template<class TValue> requires std::is_arithmetic_v<TValue>
-    KVec2 operator/=(TValue v)
+    KVec2& operator/=(TValue v)
     {
         if (KMath::EqualsZero(v))
         {
             KLog::LogSimpleError("divide zero error.");
-            return;
+            return *this;
         }
         return *this *= (1.f / v);
     }
 
+    bool operator==(const KVec2& rhs) { return KMath::Equals(x, rhs.x) && KMath::Equals(y, rhs.y); }
+    bool operator!=(const KVec2& rhs) { return !(*this == rhs); }
+
     // 点乘
-    float operator|(const KVec2& other) { return static_cast<float>(x * other.x, y * other.y); }
+    float operator|(const KVec2& rhs) { return static_cast<float>(x * rhs.x, y * rhs.y); }
     static float Dot(const KVec2& lhs, const KVec2& rhs) { return lhs | rhs; }
 
     // 叉乘
@@ -87,25 +93,32 @@ public:
     * 0 + x1y2_k - y1x2_k + 0
     * 得到 [x1y2, -y1x2]
     */
-    KVec2 operator^(const KVec2& other) { return KVec2 { x * other.y, -y * other.x}; }
+    KVec2 operator^(const KVec2& rhs) { return KVec2 { x * rhs.y, -y * rhs.x}; }
     static KVec2 Cross(const KVec2& lhs, const KVec2& rhs) { return lhs ^ rhs; }
 
-    void Normalize()
+    KVec2& Normalize()
     {
         float length = Length();
         if (KMath::NearlyZero(length))
-            return;
-        *this /= length;
+            return *this;
+        return *this /= length;
     }
 
     float Length()
     {
-        return sqrt(SqrtLength());
+        return sqrt(static_cast<float>(SqrtLength()));
     }
 
-    float SqrtLength()
+    KReal SqrtLength()
     {
         return x * x + y * y;
+    }
+
+protected:
+    friend std::ostream& operator<<(std::ostream& out, const KVec2& rhs)
+    {
+        out << "{ " << rhs.x << ", " << rhs.y << " }";
+        return out;
     }
 
 protected:
