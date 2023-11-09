@@ -27,10 +27,7 @@ public:
     KMatrix3x3& operator=(KMatrix3x3&&) = default;
 
     template<class TValue> requires std::is_arithmetic_v<TValue>
-    KMatrix3x3 operator*(TValue value) const
-    {
-        return KMatrix3x3 { p * value, q * value, r * value };
-    }
+    KMatrix3x3 operator*(TValue value) const { return KMatrix3x3 { p * value, q * value, r * value }; }
     template<class TValue> requires std::is_arithmetic_v<TValue>
     KMatrix3x3& operator*=(TValue value)
     {
@@ -54,10 +51,7 @@ public:
         }
         return ret;
     }
-    KMatrix3x3& operator*=(const KMatrix3x3& rhs)
-    {
-        return *this = *this * rhs;
-    }
+    KMatrix3x3& operator*=(const KMatrix3x3& rhs) { return *this = *this * rhs; }
 
     // 左乘一个变换的向量（变换到矩阵代表的空间中）
     template<class TValue = TReal> requires std::is_arithmetic_v<TValue>

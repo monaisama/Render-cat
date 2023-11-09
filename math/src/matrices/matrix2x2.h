@@ -44,8 +44,8 @@ public:
     KVec2<TValue> operator*(const KVec2<TValue>& rhs) const
     {
         return KVec2<TValue> {
-            rhs.X() * m11 + rhs.Y() * m21,
-            rhs.X() * m12 + rhs.Y() * m22
+            static_cast<TValue>(rhs.X() * m11 + rhs.Y() * m21),
+            static_cast<TValue>(rhs.X() * m12 + rhs.Y() * m22)
         };
     }
 
