@@ -67,7 +67,11 @@ protected:
 protected:
     union
     {
-        struct { TReal m11, m12, m21, m22; };
+        struct
+        {
+            TReal m11, m12;
+            TReal m21, m22;
+        };
 
         struct { KVec2<TReal> p, q; };
 
