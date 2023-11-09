@@ -13,9 +13,9 @@ class KVec2
 {
     using KReal = TELE;
 public:
-    static const KVec2 Up;
-    static const KVec2 Right;
-    static const KVec2 Zero;
+    K_API static const KVec2 Up;
+    K_API static const KVec2 Right;
+    K_API static const KVec2 Zero;
 
 public:
     KVec2() = default;
