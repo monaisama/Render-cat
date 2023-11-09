@@ -1,6 +1,6 @@
 #include "mymath.h"
 
-int32_t KPowTest(int32_t n)
+namespace KMath
 {
-    return n * n;
+
 }

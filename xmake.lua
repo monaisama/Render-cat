@@ -47,6 +47,16 @@ rule('krule.include.file')
     end)
 rule_end()
 
+rule('krule.include.self')
+    on_load(function(target)
+        local includePath = path.join(target:scriptdir(), 'src')
+        if os.exists(includePath) then 
+            target:add('includedirs', path.join(target:scriptdir(), 'src'))
+        end 
+    end)
+rule_end()
+
+add_rules('krule.include.self')
 add_rules('kmode.debug', 'kmode.release')
 includes('math', 'project-cat', 'file', 'log')
 includes('resource')

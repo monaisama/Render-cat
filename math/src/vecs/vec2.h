@@ -1,5 +1,7 @@
 #pragma once
 
+#include "mymath.h"
+#include "log.h"
 #include <type_traits>
 
 namespace KMath
@@ -52,6 +54,27 @@ public:
         return *this;
     }
 
+    template<class TValue> requires std::is_arithmetic_v<TValue>
+    KVec2 operator/(TValue v)
+    {
+        if (KMath::EqualsZero(v))
+        {
+            KLog::LogSimpleError("divide zero error.");
+            return;
+        }
+        return *this * (1.f / v);
+    }
+    template<class TValue> requires std::is_arithmetic_v<TValue>
+    KVec2 operator/=(TValue v)
+    {
+        if (KMath::EqualsZero(v))
+        {
+            KLog::LogSimpleError("divide zero error.");
+            return;
+        }
+        return *this *= (1.f / v);
+    }
+
     // 点乘
     float operator|(const KVec2& other) { return static_cast<float>(x * other.x, y * other.y); }
     static float Dot(const KVec2& lhs, const KVec2& rhs) { return lhs | rhs; }
@@ -64,15 +87,25 @@ public:
     * 0 + x1y2_k - y1x2_k + 0
     * 得到 [x1y2, -y1x2]
     */
-    KVec2 operator^(const KVec2& other) { return KVec2 { x * other.Y, -y * other.x}; }
+    KVec2 operator^(const KVec2& other) { return KVec2 { x * other.y, -y * other.x}; }
     static KVec2 Cross(const KVec2& lhs, const KVec2& rhs) { return lhs ^ rhs; }
 
     void Normalize()
     {
+        float length = Length();
+        if (KMath::NearlyZero(length))
+            return;
+        *this /= length;
     }
+
     float Length()
     {
-        return 0.f;
+        return sqrt(SqrtLength());
+    }
+
+    float SqrtLength()
+    {
+        return x * x + y * y;
     }
 
 protected:

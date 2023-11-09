@@ -1,6 +1,7 @@
 #include <functional>
 #include "vecs/vec3.h"
 #include "vecs/vec4.h"
+#include "vecs/vec2.h"
 #include "file.h"
 #include "log.h"
 
@@ -24,9 +25,9 @@ using namespace KMath;
 using namespace KFileUtils;
 
 #define test_cxxfeature 0
-#define test_math 0
+#define test_math 1
 #define test_file 0
-#define test_log 1
+#define test_log 0
 #define test_initializelist 0
 #define test_temp 1
 #define test_arraytype 0
@@ -255,6 +256,13 @@ int main()
 
     KVec4 vec(1.f, 1.f, 1.f, 2.f);
     KLog::LogSimple(vec.XYZW()[0], vec.XYZW()[1], vec.XYZW()[2], vec.XYZW()[3]);
+
+    KVec2<float> c21 { 100.1f, -10.2f};
+    KLog::LogSimple(c21.X(), c21.Y());
+    // KLog::LogSimple(KVec2<float>::Up.X(), KVec2<float>::Up.Y());
+
+    // KLog::LogSimple(KVec2<int32_t>::Right.X(), KVec2<int32_t>::Right.Y());
+
 #endif
 
 #if test_file
