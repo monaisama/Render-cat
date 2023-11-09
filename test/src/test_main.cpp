@@ -318,26 +318,26 @@ int main()
 
     KLog::LogSimple(KMatrix3f::identity, KMatrix3i::zero);
 
-    KLog::LogSimple(MakeRotateMatrix<float>(KVec3f::up, 90));
-    KLog::LogSimple(MakeRotateMatrix<float>(KVec3f::up, -90));
-    KLog::LogSimple(MakeRotateMatrix<float>(KVec3f::right, 90));
-    KLog::LogSimple(MakeRotateMatrix<float>(KVec3f::forward, 90));
+    KLog::LogSimple(MakeRotateMatrix(KVec3f::up, 90));
+    KLog::LogSimple(MakeRotateMatrix(KVec3f::up, -90));
+    KLog::LogSimple(MakeRotateMatrix(KVec3f::right, 90));
+    KLog::LogSimple(MakeRotateMatrix(KVec3f::forward, 90));
 
     KLog::LogSimple(
         "test matrix3x3 start: \n",
         KMatrix3f::identity.TransformVector(KVec3f { 1.f, 1.f, 1.f}),
         "\n",
-        KMatrix3f::identity * MakeRotateMatrix<float>(KVec3f::up, 90),
+        KMatrix3f::identity * MakeRotateMatrix(KVec3f::up, 90),
         "\ntest matrix3x3 end."
     );
 
-    KLog::LogSimple(MakeRotateMatrix<float>(45));
-    KLog::LogSimple(MakeRotateMatrix<float>(180));
+    KLog::LogSimple(MakeRotateMatrix(45));
+    KLog::LogSimple(MakeRotateMatrix(180));
 
     KLog::LogSimple(
         "test matrix2x2 start: \n",
         KMatrix2f::identity,
-        MakeRotateMatrix<float>(90).TransformVector(KVec2f::up),
+        MakeRotateMatrix(90).TransformVector(KVec2f::up),
         "\ntest matrix2x2 end."
     );
 

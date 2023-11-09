@@ -15,7 +15,7 @@ using KMatrix2f = KMatrix2x2<float>;
 using KMatrix2i = KMatrix2x2<int32_t>;
 
 // 构造出旋转任意角度的变换矩阵(angle是角度)
-template<class TReal>
+template<class TReal = float>
 KMatrix2x2<TReal> MakeRotateMatrix(float angle)
 {
     angle *= degree2radian;
@@ -27,7 +27,7 @@ KMatrix2x2<TReal> MakeRotateMatrix(float angle)
 }
 
 // 构造出绕任意轴旋转的变换矩阵(angle是角度)
-template<class TReal, class TReal2 = TReal>
+template<class TReal = float, class TReal2 = TReal>
 KMatrix3x3<TReal> MakeRotateMatrix(KVec3<TReal2> vec, float angle)
 {
     angle *= degree2radian;
