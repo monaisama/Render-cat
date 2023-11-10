@@ -341,6 +341,9 @@ int main()
         "\ntest matrix2x2 end."
     );
 
+    KLog::LogSimple(KMatrix2f::identity * 10);
+    KLog::LogSimple(KMatrix3i::identity * 100);
+
 #endif
 
 #if test_file

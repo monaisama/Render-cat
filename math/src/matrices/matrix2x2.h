@@ -38,7 +38,7 @@ public:
     }
 
     template<class TValue> requires std::is_arithmetic_v<TValue>
-    KMatrix2x2 operator*(TValue value) const { KMatrix2x2 ret { p * value, q * value }; }
+    KMatrix2x2 operator*(TValue value) const { return KMatrix2x2 { p * value, q * value }; }
     template<class TValue> requires std::is_arithmetic_v<TValue>
     KMatrix2x2& operator*=(TValue value) { return *this = *this * value; }
     template<class TValue = TReal> requires std::is_arithmetic_v<TValue>
