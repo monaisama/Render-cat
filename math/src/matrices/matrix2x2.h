@@ -56,6 +56,15 @@ public:
         return *this * vec;
     }
 
+    // 矩阵转置
+    KMatrix2x2 Transpose() const
+    {
+        return KMatrix2x2 {
+            KVec2<TReal> { m11, m21 },
+            KVec2<TReal> { m12, m22 }
+        };
+    }
+
 protected:
     friend std::ostream& operator<<(std::ostream& out, const KMatrix2x2& rhs)
     {

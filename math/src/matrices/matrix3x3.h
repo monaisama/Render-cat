@@ -70,6 +70,16 @@ public:
         return *this * vec;
     }
 
+    // 转置
+    KMatrix3x3 Transpose() const
+    {
+        return KMatrix3x3 {
+            KVec3<TReal> { m11, m21, m31 },
+            KVec3<TReal> { m12, m22, m32 },
+            KVec3<TReal> { m13, m23, m33 }
+        };
+    }
+
 protected:
     friend std::ostream& operator<<(std::ostream& out, const KMatrix3x3& rhs)
     {

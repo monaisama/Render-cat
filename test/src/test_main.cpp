@@ -344,6 +344,9 @@ int main()
     KLog::LogSimple(KMatrix2f::identity * 10);
     KLog::LogSimple(KMatrix3i::identity * 100);
 
+    KLog::LogSimple(MakeRotateMatrix(KVec3f::up, 90));
+    KLog::LogSimple(MakeRotateMatrix(KVec3f::up, 90).Transpose());
+
 #endif
 
 #if test_file
