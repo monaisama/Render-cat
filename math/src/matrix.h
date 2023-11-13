@@ -16,28 +16,33 @@ using KMatrix2i = KMatrix2x2<int32_t>;
 
 // 构造出旋转任意角度的变换矩阵(angle是角度)
 template<class TReal = float>
+requires std::is_arithmetic_v<TReal>
 KMatrix2x2<TReal> MakeRotateMatrix(float angle)
 {
     angle *= degree2radian;
-    float cosValue = cos(angle), sinValue = sin(angle);
-    return KMatrix2x2 {
+    TReal cosValue = static_cast<TReal>(cos(angle)), sinValue = static_cast<TReal>(sin(angle));
+    return KMatrix2x2<TReal> {
         KVec2<TReal> { cosValue, sinValue },
         KVec2<TReal> { -sinValue, cosValue }
     };
 }
 
 // 构造出绕任意轴旋转的变换矩阵(angle是角度)
+// 这里的所有向量都需要是单位向量，因为后面的公式都是用单位向量来推算出来的
 template<class TReal = float, class TReal2 = TReal>
+requires std::is_arithmetic_v<TReal> && std::is_arithmetic_v<TReal2>
 KMatrix3x3<TReal> MakeRotateMatrix(KVec3<TReal2> vec, float angle)
 {
-    angle *= degree2radian;
-    float cosValue = cos(angle), sinValue = sin(angle);
-    float i_cosValue = 1.f - cosValue; // 1 - cos
-    float nx = vec.X(), ny = vec.Y(), nz = vec.Z();
-    float nx2 = nx * nx, ny2 = ny * ny, nz2 = nz * nz;
-    float nxy = nx * ny, nxz = nx * nz, nyz = ny * nz;
+    vec.Normalize();
 
-    return KMatrix3x3 {
+    angle *= degree2radian;
+    TReal cosValue = static_cast<TReal>(cos(angle)), sinValue = static_cast<TReal>(sin(angle));
+    TReal i_cosValue = 1 - cosValue; // 1 - cos
+    TReal nx = static_cast<TReal>(vec.X()), ny = static_cast<TReal>(vec.Y()), nz = static_cast<TReal>(vec.Z());
+    TReal nx2 = nx * nx, ny2 = ny * ny, nz2 = nz * nz;
+    TReal nxy = nx * ny, nxz = nx * nz, nyz = ny * nz;
+
+    return KMatrix3x3<TReal> {
         KVec3<TReal> {
             nx2 * i_cosValue + cosValue,
             nxy * i_cosValue + nz * sinValue,
@@ -55,6 +60,41 @@ KMatrix3x3<TReal> MakeRotateMatrix(KVec3<TReal2> vec, float angle)
             nyz * i_cosValue - nx * sinValue,
             nz2 * i_cosValue + cosValue
         }
+    };
+}
+
+// 构造绕任意轴缩放的矩阵
+// 这里的缩放轴是根据单位向量推算的
+template<class TReal = float, class TReal2 = TReal, class TReal3 = TReal>
+requires std::is_arithmetic_v<TReal> && std::is_arithmetic_v<TReal2> && std::is_arithmetic_v<TReal3>
+KMatrix2x2<TReal> MakeScaleMatrix(KVec2<TReal2> vec, TReal3 scale)
+{
+    vec.Normalize();
+
+    TReal nx2 = static_cast<TReal>(vec.X() * vec.X()), ny2 = static_cast<TReal>(vec.Y() * vec.Y());
+    TReal nxy = static_cast<TReal>(vec.X() * vec.Y());
+    TReal k_1 = static_cast<TReal>(scale - 1);
+
+    return KMatrix2x2<TReal> {
+        KVec2<TReal> { 1 + k_1 * nx2, k_1 * nxy },
+        KVec2<TReal> { k_1 * nxy, 1 + k_1 * ny2 }
+    };
+}
+
+template<class TReal = float, class TReal2 = TReal, class TReal3 = TReal>
+requires std::is_arithmetic_v<TReal> && std::is_arithmetic_v<TReal2> && std::is_arithmetic_v<TReal3>
+KMatrix3x3<TReal> MakeScaleMatrix(KVec3<TReal2> vec, TReal3 scale)
+{
+    vec.Normalize();
+
+    TReal nx2 = static_cast<TReal>(vec.X() * vec.X()), ny2 = static_cast<TReal>(vec.Y() * vec.Y()), nz2 = static_cast<TReal>(vec.Z() * vec.Z());
+    TReal nxy = static_cast<TReal>(vec.X() * vec.Y()), nxz = static_cast<TReal>(vec.X() * vec.Z()), nyz = static_cast<TReal>(vec.Y() * vec.Z());
+    TReal k_1 = static_cast<TReal>(scale - 1);
+
+    return KMatrix3x3<TReal> {
+        KVec3<TReal> { 1 + k_1 * nx2, k_1 * nxy, k_1 * nxz },
+        KVec3<TReal> { k_1 * nxy, 1 + k_1 * ny2, k_1 * nyz },
+        KVec3<TReal> { k_1 * nxz, k_1*nyz, 1 + k_1 * nz2 },
     };
 }
 

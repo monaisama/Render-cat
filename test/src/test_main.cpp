@@ -347,6 +347,10 @@ int main()
     KLog::LogSimple(MakeRotateMatrix(KVec3f::up, 90));
     KLog::LogSimple(MakeRotateMatrix(KVec3f::up, 90).Transpose());
 
+    auto transMatrix = MakeScaleMatrix(KVec2f::up, 2) * MakeScaleMatrix(KVec2f::right, 2);
+
+    KLog::LogSimple(transMatrix ,transMatrix * KVec2f { 1, 1 });
+
 #endif
 
 #if test_file
