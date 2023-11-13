@@ -14,6 +14,32 @@ using KMatrix3i = KMatrix3x3<int32_t>;
 using KMatrix2f = KMatrix2x2<float>;
 using KMatrix2i = KMatrix2x2<int32_t>;
 
+template<class TReal = float, class TReal2 = TReal>
+requires std::is_arithmetic_v<TReal> && std::is_arithmetic_v<TReal2>
+KVec2<TReal> operator*(const KVec2<TReal>& vec, const KMatrix2x2<TReal2>& matrix)
+{
+    return matrix * vec;
+}
+template<class TReal = float, class TReal2 = TReal>
+requires std::is_arithmetic_v<TReal> && std::is_arithmetic_v<TReal2>
+KVec2<TReal>& operator*=(KVec2<TReal>& vec, const KMatrix2x2<TReal2>& matrix)
+{
+    return vec = matrix * vec;
+}
+
+template<class TReal = float, class TReal2 = TReal>
+requires std::is_arithmetic_v<TReal> && std::is_arithmetic_v<TReal2>
+KVec3<TReal> operator*(const KVec3<TReal>& vec, const KMatrix3x3<TReal2>& matrix)
+{
+    return matrix * vec;
+}
+template<class TReal = float, class TReal2 = TReal>
+requires std::is_arithmetic_v<TReal> && std::is_arithmetic_v<TReal2>
+KVec3<TReal>& operator*=(KVec3<TReal>& vec, const KMatrix3x3<TReal2>& matrix)
+{
+    return vec = matrix * vec;
+}
+
 // 构造出旋转任意角度的变换矩阵(angle是角度)
 template<class TReal = float>
 requires std::is_arithmetic_v<TReal>

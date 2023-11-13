@@ -349,7 +349,12 @@ int main()
 
     auto transMatrix = MakeScaleMatrix(KVec2f::up, 2) * MakeScaleMatrix(KVec2f::right, 2);
 
-    KLog::LogSimple(transMatrix ,transMatrix * KVec2f { 1, 1 });
+    KLog::LogSimple(transMatrix, transMatrix.Inverse());
+    auto point = KVec2f {1, 1};
+    KLog::LogSimple(point, transMatrix * point, transMatrix.Inverse() * (transMatrix * point));
+    KLog::LogSimple(transMatrix * transMatrix.Inverse());
+
+    KLog::LogSimple(point * KMatrix2f::identity, point * transMatrix * transMatrix.Inverse());
 
 #endif
 

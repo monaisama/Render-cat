@@ -49,6 +49,10 @@ public:
             static_cast<TValue>(rhs.X() * m12 + rhs.Y() * m22)
         };
     }
+    template<class TValue> requires std::is_arithmetic_v<TValue>
+    KMatrix2x2 operator/(TValue value) const { return operator*(1 / static_cast<TReal>(value)); }
+    template<class TValue> requires std::is_arithmetic_v<TValue>
+    KMatrix2x2& operator/=(TValue value) { return operator*=(1 / static_cast<TReal>(value)); }
 
     template<class TValue = TReal> requires std::is_arithmetic_v<TValue>
     KVec2<TValue> TransformVector(const KVec2<TValue>& vec) const
@@ -64,6 +68,33 @@ public:
             KVec2<TReal> { m12, m22 }
         };
     }
+
+    // 计算出2x2矩阵的行列式
+    TReal Det() const { return m11 * m22 - m12 * m21; }
+
+    // 计算是否是奇异矩阵
+    bool IsSingular() const { return EqualsZero(Det()); } // 行列式为0
+
+    // 矩阵求逆 // 需要确保这里不是奇异矩阵 // 这里假定一定是正交矩阵吗？还是说一定用伴随矩阵求解
+    // 施密特正交化 todo..
+    // 逆矩阵是伴随矩阵除以行列式
+    KMatrix2x2 Inverse() { return Adjugate() / Det(); }
+
+    // 代数余子式矩阵
+    KMatrix2x2 Cofactor() const
+    {
+        KMatrix2x2 cof;
+        {
+            cof.m11 = m22;
+            cof.m12 = -m21;
+            cof.m21 = -m12;
+            cof.m22 = m11;
+        }
+        return cof;
+    }
+
+    // 伴随矩阵是代数余子式矩阵的转置矩阵
+    KMatrix2x2 Adjugate() const { return Cofactor().Transpose(); }
 
 protected:
     friend std::ostream& operator<<(std::ostream& out, const KMatrix2x2& rhs)
