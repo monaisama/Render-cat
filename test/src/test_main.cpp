@@ -356,6 +356,12 @@ int main()
 
     KLog::LogSimple(point * KMatrix2f::identity, point * transMatrix * transMatrix.Inverse());
 
+    auto point1 = KVec3f { 1, 1, 1 };
+    auto transMatrix1 = /*MakeRotateMatrix(KVec3f::up, 45) */ MakeScaleMatrix(KVec3f{ 1, 1, 1 }, 2);
+    KLog::LogSimple(point1);
+    KLog::LogSimple(point1 * transMatrix1);
+    KLog::LogSimple(point1 * transMatrix1 * transMatrix1.Inverse());
+
 #endif
 
 #if test_file

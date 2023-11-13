@@ -71,15 +71,13 @@ public:
 
     // 计算出2x2矩阵的行列式
     TReal Det() const { return m11 * m22 - m12 * m21; }
-
     // 计算是否是奇异矩阵
     bool IsSingular() const { return EqualsZero(Det()); } // 行列式为0
 
     // 矩阵求逆 // 需要确保这里不是奇异矩阵 // 这里假定一定是正交矩阵吗？还是说一定用伴随矩阵求解
     // 施密特正交化 todo..
     // 逆矩阵是伴随矩阵除以行列式
-    KMatrix2x2 Inverse() { return Adjugate() / Det(); }
-
+    KMatrix2x2 Inverse() const { return Adjugate() / Det(); }
     // 代数余子式矩阵
     KMatrix2x2 Cofactor() const
     {
@@ -92,7 +90,6 @@ public:
         }
         return cof;
     }
-
     // 伴随矩阵是代数余子式矩阵的转置矩阵
     KMatrix2x2 Adjugate() const { return Cofactor().Transpose(); }
 
