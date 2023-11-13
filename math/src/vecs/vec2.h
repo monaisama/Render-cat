@@ -81,8 +81,8 @@ public:
     bool operator!=(const KVec2& rhs) const { return !(*this == rhs); }
 
     // 点乘
-    TReal operator|(const KVec2& rhs) const { return x * rhs.x + y * rhs.y; }
-    static TReal Dot(const KVec2& lhs, const KVec2& rhs) { return lhs | rhs; }
+    TReal operator*(const KVec2& rhs) const { return x * rhs.x + y * rhs.y; }
+    static TReal Dot(const KVec2& lhs, const KVec2& rhs) { return lhs * rhs; }
 
     // 叉乘
     /*[x1, y1] X [x2, y2] = ([x1, 0] + [0, y1]) X ([x2, 0] + [0, y2])

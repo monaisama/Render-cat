@@ -269,7 +269,7 @@ int main()
         c1 == c1,
         c1 != c2,
         c1 ^ c2,
-        c1 | c2,
+        c1 * c2,
         c1 * 10,
         c2 * 10,
         c1 + c2,
@@ -301,7 +301,7 @@ int main()
         cf1 - cf2,
         cf1 / 10,
         cf2 * 100.f,
-        cf1 | cf2,
+        cf1 * cf2,
         KVec3i::Cross(cf1, cf2),
         cf1.Length(),
         cf2.SqrtLength(),
@@ -361,6 +361,8 @@ int main()
     KLog::LogSimple(point1);
     KLog::LogSimple(point1 * transMatrix1);
     KLog::LogSimple(point1 * transMatrix1 * transMatrix1.Inverse());
+
+    KLog::LogSimple(KVec4f::wzero, KVec4f::wzero * MakeTranslateMatrix(point1));
 
 #endif
 

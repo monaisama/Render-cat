@@ -2,6 +2,7 @@
 
 #include "compile_header.h"
 #include "vec.h"
+#include "matrix2x2.h"
 #include <iostream>
 
 namespace KMath
@@ -21,10 +22,20 @@ public:
     KMatrix3x3(const KVec3<TReal>& p, const KVec3<TReal>& q, const KVec3<TReal>& r)
         : p (p), q(q), r(r)
     { }
+    explicit KMatrix3x3(const KMatrix2x2<TReal>& mat2)
+        : p(mat2.P()), q(mat2.Q()), r(KVec2<TReal>::zero, 1)
+    { }
     KMatrix3x3(const KMatrix3x3&) = default;
     KMatrix3x3(KMatrix3x3&&) = default;
     KMatrix3x3& operator=(const KMatrix3x3&) = default;
     KMatrix3x3& operator=(KMatrix3x3&&) = default;
+
+    const KVec3<TReal>& P() const { return p; }
+    const KVec3<TReal>& Q() const { return q; }
+    const KVec3<TReal>& R() const { return r; }
+
+    TReal operator[](int32_t subIndex) const { return matrix[subIndex / 10 - 1][subIndex % 10 - 1]; }
+    TReal& operator[](int32_t subIndex) { return matrix[subIndex / 10 - 1][subIndex % 10 - 1]; }
 
     template<class TValue> requires std::is_arithmetic_v<TValue>
     KMatrix3x3 operator*(TValue value) const { return KMatrix3x3 { p * value, q * value, r * value }; }
@@ -103,7 +114,7 @@ public:
         auto cofValue = [](TReal x1, TReal y1, TReal x2, TReal y2, int32_t indexSum)
         {
             TReal det = x1 * y2 - y1 * x2;
-            return indexSum & 1 > 0 ? -det : det;
+            return (indexSum & 1 > 0) ? -det : det;
         };
 
         TReal cof11 = cofValue(m22, m23, m32, m33, 1 + 1);

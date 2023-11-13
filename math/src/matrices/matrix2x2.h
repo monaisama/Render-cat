@@ -23,6 +23,12 @@ public:
     KMatrix2x2& operator=(const KMatrix2x2&) = default;
     KMatrix2x2& operator=(KMatrix2x2&&) = default;
 
+    const KVec2<TReal>& P() const { return p; }
+    const KVec2<TReal>& Q() const { return q; }
+    
+    TReal operator[](int32_t subIndex) const { return matrix[subIndex / 10 - 1][subIndex % 10 - 1]; }
+    TReal& operator[](int32_t subIndex) { return matrix[subIndex / 10 - 1][subIndex % 10 - 1]; }
+
     KMatrix2x2 operator*(const KMatrix2x2& rhs) const
     {
         KMatrix2x2 ret;

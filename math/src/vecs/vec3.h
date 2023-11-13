@@ -4,6 +4,7 @@
 #include "mymath.h"
 #include "log.h"
 #include <iostream>
+#include "vec2.h"
 
 namespace KMath
 {
@@ -18,10 +19,12 @@ public:
     K_API static const KVec3 right; // y
     K_API static const KVec3 forward; // x
     K_API static const KVec3 zero;
+    K_API static const KVec3 wzero;
 
 public:
     KVec3() = default;
     KVec3(TReal x, TReal y, TReal z) : x(x), y(y), z(z) { }
+    explicit KVec3(const KVec2<TReal>& vec2, TReal w = 0) : x(vec2.X()), y(vec2.Y()), z(w) { }
     KVec3(const KVec3&) = default;
     KVec3(KVec3&&) = default;
     KVec3& operator=(const KVec3&) = default;
@@ -94,8 +97,8 @@ public:
     bool operator!=(const KVec3& rhs) const { return !(*this == rhs); }
 
     // 点乘
-    TReal operator|(const KVec3& rhs) const { return x * rhs.x + y * rhs.y + z * rhs.z; }
-    static TReal Dot(const KVec3& lhs, const KVec3& rhs) { return lhs | rhs; }
+    TReal operator*(const KVec3& rhs) const { return x * rhs.x + y * rhs.y + z * rhs.z; }
+    static TReal Dot(const KVec3& lhs, const KVec3& rhs) { return lhs * rhs; }
 
     // 叉乘 推导类似vec2 也是用分配率展开，然后根据ijk三个轴消除
     KVec3 operator^(const KVec3& rhs) const

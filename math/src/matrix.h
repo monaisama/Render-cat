@@ -1,18 +1,22 @@
 #pragma once
 
-#include "matrices/matrix3x3.h"
 #include "matrices/matrix2x2.h"
+#include "matrices/matrix3x3.h"
+#include "matrices/matrix4x4.h"
 #include <cmath>
 #include "mymath.h"
 
 namespace KMath
 {
 
+using KMatrix2f = KMatrix2x2<float>;
+using KMatrix2i = KMatrix2x2<int32_t>;
+
 using KMatrix3f = KMatrix3x3<float>;
 using KMatrix3i = KMatrix3x3<int32_t>;
 
-using KMatrix2f = KMatrix2x2<float>;
-using KMatrix2i = KMatrix2x2<int32_t>;
+using KMatrix4f = KMatrix4x4<float>;
+using KMatrix4i = KMatrix4x4<int32_t>;
 
 template<class TReal = float, class TReal2 = TReal>
 requires std::is_arithmetic_v<TReal> && std::is_arithmetic_v<TReal2>
@@ -36,6 +40,18 @@ KVec3<TReal> operator*(const KVec3<TReal>& vec, const KMatrix3x3<TReal2>& matrix
 template<class TReal = float, class TReal2 = TReal>
 requires std::is_arithmetic_v<TReal> && std::is_arithmetic_v<TReal2>
 KVec3<TReal>& operator*=(KVec3<TReal>& vec, const KMatrix3x3<TReal2>& matrix)
+{
+    return vec = matrix * vec;
+}
+template<class TReal = float, class TReal2 = TReal>
+requires std::is_arithmetic_v<TReal> && std::is_arithmetic_v<TReal2>
+KVec4<TReal> operator*(const KVec4<TReal>& vec, const KMatrix4x4<TReal2>& matrix)
+{
+    return matrix * vec;
+}
+template<class TReal = float, class TReal2 = TReal>
+requires std::is_arithmetic_v<TReal> && std::is_arithmetic_v<TReal2>
+KVec4<TReal>& operator*=(const KVec4<TReal>& vec, const KMatrix4x4<TReal2>& matrix)
 {
     return vec = matrix * vec;
 }
@@ -122,6 +138,17 @@ KMatrix3x3<TReal> MakeScaleMatrix(KVec3<TReal2> vec, TReal3 scale)
         KVec3<TReal> { k_1 * nxy, 1 + k_1 * ny2, k_1 * nyz },
         KVec3<TReal> { k_1 * nxz, k_1*nyz, 1 + k_1 * nz2 },
     };
+}
+
+template<class TReal = float, class TReal2 = TReal>
+requires std::is_arithmetic_v<TReal> && std::is_arithmetic_v<TReal2>
+KMatrix4x4<TReal> MakeTranslateMatrix(KVec3<TReal2> vec)
+{
+    KMatrix4x4<TReal> ret = KMatrix4x4<TReal>::identity;
+    ret[41] = static_cast<TReal>(vec.X());
+    ret[42] = static_cast<TReal>(vec.Y());
+    ret[43] = static_cast<TReal>(vec.Z());
+    return ret;
 }
 
 }
