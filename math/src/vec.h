@@ -40,7 +40,7 @@ KVec3<TReal> ToVec3(const KVec4<TReal2>& vec4)
 }
 
 template<class TReal, class TReal2 = TReal> requires std::is_arithmetic_v<TReal>
-KVec3<TReal> ToVec2(const KVec3<TReal2>& vec3)
+KVec2<TReal> ToVec2(const KVec3<TReal2>& vec3)
 {
     return KVec2<TReal> {
         static_cast<TReal>(vec3.X()),

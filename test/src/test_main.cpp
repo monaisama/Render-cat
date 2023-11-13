@@ -363,6 +363,7 @@ int main()
     KLog::LogSimple(point1 * transMatrix1 * transMatrix1.Inverse());
 
     KLog::LogSimple(KVec4f::wzero, KVec4f::wzero * MakeTranslateMatrix(point1));
+    KLog::LogSimple(KVec3f::wzero, ToVec2<float>(KVec3f::wzero * MakeTranslateMatrix(KVec2f{1,1})));
 
 #endif
 
