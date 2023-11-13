@@ -85,7 +85,7 @@ public:
     }
 
     // 矩阵求逆 // 伴随矩阵除以行列式
-    KMatrix3x3 Inverse() const { return Adjugete() / Det(); }
+    KMatrix3x3 Inverse() const { return Adjugate() / Det(); }
     // 行列式 // 任意选择一行或者一列的元素乘以对应的余子式矩阵的行列式
     // 3x3直接写公式
     TReal Det() const
@@ -96,7 +96,7 @@ public:
     // 是否是奇异矩阵
     bool IsSingular() const { return EqualsZero(Det()); }
     // 伴随矩阵 // 代数余子式矩阵的转置
-    KMatrix3x3 Adjugete() const { return Cofactor().Transpose(); }
+    KMatrix3x3 Adjugate() const { return Cofactor().Transpose(); }
     // 余子式矩阵 // 代数余子式 = 有符号的余子式矩阵行列式
     KMatrix3x3 Cofactor() const
     {
