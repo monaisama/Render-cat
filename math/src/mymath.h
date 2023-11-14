@@ -16,6 +16,9 @@ inline constexpr float pi = 3.141593f;
 inline constexpr float degree2radian = pi / 180.f;
 inline constexpr float radian2degree = 1 / degree2radian;
 
+inline float Radians(float degree) { return degree * degree2radian; }
+inline float Degree(float radians) { return radians * radian2degree; }
+
 template<class TFloat>
 requires std::is_floating_point_v<TFloat>
 inline TFloat Abs(TFloat number)

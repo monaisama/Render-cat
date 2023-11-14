@@ -89,7 +89,7 @@ template<class TReal = float>
 requires std::is_arithmetic_v<TReal>
 KMatrix2x2<TReal> MakeRotateMatrix(float angle)
 {
-    angle *= degree2radian;
+    angle = Radians(angle);
     TReal cosValue = static_cast<TReal>(cos(angle)), sinValue = static_cast<TReal>(sin(angle));
     return KMatrix2x2<TReal> {
         KVec2<TReal> { cosValue, sinValue },
@@ -105,7 +105,7 @@ KMatrix3x3<TReal> MakeRotateMatrix(KVec3<TReal2> vec, float angle)
 {
     vec.Normalize();
 
-    angle *= degree2radian;
+    angle = Radians(angle);
     TReal cosValue = static_cast<TReal>(cos(angle)), sinValue = static_cast<TReal>(sin(angle));
     TReal i_cosValue = 1 - cosValue; // 1 - cos
     TReal nx = static_cast<TReal>(vec.X()), ny = static_cast<TReal>(vec.Y()), nz = static_cast<TReal>(vec.Z());
