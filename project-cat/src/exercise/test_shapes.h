@@ -123,10 +123,13 @@ protected:
     virtual void RenderPhase(ERenderPhase phase)
     {
         using namespace KMath;
+        auto translateMat = MakeTranslateMatrix<float, float>(KVec3f { 0.3f, 0.3f, 0 });
+        auto rotationMat = MakeRotateMatrix<float, float>(KVec3f::up, glfwGetTime());
         switch (phase)
         {
             case ERenderPhase::AfterSetMat:
-                mat->SetMatrix4f("matrix", KMatrix4f { MakeRotateMatrix<float, float>(-KVec3f::up, glfwGetTime()) });
+                // mat->SetMatrix4f("matrix", translateMat * KMatrix4f { rotationMat });
+                mat->SetMatrix4f("matrix", KMatrix4f { rotationMat } * translateMat);
                 break;
             default:
                 break;

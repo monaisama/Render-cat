@@ -62,7 +62,7 @@ public:
         {
             for (int32_t j = 0; j < 4; ++j)
             {
-                ret[i][j] = matrix[i][0] * rhs.matrix[0][j] +
+                ret.matrix[i][j] = matrix[i][0] * rhs.matrix[0][j] +
                         matrix[i][1] * rhs.matrix[1][j] +
                         matrix[i][2] * rhs.matrix[2][j] +
                         matrix[i][3] * rhs.matrix[3][j];
