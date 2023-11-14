@@ -78,12 +78,15 @@ public:
             static_cast<TValue>(rhs.X() * m13 + rhs.Y() * m23 + rhs.Z() * m33)
         };
     }
-
     template<class TValue = TReal> requires std::is_arithmetic_v<TValue>
-    KVec3<TValue> TransformVector(const KVec3<TValue>& vec) const
+    KVec2<TValue> operator*(const KVec2<TValue>& rhs) const
     {
-        return *this * vec;
+        return ToVec2<TValue>(operator*(KVec3<TValue>(rhs, 1)));
     }
+    template<class TValue = TReal> requires std::is_arithmetic_v<TValue>
+    KVec3<TValue> TransformVector(const KVec3<TValue>& vec) const { return *this * vec; }
+    template<class TValue = TReal> requires std::is_arithmetic_v<TValue>
+    KVec2<TValue> TransformVector(const KVec2<TValue>& vec) const { return *this * vec; }
 
     // 转置
     KMatrix3x3 Transpose() const
@@ -107,9 +110,9 @@ public:
     // 是否是奇异矩阵
     bool IsSingular() const { return EqualsZero(Det()); }
     // 伴随矩阵 // 代数余子式矩阵的转置
-    KMatrix3x3 Adjugate() const { return Cofactor().Transpose(); }
+    KMatrix3x3 Adjugate() const { return CofactorMatrix().Transpose(); }
     // 余子式矩阵 // 代数余子式 = 有符号的余子式矩阵行列式
-    KMatrix3x3 Cofactor() const
+    KMatrix3x3 CofactorMatrix() const
     {
         auto cofValue = [](TReal x1, TReal y1, TReal x2, TReal y2, int32_t indexSum)
         {

@@ -33,6 +33,19 @@ KVec2<TReal>& operator*=(KVec2<TReal>& vec, const KMatrix2x2<TReal2>& matrix)
 
 template<class TReal = float, class TReal2 = TReal>
 requires std::is_arithmetic_v<TReal> && std::is_arithmetic_v<TReal2>
+KVec2<TReal> operator*(const KVec2<TReal>& vec, const KMatrix3x3<TReal2>& matrix)
+{
+    return matrix * vec;
+}
+template<class TReal = float, class TReal2 = TReal>
+requires std::is_arithmetic_v<TReal> && std::is_arithmetic_v<TReal2>
+KVec2<TReal>& operator*=(KVec2<TReal>& vec, const KMatrix3x3<TReal2>& matrix)
+{
+    return vec = matrix * vec;
+}
+
+template<class TReal = float, class TReal2 = TReal>
+requires std::is_arithmetic_v<TReal> && std::is_arithmetic_v<TReal2>
 KVec3<TReal> operator*(const KVec3<TReal>& vec, const KMatrix3x3<TReal2>& matrix)
 {
     return matrix * vec;
@@ -43,12 +56,27 @@ KVec3<TReal>& operator*=(KVec3<TReal>& vec, const KMatrix3x3<TReal2>& matrix)
 {
     return vec = matrix * vec;
 }
+
+template<class TReal = float, class TReal2 = TReal>
+requires std::is_arithmetic_v<TReal> && std::is_arithmetic_v<TReal2>
+KVec3<TReal> operator*(const KVec3<TReal>& vec, const KMatrix4x4<TReal2>& matrix)
+{
+    return matrix * vec;
+}
+template<class TReal = float, class TReal2 = TReal>
+requires std::is_arithmetic_v<TReal> && std::is_arithmetic_v<TReal2>
+KVec3<TReal>& operator*=(KVec3<TReal>& vec, const KMatrix4x4<TReal2>& matrix)
+{
+    return vec = matrix * vec;
+}
+
 template<class TReal = float, class TReal2 = TReal>
 requires std::is_arithmetic_v<TReal> && std::is_arithmetic_v<TReal2>
 KVec4<TReal> operator*(const KVec4<TReal>& vec, const KMatrix4x4<TReal2>& matrix)
 {
     return matrix * vec;
 }
+
 template<class TReal = float, class TReal2 = TReal>
 requires std::is_arithmetic_v<TReal> && std::is_arithmetic_v<TReal2>
 KVec4<TReal>& operator*=(const KVec4<TReal>& vec, const KMatrix4x4<TReal2>& matrix)

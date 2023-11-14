@@ -365,6 +365,24 @@ int main()
     KLog::LogSimple(KVec4f::wzero, KVec4f::wzero * MakeTranslateMatrix(point1));
     KLog::LogSimple(KVec3f::wzero, ToVec2<float>(KVec3f::wzero * MakeTranslateMatrix(KVec2f{1,1})));
 
+    KMatrix4f transMatrix2 = MakeTranslateMatrix(KVec3f {-1,1,1});
+    KVec3f point2 {1,0,0};
+    KLog::LogSimple(transMatrix2, transMatrix2.Inverse());
+    KLog::LogSimple(point2, point2 * transMatrix2, point2 * transMatrix2 * transMatrix2.Inverse());
+
+    KMatrix3f transMatrix3 = MakeTranslateMatrix(KVec2f {-1,1});
+    KVec2f point3 {1,0};
+    KLog::LogSimple(point3, point3 * transMatrix3, point3 * transMatrix3 * transMatrix3.Inverse());
+
+    KMatrix4i transMatrix4 = MakeTranslateMatrix<int32_t>(KVec3i {-1,1,1});
+    KVec3i point4 {1,0,0};
+    KLog::LogSimple(transMatrix4, transMatrix4.Inverse());
+    KLog::LogSimple(point4, point4 * transMatrix4, point4 * transMatrix4 * transMatrix4.Inverse());
+
+    KMatrix3i transMatrix5 = MakeTranslateMatrix<int32_t>(KVec2i {-1,1});
+    KVec2i point5 {1,0};
+    KLog::LogSimple(point5, point5 * transMatrix5, point5 * transMatrix5 * transMatrix5.Inverse());
+
 #endif
 
 #if test_file

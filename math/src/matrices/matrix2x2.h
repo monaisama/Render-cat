@@ -85,7 +85,7 @@ public:
     // 逆矩阵是伴随矩阵除以行列式
     KMatrix2x2 Inverse() const { return Adjugate() / Det(); }
     // 代数余子式矩阵
-    KMatrix2x2 Cofactor() const
+    KMatrix2x2 CofactorMatrix() const
     {
         KMatrix2x2 cof;
         {
@@ -97,7 +97,7 @@ public:
         return cof;
     }
     // 伴随矩阵是代数余子式矩阵的转置矩阵
-    KMatrix2x2 Adjugate() const { return Cofactor().Transpose(); }
+    KMatrix2x2 Adjugate() const { return CofactorMatrix().Transpose(); }
 
 protected:
     friend std::ostream& operator<<(std::ostream& out, const KMatrix2x2& rhs)
