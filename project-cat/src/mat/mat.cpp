@@ -36,9 +36,18 @@ void KMat::SetInt(const std::string& name, int32_t value) const
 {
     glUniform1i(glGetUniformLocation(matObjectID, name.c_str()), value);
 }
-void KMat::SetVec3f(const std::string& name, KMath::KVec3f value) const
+void KMat::SetVec3f(const std::string& name, const KMath::KVec3f& value) const
 {
     glUniform3f(glGetUniformLocation(matObjectID, name.c_str()), value.X(), value.Y(), value.Z());
+}
+void KMat::SetMatrix4f(const std::string& name, const KMath::KMatrix4f& value) const
+{
+    // 这里需要做一次转置，因为opengl是列向量，math library里面是行向量
+    glUniformMatrix4fv(glGetUniformLocation(matObjectID, name.c_str()), 1, GL_TRUE, value.Matrix());
+}
+void KMat::SetMatrix3f(const std::string& name, const KMath::KMatrix3f& value) const
+{
+    glUniformMatrix3fv(glGetUniformLocation(matObjectID, name.c_str()), 1, GL_TRUE, value.Matrix());
 }
 
 KMat::~KMat()

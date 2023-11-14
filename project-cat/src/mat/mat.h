@@ -3,6 +3,7 @@
 
 #include "shader.h"
 #include "vec.h"
+#include "matrix.h"
 
 namespace KCore
 {
@@ -31,10 +32,12 @@ public:
     void Use() const;
 
     virtual const KMatMeta* GetMeta() const override { return &metaInfo; }
-    void SetBool(const std::string &name, bool value) const;
-    void SetFloat(const std::string &name, float value) const;
-    void SetInt(const std::string &name, int32_t value) const;
-    void SetVec3f(const std::string &name, KMath::KVec3f value) const;
+    void SetBool(const std::string&, bool) const;
+    void SetFloat(const std::string&, float) const;
+    void SetInt(const std::string&, int32_t) const;
+    void SetVec3f(const std::string&, const KMath::KVec3f&) const;
+    void SetMatrix4f(const std::string&, const KMath::KMatrix4f&) const;
+    void SetMatrix3f(const std::string&, const KMath::KMatrix3f&) const;
 
 protected:
     GLuint matObjectID;

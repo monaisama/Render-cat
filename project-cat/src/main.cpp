@@ -62,11 +62,11 @@ int main()
     KExample example;
     example.Setup();
 
-    K_2Triangles excrise1;
-    excrise1.Setup();
+    K_2Triangles triangles2;
+    triangles2.Setup();
 
-    KExcriseShape shape;
-    shape.Setup();
+    KExerciseShape exercise;
+    exercise.Setup();
 
     while (!glfwWindowShouldClose(window))
     {
@@ -75,13 +75,13 @@ int main()
         glClearColor(0.f, 0.f, 0.f, 1.f);
         glClear(GL_COLOR_BUFFER_BIT);
         
-        glPolygonMode(GL_FRONT_AND_BACK, GL_FILL);
-        example.Render();
+        // glPolygonMode(GL_FRONT_AND_BACK, GL_FILL);
+        // example.Render();
 
         glPolygonMode(GL_FRONT_AND_BACK, GL_LINE);
-        triangle.Render();
-        excrise1.Render();
-        shape.Render();
+        // triangle.Render();
+        // triangles2.Render();
+        exercise.Render();
 
         glfwPollEvents();
         glfwSwapBuffers(window);

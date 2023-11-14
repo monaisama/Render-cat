@@ -25,6 +25,8 @@ public:
 
     const KVec2<TReal>& P() const { return p; }
     const KVec2<TReal>& Q() const { return q; }
+
+    const TReal* Matrix() const { return &matrix[0][0]; }
     
     TReal operator[](int32_t subIndex) const { return matrix[subIndex / 10 - 1][subIndex % 10 - 1]; }
     TReal& operator[](int32_t subIndex) { return matrix[subIndex / 10 - 1][subIndex % 10 - 1]; }

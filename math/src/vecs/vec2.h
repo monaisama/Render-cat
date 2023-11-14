@@ -40,6 +40,7 @@ public:
     KVec2& operator-=(const KVec2& rhs) { x -= rhs.x; y -= rhs.y; return *this; }
 
     KVec2& operator-() { return *this *= -1; }
+    KVec2 operator-() const { return *this * -1; }
 
     template<class TValue> requires std::is_arithmetic_v<TValue>
     KVec2 operator*(TValue value) const

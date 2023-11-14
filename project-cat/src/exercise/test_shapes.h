@@ -93,42 +93,40 @@ protected:
     }
 };
 
-class KExcriseShape : public KPrimitive
+class KExerciseShape : public KPrimitive
 {
 protected:
     virtual void SetupShape() override
     {
         metaInfo.vertexs = {
             -0.5f, -0.5f, 0.f,
-            0.5f, -0.5f, 0.f,
-            0.5f, 0.5f, 0.f,
-            -0.5, 0.5f, 0.f
+            0.f, 0.5f, 0.f,
+            0.5f, -0.5f, 0.f
         };
 
         metaInfo.colors = {
             1.f, 0.f, 0.f,
             0.f, 1.f, 0.f,
-            0.f, 0.f, 1.f,
-            1.f, 1.f, 1.f
+            0.f, 0.f, 1.f
         };
 
         metaInfo.indices = {
-            0,1,2,
-            0,2,3
+            0,1,2
         };
 
         metaInfo.mat = KUtils::MakeMetaMat(
-            KUtils::MakeMetaShader("triangle.vs", KShaderType::Vertex),
-            KUtils::MakeMetaShader("triangle.fs", KShaderType::Fragment)
+            KUtils::MakeMetaShader("exercise.vs", KShaderType::Vertex),
+            KUtils::MakeMetaShader("exercise.fs", KShaderType::Fragment)
         );
     }
 
     virtual void RenderPhase(ERenderPhase phase)
     {
+        using namespace KMath;
         switch (phase)
         {
             case ERenderPhase::AfterSetMat:
-                mat->SetFloat("offset", sin(glfwGetTime()));
+                mat->SetMatrix4f("matrix", KMatrix4f { MakeRotateMatrix<float, float>(-KVec3f::up, glfwGetTime()) });
                 break;
             default:
                 break;

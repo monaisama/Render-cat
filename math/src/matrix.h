@@ -101,9 +101,9 @@ KMatrix2x2<TReal> MakeRotateMatrix(float angle)
 // 这里的所有向量都需要是单位向量，因为后面的公式都是用单位向量来推算出来的
 template<class TReal = float, class TReal2 = TReal>
 requires std::is_arithmetic_v<TReal> && std::is_arithmetic_v<TReal2>
-KMatrix3x3<TReal> MakeRotateMatrix(KVec3<TReal2> vec, float angle)
+KMatrix3x3<TReal> MakeRotateMatrix(const KVec3<TReal2>& vec, float angle)
 {
-    vec.Normalize();
+    const_cast<KVec3<TReal2>&>(vec).Normalize();
 
     angle = Radians(angle);
     TReal cosValue = static_cast<TReal>(cos(angle)), sinValue = static_cast<TReal>(sin(angle));
@@ -137,9 +137,9 @@ KMatrix3x3<TReal> MakeRotateMatrix(KVec3<TReal2> vec, float angle)
 // 这里的缩放轴是根据单位向量推算的
 template<class TReal = float, class TReal2 = TReal, class TReal3 = TReal>
 requires std::is_arithmetic_v<TReal> && std::is_arithmetic_v<TReal2> && std::is_arithmetic_v<TReal3>
-KMatrix2x2<TReal> MakeScaleMatrix(KVec2<TReal2> vec, TReal3 scale)
+KMatrix2x2<TReal> MakeScaleMatrix(const KVec2<TReal2>& vec, TReal3 scale)
 {
-    vec.Normalize();
+    const_cast<KVec2<TReal2>&>(vec).Normalize();
 
     TReal nx2 = static_cast<TReal>(vec.X() * vec.X()), ny2 = static_cast<TReal>(vec.Y() * vec.Y());
     TReal nxy = static_cast<TReal>(vec.X() * vec.Y());
@@ -153,9 +153,9 @@ KMatrix2x2<TReal> MakeScaleMatrix(KVec2<TReal2> vec, TReal3 scale)
 
 template<class TReal = float, class TReal2 = TReal, class TReal3 = TReal>
 requires std::is_arithmetic_v<TReal> && std::is_arithmetic_v<TReal2> && std::is_arithmetic_v<TReal3>
-KMatrix3x3<TReal> MakeScaleMatrix(KVec3<TReal2> vec, TReal3 scale)
+KMatrix3x3<TReal> MakeScaleMatrix(const KVec3<TReal2>& vec, TReal3 scale)
 {
-    vec.Normalize();
+    const_cast<KVec3<TReal2>&>(vec).Normalize();
 
     TReal nx2 = static_cast<TReal>(vec.X() * vec.X()), ny2 = static_cast<TReal>(vec.Y() * vec.Y()), nz2 = static_cast<TReal>(vec.Z() * vec.Z());
     TReal nxy = static_cast<TReal>(vec.X() * vec.Y()), nxz = static_cast<TReal>(vec.X() * vec.Z()), nyz = static_cast<TReal>(vec.Y() * vec.Z());
@@ -170,7 +170,7 @@ KMatrix3x3<TReal> MakeScaleMatrix(KVec3<TReal2> vec, TReal3 scale)
 
 template<class TReal = float, class TReal2 = TReal>
 requires std::is_arithmetic_v<TReal> && std::is_arithmetic_v<TReal2>
-KMatrix3x3<TReal> MakeTranslateMatrix(KVec2<TReal2> vec)
+KMatrix3x3<TReal> MakeTranslateMatrix(const KVec2<TReal2>& vec)
 {
     KMatrix3x3<TReal> ret(KMatrix3x3<TReal>::identity);
     ret[31] = static_cast<TReal>(vec.X());
@@ -180,7 +180,7 @@ KMatrix3x3<TReal> MakeTranslateMatrix(KVec2<TReal2> vec)
 
 template<class TReal = float, class TReal2 = TReal>
 requires std::is_arithmetic_v<TReal> && std::is_arithmetic_v<TReal2>
-KMatrix4x4<TReal> MakeTranslateMatrix(KVec3<TReal2> vec)
+KMatrix4x4<TReal> MakeTranslateMatrix(const KVec3<TReal2>& vec)
 {
     KMatrix4x4<TReal> ret(KMatrix4x4<TReal>::identity);
     ret[41] = static_cast<TReal>(vec.X());
