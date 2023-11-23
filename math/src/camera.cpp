@@ -24,14 +24,12 @@ KMatrix4f GetCorrdConverter2OpenglNDC()
 // 所以这里需要先映射到 [-1, 1]的正方体中
 KMatrix4f MakeClipSpaceNDC(float near, float far, float width, float height) // ortho
 {
-    // 下面所有的计算都是在NDC坐标系空间中
     const float midz = (far - near) / 2;
-    KMatrix4f trans = MakeTranslateMatrix(KVec3f {0, 0, midz}).Inverse(); // 位移到原点
-    KMatrix4f scale = ToMatrix4(MakeScaleMatrix(KVec3f(width / 2, height / 2, midz)).Inverse()); // 缩放到正方体中
+    KMatrix4f trans = MakeTranslateMatrix(KVec3f {midz, 0, 0}).Inverse(); // 位移到原点
+    KMatrix4f scale = ToMatrix4(MakeScaleMatrix(KVec3f(midz, width / 2, height / 2)).Inverse()); // 缩放到正方体中
 
     // KLog::LogSimple("trans & scale:\n", trans, scale);
-    return GetCorrdConverter2OpenglNDC() * // 转换坐标系
-        trans * scale;
+    return trans * scale * GetCorrdConverter2OpenglNDC(); // 转换坐标系
 }
 
 KCamera KCamera::Ortho(const KVec3f& location, const KRotatorf& rotation, float near, float far, float width, float height)
