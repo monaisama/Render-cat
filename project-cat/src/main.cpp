@@ -80,7 +80,7 @@ int main()
         // glPolygonMode(GL_FRONT_AND_BACK, GL_FILL);
         // example.Render();
 
-        glPolygonMode(GL_FRONT_AND_BACK, GL_LINE);
+        // glPolygonMode(GL_FRONT_AND_BACK, GL_LINE);
         // triangle.Render();
         // triangles2.Render();
         exercise.Render();

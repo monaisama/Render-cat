@@ -385,13 +385,15 @@ int main()
     KVec2i point5 {1,0};
     KLog::LogSimple(point5, point5 * transMatrix5, point5 * transMatrix5 * transMatrix5.Inverse());
 
-    KCamera camera = KCamera::Ortho( {-5, 0, 0}, {0, 0, 0}, 1.f, 10.f, 80, 60);
+    KCamera camera = KCamera::Ortho( {-5, 0, 0}, KRotatorf::zero, 1.f, 10.f, 80, 60);
     KMatrix4f MVP = camera.Matrix();
     
     // 0, -1, -1,
     // 0, 1, -1,
     // 0, 0, 1,
-    KVec3f a = KVec3f {0, -1, -1}, b = KVec3f {0, 1, -1}, c = KVec3f {0, 0, 1};
+    KVec3f a {0, -1, -1}, b {0, 1, -1}, c {0, 0, 1};
+
+    KCamera perspCam = KCamera::Persp( {-5, 0, 0}, KRotatorf::zero, 90, 0.1f, 100.f, 8.f / 6.f);
     
     KLog::LogSimple(
         "start MVP test:\n",
@@ -404,6 +406,20 @@ int main()
         b * MVP,
         c * MVP,
         "\nend mvp test.");
+
+    KVec4f a4f {0, -1, -1, 1}, b4f {0, 1, -1, 1}, c4f {0, 0, 1, 1};
+    KLog::LogSimple(
+        "start persp test:\n",
+        perspCam.ViewMatrix(),
+        a4f * perspCam.ViewMatrix(),
+        b4f * perspCam.ViewMatrix(),
+        c4f * perspCam.ViewMatrix(),
+        "\n",
+        perspCam.Matrix(),
+        a4f * perspCam.Matrix(),
+        b4f * perspCam.Matrix(),
+        c4f * perspCam.Matrix(),
+        "\nend persp test.");
 
 #endif
 

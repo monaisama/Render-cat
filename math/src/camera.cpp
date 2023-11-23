@@ -1,4 +1,6 @@
 #include "camera.h"
+#include <cmath>
+#include "mymath.h"
 
 namespace KMath
 {
@@ -35,20 +37,21 @@ KMatrix4f MakeClipSpaceNDC_Ortho(float near, float far, float width, float heigh
 
 // 透视投影
 // 这里假定投影平面是距离原点位置d = 1(这个距离不重要，不同距离对应大小在屏幕的占比是一致的)
-KMatrix4f MakeClipSpaceNDC_Persp(float fov, float near, float far, float ratio)
+KMatrix4f MakeClipSpaceNDC_Persp(float fov, float near, float far, float aspect)
 {
     // 缩放到正方体中 // 这里其实就是将视锥体压缩到立方体中
     // 近裁剪面 n 远裁剪面 f, 根据(n,0,0,1) 映射后 n不变，（f,0,0,1） 映射后f不变
     // 根据相似三角形来计算对应的矩阵 y` = y * n/x，然后直接其次坐标变成(x`,y,z,x)
-    KMatrix4f zom {
-        KVec4f {near + far, 0, 0, 0},
+    KMatrix4f zoom {
+        KVec4f {near + far, 0, 0, 1},
         KVec4f {0, near, 0, 0},
         KVec4f {0, 0, near, 0},
-        KVec4f {-near * far, 0, 0, 1},
+        KVec4f {-near * far, 0, 0, 0},
     };
-    // 位移到远点
-    // 转换坐标系
-    return zom;
+    // 压缩成一个立方体之后，需要执行正交投影变换
+    float radian = Radians(fov / 2.f);
+    float height = 2 * near / tan(radian);
+    return zoom * MakeClipSpaceNDC_Ortho(near, far, height * aspect, height);
 }
 
 KCamera KCamera::Ortho(const KVec3f& location, const KRotatorf& rotation, float near, float far, float width, float height)
@@ -58,10 +61,10 @@ KCamera KCamera::Ortho(const KVec3f& location, const KRotatorf& rotation, float 
     return camera;
 }
 
-KCamera KCamera::Persp(const KVec3f& location, const KRotatorf& rotation, float fov, float near, float far, float ratio)
+KCamera KCamera::Persp(const KVec3f& location, const KRotatorf& rotation, float fov, float near, float far, float aspect)
 {
     KCamera camera(ToMatrix4(rotation.ToMatrix()) * MakeTranslateMatrix(location));
-    camera.clipMatrix = MakeClipSpaceNDC_Persp(fov, near, far, ratio);
+    camera.clipMatrix = MakeClipSpaceNDC_Persp(fov, near, far, aspect);
     return camera;
 }
 

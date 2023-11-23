@@ -20,7 +20,7 @@ public:
     // 正交投影相机
     static KCamera Ortho(const KVec3f& location, const KRotatorf& rotaion, float near, float far, float width, float height);
     // 透视投影相机
-    static KCamera Persp(const KVec3f& location, const KRotatorf& rotation, float fov, float near, float far, float ratio);
+    static KCamera Persp(const KVec3f& location, const KRotatorf& rotation, float fov, float near, float far, float aspect);
 
     KMatrix4f Matrix() const { return viewMatrix * clipMatrix; }
     const KMatrix4f& ViewMatrix() const { return viewMatrix; }

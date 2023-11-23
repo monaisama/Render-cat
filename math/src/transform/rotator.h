@@ -1,6 +1,7 @@
 #pragma once
 #include <type_traits>
 
+#include "compile_header.h"
 #include "matrix.h"
 
 namespace KMath
@@ -11,6 +12,8 @@ requires std::is_arithmetic_v<TAngle>
 class KRotator
 {
 public:
+    K_API static const KRotator zero;
+
     KRotator() = default;
     KRotator(TAngle roll, TAngle pitch, TAngle yaw)
         : roll(roll), pitch(pitch), yaw(yaw) { }
