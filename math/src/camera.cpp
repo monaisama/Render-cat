@@ -22,7 +22,8 @@ KMatrix4f GetCorrdConverter2OpenglNDC()
 // 这里采用直接转换到opengl的坐标系中
 // opengl的NDC使用xyz -> [-1, 1] 并且z轴向屏幕内，y轴向上，x轴向右
 // 所以这里需要先映射到 [-1, 1]的正方体中
-KMatrix4f MakeClipSpaceNDC(float near, float far, float width, float height) // ortho
+// 正交投影
+KMatrix4f MakeClipSpaceNDC_Ortho(float near, float far, float width, float height) // ortho
 {
     const float midz = (far - near) / 2;
     KMatrix4f trans = MakeTranslateMatrix(KVec3f {midz, 0, 0}).Inverse(); // 位移到原点
@@ -32,10 +33,35 @@ KMatrix4f MakeClipSpaceNDC(float near, float far, float width, float height) // 
     return trans * scale * GetCorrdConverter2OpenglNDC(); // 转换坐标系
 }
 
+// 透视投影
+// 这里假定投影平面是距离原点位置d = 1(这个距离不重要，不同距离对应大小在屏幕的占比是一致的)
+KMatrix4f MakeClipSpaceNDC_Persp(float fov, float near, float far, float ratio)
+{
+    // 缩放到正方体中 // 这里其实就是将视锥体压缩到立方体中
+    // 近裁剪面 n 远裁剪面 f, 根据(n,0,0,1) 映射后 n不变，（f,0,0,1） 映射后f不变
+    // 根据相似三角形来计算对应的矩阵 y` = y * n/x，然后直接其次坐标变成(x`,y,z,x)
+    KMatrix4f zom {
+        KVec4f {near + far, 0, 0, 0},
+        KVec4f {0, near, 0, 0},
+        KVec4f {0, 0, near, 0},
+        KVec4f {-near * far, 0, 0, 1},
+    };
+    // 位移到远点
+    // 转换坐标系
+    return zom;
+}
+
 KCamera KCamera::Ortho(const KVec3f& location, const KRotatorf& rotation, float near, float far, float width, float height)
 {
-    KCamera camera(ToMatrix4(rotation.ToMatrix()) * MakeTranslateMatrix(location)); // todo rotation
-    camera.clipMatrix = MakeClipSpaceNDC(near, far, width, height);
+    KCamera camera(ToMatrix4(rotation.ToMatrix()) * MakeTranslateMatrix(location));
+    camera.clipMatrix = MakeClipSpaceNDC_Ortho(near, far, width, height);
+    return camera;
+}
+
+KCamera KCamera::Persp(const KVec3f& location, const KRotatorf& rotation, float fov, float near, float far, float ratio)
+{
+    KCamera camera(ToMatrix4(rotation.ToMatrix()) * MakeTranslateMatrix(location));
+    camera.clipMatrix = MakeClipSpaceNDC_Persp(fov, near, far, ratio);
     return camera;
 }
 
