@@ -16,6 +16,7 @@ public:
     K_API static const KVec2 up;
     K_API static const KVec2 right;
     K_API static const KVec2 zero;
+    K_API static const KVec2 one;
 
 public:
     KVec2() = default;

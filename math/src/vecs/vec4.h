@@ -14,6 +14,7 @@ class KVec4
 public:
     K_API static const KVec4 zero;
     K_API static const KVec4 wzero;
+    K_API static const KVec4 one;
 
 public:
     KVec4() = default;

@@ -20,6 +20,7 @@ public:
     K_API static const KVec3 forward; // x
     K_API static const KVec3 zero;
     K_API static const KVec3 wzero;
+    K_API static const KVec3 one;
 
 public:
     KVec3() = default;

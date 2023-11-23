@@ -4,6 +4,8 @@
 #include "vecs/vec3.h"
 #include "vecs/vec4.h"
 
+#include "vecs/rotator.h"
+
 namespace KMath
 {
 
@@ -15,6 +17,9 @@ using KVec3i = KVec3<int32_t>;
 
 using KVec4f = KVec4<float>;
 using KVec4i = KVec4<int32_t>;
+
+using KRotatorf = KRotator<float>;
+using KRotatori = KRotator<int32_t>;
 
 template<class TReal> requires std::is_arithmetic_v<TReal>
 float Distance(const KVec2<TReal>& lhs, const KVec2<TReal>& rhs)
