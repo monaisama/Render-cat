@@ -168,7 +168,7 @@ protected:
     virtual void RenderPhase(ERenderPhase phase)
     {
         using namespace KMath;
-        KCamera camera = KCamera::Ortho( {-5, 0, 0}, {0, 0, 0}, 0.1f, 10.f, 80, 60);
+        KCamera camera = KCamera::Ortho( {-5, 0, 4}, {0, 20, 0}, 0.1f, 10.f, 80, 60);
         auto translateMat = MakeTranslateMatrix<float, float>(KVec3f { 0.3f, 0.3f, 0 });
         auto rotationMat = MakeRotateMatrix<float, float>(KVec3f::up, glfwGetTime());
 

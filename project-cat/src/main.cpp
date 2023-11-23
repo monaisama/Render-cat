@@ -68,12 +68,14 @@ int main()
     KExerciseShape exercise;
     exercise.Setup();
 
+    glEnable(GL_DEPTH_TEST);
+
     while (!glfwWindowShouldClose(window))
     {
         WindowInput(window);
 
         glClearColor(0.f, 0.f, 0.f, 1.f);
-        glClear(GL_COLOR_BUFFER_BIT);
+        glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
         
         // glPolygonMode(GL_FRONT_AND_BACK, GL_FILL);
         // example.Render();
