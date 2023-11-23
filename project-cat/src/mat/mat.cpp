@@ -42,12 +42,13 @@ void KMat::SetVec3f(const std::string& name, const KMath::KVec3f& value) const
 }
 void KMat::SetMatrix4f(const std::string& name, const KMath::KMatrix4f& value) const
 {
-    // 这里需要做一次转置，因为opengl是列向量，math library里面是行向量
-    glUniformMatrix4fv(glGetUniformLocation(matObjectID, name.c_str()), 1, GL_TRUE, value.Matrix());
+    // opengl是列向量，math library里面是行向量
+    // 但是这里不转置，因为在shader里面需要左乘矩阵 matrix * vec，就可以了（如果转置了，就需要右乘矩阵了 vec * matrix）
+    glUniformMatrix4fv(glGetUniformLocation(matObjectID, name.c_str()), 1, GL_FALSE, value.Matrix());
 }
 void KMat::SetMatrix3f(const std::string& name, const KMath::KMatrix3f& value) const
 {
-    glUniformMatrix3fv(glGetUniformLocation(matObjectID, name.c_str()), 1, GL_TRUE, value.Matrix());
+    glUniformMatrix3fv(glGetUniformLocation(matObjectID, name.c_str()), 1, GL_FALSE, value.Matrix());
 }
 
 KMat::~KMat()

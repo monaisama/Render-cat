@@ -3,6 +3,8 @@
 #include "file.h"
 #include "log.h"
 #include "matrix.h"
+#include "camera.h"
+#include "transform.h"
 
 #include <iostream>
 #include <string>
@@ -382,6 +384,26 @@ int main()
     KMatrix3i transMatrix5 = MakeTranslateMatrix<int32_t>(KVec2i {-1,1});
     KVec2i point5 {1,0};
     KLog::LogSimple(point5, point5 * transMatrix5, point5 * transMatrix5 * transMatrix5.Inverse());
+
+    KCamera camera = KCamera::Ortho( {-5, 0, 0}, {0, 0, 0}, 1.f, 10.f, 80, 60);
+    KMatrix4f MVP = camera.Matrix();
+    
+    // 0, -1, -1,
+    // 0, 1, -1,
+    // 0, 0, 1,
+    KVec3f a = KVec3f {0, -1, -1}, b = KVec3f {0, 1, -1}, c = KVec3f {0, 0, 1};
+    
+    KLog::LogSimple(
+        "start MVP test:\n",
+        // camera.ProjectiveMatrix(),
+        camera.ViewMatrix(),
+        a * camera.ViewMatrix(),
+        b * camera.ViewMatrix(),
+        c * camera.ViewMatrix(),
+        a * MVP,
+        b * MVP,
+        c * MVP,
+        "\nend mvp test.");
 
 #endif
 
