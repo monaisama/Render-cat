@@ -34,7 +34,7 @@ KMatrix4f MakeClipSpaceNDC(float near, float far, float width, float height) // 
 
 KCamera KCamera::Ortho(const KVec3f& location, const KRotatorf& rotation, float near, float far, float width, float height)
 {
-    KCamera camera(MakeTranslateMatrix(location)); // todo rotation
+    KCamera camera(ToMatrix4(rotation.ToMatrix()) * MakeTranslateMatrix(location)); // todo rotation
     camera.clipMatrix = MakeClipSpaceNDC(near, far, width, height);
     return camera;
 }

@@ -3,6 +3,7 @@
 #include "compile_header.h"
 #include "vec.h"
 #include "matrix.h"
+#include "transform/rotator.h"
 
 namespace KMath
 {

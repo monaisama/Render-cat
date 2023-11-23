@@ -85,11 +85,11 @@ KVec4<TReal>& operator*=(const KVec4<TReal>& vec, const KMatrix4x4<TReal2>& matr
 }
 
 // 构造出旋转任意角度的变换矩阵(angle是角度)
-template<class TReal = float>
-requires std::is_arithmetic_v<TReal>
-KMatrix2x2<TReal> MakeRotateMatrix(float angle)
+template<class TReal = float, class TReal2 = float>
+requires std::is_arithmetic_v<TReal> && std::is_arithmetic_v<TReal2>
+KMatrix2x2<TReal> MakeRotateMatrix(TReal2 angle)
 {
-    angle = Radians(angle);
+    angle = static_cast<TReal2>(Radians(angle));
     TReal cosValue = static_cast<TReal>(cos(angle)), sinValue = static_cast<TReal>(sin(angle));
     return KMatrix2x2<TReal> {
         KVec2<TReal> { cosValue, sinValue },
@@ -99,13 +99,13 @@ KMatrix2x2<TReal> MakeRotateMatrix(float angle)
 
 // 构造出绕任意轴旋转的变换矩阵(angle是角度)
 // 这里的所有向量都需要是单位向量，因为后面的公式都是用单位向量来推算出来的
-template<class TReal = float, class TReal2 = TReal>
-requires std::is_arithmetic_v<TReal> && std::is_arithmetic_v<TReal2>
-KMatrix3x3<TReal> MakeRotateMatrix(const KVec3<TReal2>& vec, float angle)
+template<class TReal = float, class TReal2 = TReal, class TReal3 = float>
+requires std::is_arithmetic_v<TReal> && std::is_arithmetic_v<TReal2> && std::is_arithmetic_v<TReal3>
+KMatrix3x3<TReal> MakeRotateMatrix(const KVec3<TReal2>& vec, TReal3 angle)
 {
     const_cast<KVec3<TReal2>&>(vec).Normalize();
 
-    angle = Radians(angle);
+    angle = static_cast<TReal3>(Radians(angle));
     TReal cosValue = static_cast<TReal>(cos(angle)), sinValue = static_cast<TReal>(sin(angle));
     TReal i_cosValue = 1 - cosValue; // 1 - cos
     TReal nx = static_cast<TReal>(vec.X()), ny = static_cast<TReal>(vec.Y()), nz = static_cast<TReal>(vec.Z());
