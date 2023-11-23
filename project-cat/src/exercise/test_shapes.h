@@ -143,21 +143,21 @@ protected:
         //     0, 0.333333, 0.010101 
         // };
 
-        metaInfo.vertexs = {
-            0, -1, -1,
-            0, 1, -1,
-            0, 0, 1
-        };
+        // metaInfo.vertexs = {
+        //     0, -1, -1,
+        //     0, 1, -1,
+        //     0, 0, 1
+        // };
         
-        metaInfo.colors = {
-            1.f, 0.f, 0.f,
-            0.f, 1.f, 0.f,
-            0.f, 0.f, 1.f,
-        };
+        // metaInfo.colors = {
+        //     1.f, 0.f, 0.f,
+        //     0.f, 1.f, 0.f,
+        //     0.f, 0.f, 1.f,
+        // };
 
-        metaInfo.indices = {
-            0,1,2
-        };
+        // metaInfo.indices = {
+        //     0,1,2
+        // };
 
         metaInfo.mat = KUtils::MakeMetaMat(
             KUtils::MakeMetaShader("exercise.vs", KShaderType::Vertex),
