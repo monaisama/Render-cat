@@ -101,9 +101,9 @@ void KPrimitive::InnerLoadShader()
     }
 }
 
-void KPrimitive::Render()
+void KPrimitive::Render(const KRender& render)
 {
-    RenderPhase(ERenderPhase::Begin);
+    RenderPhase(ERenderPhase::Begin, render);
     if (mat) // 这里是否一定不再判定default mat
     {
         mat->Use();
@@ -114,17 +114,17 @@ void KPrimitive::Render()
             glBindTexture(texs[i]->GetTextureType(), texs[i]->GetTexture());
         }
     }
-    RenderPhase(ERenderPhase::AfterSetMat);
+    RenderPhase(ERenderPhase::AfterSetMat, render);
     glBindVertexArray(renderInfo.vao);
     {
-        RenderPhase(ERenderPhase::AfterBinding);
+        RenderPhase(ERenderPhase::AfterBinding, render);
         if (renderInfo.bUseEBO)
             glDrawElements(GL_TRIANGLES, renderInfo.count, GL_UNSIGNED_INT, 0);
         else
             glDrawArrays(GL_TRIANGLES, 0, renderInfo.count);
     }
     glBindVertexArray(0);
-    RenderPhase(ERenderPhase::Finish);
+    RenderPhase(ERenderPhase::Finish, render);
 }
 
 KPrimitive::~KPrimitive()

@@ -9,6 +9,7 @@
 #include "shape/primitive.h"
 #include "shape/triangle.h"
 #include "exercise/test_shapes.h"
+#include "camera.h"
 
 #include "resource/resources.h"
 #include "3rd/image.h"
@@ -17,9 +18,23 @@
 
 // 这里直接写在这里省事 嘻嘻
 using namespace KCore;
+using namespace KMath;
+
+struct
+{
+    int32_t windowWidth = 800;
+    int32_t windowHeight = 600;
+} globalContext;
+
+float GetAspectRatio()
+{
+    return static_cast<float>(globalContext.windowWidth) / globalContext.windowHeight;
+}
 
 void WindowResize(GLFWwindow* window, int32_t width, int32_t height)
 {
+    globalContext.windowWidth = width;
+    globalContext.windowHeight = height;
     glViewport(0, 0, width, height);
 }
 
@@ -53,7 +68,7 @@ int main()
         return -1;
     }
 
-    glViewport(0, 0, 800, 600);
+    glViewport(0, 0, globalContext.windowWidth, globalContext.windowHeight);
     glfwSetWindowSizeCallback(window, WindowResize);
 
     KTriangle triangle;
@@ -76,14 +91,15 @@ int main()
 
         glClearColor(0.f, 0.f, 0.f, 1.f);
         glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
+        KRender render(KCamera::Persp({-5,0,4}, {0,30,0}, 90.f, 0.1f, 1000.f, GetAspectRatio()));
         
         // glPolygonMode(GL_FRONT_AND_BACK, GL_FILL);
-        // example.Render();
+        // example.Render(render);
 
         // glPolygonMode(GL_FRONT_AND_BACK, GL_LINE);
-        // triangle.Render();
-        // triangles2.Render();
-        exercise.Render();
+        // triangle.Render(render);
+        // triangles2.Render(render);
+        exercise.Render(render);
 
         glfwPollEvents();
         glfwSwapBuffers(window);

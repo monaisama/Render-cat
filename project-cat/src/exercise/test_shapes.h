@@ -82,7 +82,7 @@ protected:
         );
     }
 
-    virtual void RenderPhase(ERenderPhase phase) override
+    virtual void RenderPhase(ERenderPhase phase, const KRender& render) override
     {
         switch (phase)
         {
@@ -165,24 +165,15 @@ protected:
         );
     }
 
-    virtual void RenderPhase(ERenderPhase phase)
+    virtual void RenderPhase(ERenderPhase phase, const KRender& render)
     {
         using namespace KMath;
-        KCamera camera = KCamera::Ortho( {-20, 0, 4}, {0, 20, 0}, 0.1f, 10.f, 80, 60);
         auto translateMat = MakeTranslateMatrix<float, float>(KVec3f { 0.3f, 0.3f, 0 });
         auto rotationMat = MakeRotateMatrix<float, float>(KVec3f::right, glfwGetTime() * 100.f);
-
-        camera = KCamera::Persp({-10, 0, 4}, {0, 20, 0}, 90.f, 0.1f, 100.f, 8.f/6);
-
-        // KLog::LogSimple(KVec3f{0,-1,-1} * camera.Matrix());
-        // KLog::LogSimple(KVec3f{0,1,-1} * camera.Matrix());
-        // KLog::LogSimple(KVec3f{0,0,1} * camera.Matrix());
-
-        // KLog::LogSimple(camera.Matrix());
         switch (phase)
         {
             case ERenderPhase::AfterSetMat:
-                mat->SetMatrix4f("matrix", ToMatrix4(rotationMat) * camera.Matrix());
+                mat->SetMatrix4f("matrix", ToMatrix4(rotationMat) * render.GetContext().camera.Matrix());
                 break;
             default:
                 break;

@@ -14,15 +14,9 @@
 namespace KCore
 {
 
-// 所有meta信息的基类
-struct IMeta
-{};
-
 class KObject
 {
 public:
-    virtual const IMeta* GetMeta() const { return nullptr; }
-
     virtual ~KObject() { }
 };
 

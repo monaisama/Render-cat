@@ -1,0 +1,6 @@
+target('kphysics')
+    set_kind('shared')
+    add_files('src/**.cpp')
+    add_headerfiles('src/**.h')
+    add_rules('krule.include.math', 'krule.include.log', 'krule.export')
+    add_deps('klog', 'kmath')

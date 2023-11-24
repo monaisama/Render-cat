@@ -5,6 +5,8 @@
 #include "mat/mat.h"
 #include "mat/texture.h"
 
+#include "core/render.h"
+
 namespace KCore
 {
 
@@ -29,7 +31,7 @@ class KPrimitive : public KAsset
 public:
     KPrimitive();
     void Setup();
-    virtual void Render();
+    virtual void Render(const KRender&);
 
     virtual ~KPrimitive();
 
@@ -44,7 +46,7 @@ protected:
         Finish,
     };
     virtual void SetupShape() { } // none
-    virtual void RenderPhase(ERenderPhase phase) { }
+    virtual void RenderPhase(ERenderPhase phase, const KRender&) { }
 
 protected:
     std::shared_ptr<KMat> mat;
