@@ -228,4 +228,22 @@ KMatrix3x3<TReal> ToMatrix3(const KMatrix3x3<TReal>& mat)
     };
 }
 
+template<class TReal = float>
+requires std::is_arithmetic_v<TReal>
+KMatrix4x4<TReal> LookAt(const KVec3<TReal>& location, const KVec3<TReal>& target)
+{
+    auto forward = target - location;
+    forward.Normalize();
+
+    auto right = KVec3<TReal>::Cross(KVec3<TReal>::up, forward);
+    auto up = KVec3<TReal>::Cross(forward, right);
+
+    return KMatrix4x4<TReal> {
+        KVec4<TReal> { forward },
+        KVec4<TReal> { right },
+        KVec4<TReal> { up },
+        KVec4<TReal>::wzero
+    } * MakeTranslateMatrix(location);
+}
+
 }

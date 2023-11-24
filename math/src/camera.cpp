@@ -54,18 +54,24 @@ KMatrix4f MakeClipSpaceNDC_Persp(float fov, float near, float far, float aspect)
     return zoom * MakeClipSpaceNDC_Ortho(near, far, height * aspect, height);
 }
 
-KCamera KCamera::Ortho(const KVec3f& location, const KRotatorf& rotation, float near, float far, float width, float height)
+KCamera KCamera::Ortho(float near, float far, float width, float height)
 {
-    KCamera camera(ToMatrix4(rotation.ToMatrix()) * MakeTranslateMatrix(location));
+    KCamera camera {};
     camera.clipMatrix = MakeClipSpaceNDC_Ortho(near, far, width, height);
     return camera;
 }
 
-KCamera KCamera::Persp(const KVec3f& location, const KRotatorf& rotation, float fov, float near, float far, float aspect)
+KCamera KCamera::Persp(float fov, float near, float far, float aspect)
 {
-    KCamera camera(ToMatrix4(rotation.ToMatrix()) * MakeTranslateMatrix(location));
+    KCamera camera {};
     camera.clipMatrix = MakeClipSpaceNDC_Persp(fov, near, far, aspect);
     return camera;
+}
+
+KCamera& KCamera::LookAt(const KVec3f& location, const KVec3f& target)
+{
+    viewMatrix = KMath::LookAt(location, target).Inverse();
+    return *this;
 }
 
 }

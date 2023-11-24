@@ -85,13 +85,14 @@ int main()
 
     glEnable(GL_DEPTH_TEST);
 
+    KCamera mainCamera = KCamera::Persp(90.f, 0.1f, 1000.f, GetAspectRatio()).LookAt({-10,0,10}, KVec3f::zero);
     while (!glfwWindowShouldClose(window))
     {
         WindowInput(window);
 
         glClearColor(0.f, 0.f, 0.f, 1.f);
         glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
-        KRender render(KCamera::Persp({-5,0,4}, {0,30,0}, 90.f, 0.1f, 1000.f, GetAspectRatio()));
+        KRender render(mainCamera);
         
         // glPolygonMode(GL_FRONT_AND_BACK, GL_FILL);
         // example.Render(render);

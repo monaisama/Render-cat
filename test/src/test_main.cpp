@@ -385,7 +385,7 @@ int main()
     KVec2i point5 {1,0};
     KLog::LogSimple(point5, point5 * transMatrix5, point5 * transMatrix5 * transMatrix5.Inverse());
 
-    KCamera camera = KCamera::Ortho( {-5, 0, 0}, KRotatorf::zero, 1.f, 10.f, 80, 60);
+    KCamera camera = KCamera::Ortho(1.f, 10.f, 80, 60).LookAt({-5,0,0}, KVec3f::zero);
     KMatrix4f MVP = camera.Matrix();
     
     // 0, -1, -1,
@@ -393,7 +393,7 @@ int main()
     // 0, 0, 1,
     KVec3f a {0, -1, -1}, b {0, 1, -1}, c {0, 0, 1};
 
-    KCamera perspCam = KCamera::Persp( {-5, 0, 0}, KRotatorf::zero, 90, 0.1f, 100.f, 8.f / 6.f);
+    KCamera perspCam = KCamera::Persp(90, 0.1f, 100.f, 8.f / 6.f).LookAt({-5,0,0}, KVec3f::zero);
     
     KLog::LogSimple(
         "start MVP test:\n",
