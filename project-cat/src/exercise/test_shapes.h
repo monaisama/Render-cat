@@ -173,7 +173,7 @@ protected:
         switch (phase)
         {
             case ERenderPhase::AfterSetMat:
-                mat->SetMatrix4f("matrix", ToMatrix4(rotationMat) * render.GetContext().camera.Matrix());
+                mat->SetMatrix4f("matrix", ToMatrix4(rotationMat) * render.GetContext().vpMatrix);
                 break;
             default:
                 break;

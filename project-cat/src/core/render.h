@@ -8,7 +8,7 @@ namespace KCore
 
 struct KRenderContext
 {
-    const KMath::KCamera& camera;
+    KMath::KMatrix4f vpMatrix; // 世界坐标到裁剪空间坐标转换
 };
 
 class KRender : public KObject
