@@ -16,6 +16,9 @@
 #include "utils/utils.h"
 #include "mat/texture.h"
 
+#include <string>
+#include <map>
+
 // 这里直接写在这里省事 嘻嘻
 using namespace KCore;
 using namespace KMath;
@@ -24,7 +27,50 @@ struct
 {
     int32_t windowWidth = 800;
     int32_t windowHeight = 600;
-} globalContext;
+
+    bool bFirstUpdate = true;
+
+    float deltaTime;
+} globalContext {};
+
+struct
+{
+    double mouseX;
+    double mouseY;
+    double lastMouseX;
+    double lastMouseY;
+
+    bool bfirstMouseUpdate = true;
+    float movementSpeed = 2.5f;
+    float sensitivity = 0.1f;
+
+    std::map<int32_t, float> keyValue{
+        { GLFW_KEY_A, 0.f },
+        { GLFW_KEY_S, 0.f },
+        { GLFW_KEY_W, 0.f },
+        { GLFW_KEY_D, 0.f }
+    };
+
+} movementContext { };
+
+KVec2f GetMoveDelta(float deltaTime)
+{
+    static std::map<int32_t, KVec2f> scales {
+        { GLFW_KEY_A, { -1.f, 0.f } },
+        { GLFW_KEY_S, { 0.f, -1.f } },
+        { GLFW_KEY_W, { 0.f, 1.f } },
+        { GLFW_KEY_D, { 1.f, 0.f } }
+    };
+    KVec2f move{};
+    for (const auto& scale : scales)
+    {
+        if (auto it = movementContext.keyValue.find(scale.first); it != movementContext.keyValue.end())
+        {
+            move += scale.second * it->second * deltaTime * movementContext.movementSpeed;
+        }
+    }
+    return move;
+}
 
 float GetAspectRatio()
 {
@@ -42,6 +88,31 @@ void WindowInput(GLFWwindow* window)
 {
     if (glfwGetKey(window, GLFW_KEY_ESCAPE) == GLFW_PRESS)
         glfwSetWindowShouldClose(window, GLFW_TRUE);
+    for (auto& key : movementContext.keyValue)
+    {
+        if (glfwGetKey(window, key.first) == GLFW_PRESS)
+            key.second = 1.f;
+        else
+            key.second = 0.f;
+    }
+}
+
+void WindowMouse(GLFWwindow* window, double mouseX, double mouseY)
+{
+    if (movementContext.bfirstMouseUpdate)
+    {
+        movementContext.lastMouseX = mouseX;
+        movementContext.lastMouseY = mouseY;
+        movementContext.bfirstMouseUpdate = false;
+    }
+    else
+    {
+        movementContext.lastMouseX = movementContext.mouseX;
+        movementContext.lastMouseY = movementContext.mouseY;
+    }
+
+    movementContext.mouseX = mouseX;
+    movementContext.mouseY = mouseY;
 }
 
 int main()
@@ -69,7 +140,11 @@ int main()
     }
 
     glViewport(0, 0, globalContext.windowWidth, globalContext.windowHeight);
+    glfwSetInputMode(window, GLFW_CURSOR, GLFW_CURSOR_DISABLED);
     glfwSetWindowSizeCallback(window, WindowResize);
+    glfwSetCursorPosCallback(window, WindowMouse);
+
+    float curTime = glfwGetTime();
 
     KTriangle triangle;
     triangle.Setup();
@@ -84,18 +159,22 @@ int main()
     exercise.Setup();
 
     glEnable(GL_DEPTH_TEST);
-
     KCamera mainCamera = KCamera::Persp(90.f, 0.1f, 1000.f, GetAspectRatio()).LookAt({-10,0,10}, KVec3f::zero);
+    KCameraTransformer transformer(mainCamera);
     while (!glfwWindowShouldClose(window))
     {
+        globalContext.deltaTime = glfwGetTime() - curTime;
+        curTime = glfwGetTime();
+
         WindowInput(window);
+        auto moveDelta = GetMoveDelta(globalContext.deltaTime);
+        transformer.MoveForward(moveDelta.Y());
+        transformer.MoveRight(moveDelta.X());
 
         glClearColor(0.f, 0.f, 0.f, 1.f);
         glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
-
-        KVec3f newLoc {10 * sinf(glfwGetTime()), 10 * cosf(glfwGetTime()), 10};
-        KRender render(mainCamera.LookAt(newLoc, KVec3f::zero));
         
+        KRender render(mainCamera);
         // glPolygonMode(GL_FRONT_AND_BACK, GL_FILL);
         // example.Render(render);
 
@@ -106,6 +185,8 @@ int main()
 
         glfwPollEvents();
         glfwSwapBuffers(window);
+
+        globalContext.bFirstUpdate = false;
     }
 
     glfwTerminate();
