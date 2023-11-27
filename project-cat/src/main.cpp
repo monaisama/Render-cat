@@ -42,7 +42,7 @@ struct
 
     bool bfirstMouseUpdate = true;
     float movementSpeed = 2.5f;
-    float sensitivity = 0.1f;
+    float sensitivity = 0.01f;
 
     std::map<int32_t, float> keyValue{
         { GLFW_KEY_A, 0.f },
