@@ -169,7 +169,7 @@ protected:
     {
         using namespace KMath;
         auto translateMat = MakeTranslateMatrix<float, float>(KVec3f { 0.3f, 0.3f, 0 });
-        auto rotationMat = MakeRotateMatrix<float, float>(KVec3f::right, glfwGetTime() * 100.f);
+        auto rotationMat = KMatrix3f::identity; // MakeRotateMatrix<float, float>(KVec3f::right, glfwGetTime() * 100.f);
         switch (phase)
         {
             case ERenderPhase::AfterSetMat:

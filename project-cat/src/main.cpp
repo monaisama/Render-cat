@@ -143,7 +143,7 @@ int main()
     glewExperimental = GL_TRUE;
     if (auto err = glewInit() != GLEW_OK)
     {
-        KLog::LogError("GlewInit Failed. errorcode: {0}", err);
+        KLog::LogError("glewInit Failed. errorcode: {0}", err);
         return -1;
     }
 
