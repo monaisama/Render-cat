@@ -72,6 +72,14 @@ KVec2f GetMoveDelta(float deltaTime)
     return move;
 }
 
+KVec2f GetMouseDelta(float deltaTime)
+{
+    return {
+        static_cast<float>(movementContext.mouseX - movementContext.lastMouseX) * movementContext.sensitivity,
+        static_cast<float>(movementContext.mouseY - movementContext.lastMouseY) * movementContext.sensitivity
+    };
+}
+
 float GetAspectRatio()
 {
     return static_cast<float>(globalContext.windowWidth) / globalContext.windowHeight;
@@ -168,8 +176,11 @@ int main()
 
         WindowInput(window);
         auto moveDelta = GetMoveDelta(globalContext.deltaTime);
+        auto mosueDelta = GetMouseDelta(globalContext.deltaTime);
         transformer.MoveForward(moveDelta.Y());
         transformer.MoveRight(moveDelta.X());
+        transformer.RotatePitch(mosueDelta.Y());
+        transformer.RotateYaw(mosueDelta.X());
 
         glClearColor(0.f, 0.f, 0.f, 1.f);
         glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
