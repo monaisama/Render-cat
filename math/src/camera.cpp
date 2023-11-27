@@ -74,12 +74,74 @@ KCamera& KCamera::LookAt(const KVec3f& location, const KVec3f& target)
     return *this;
 }
 
+KCamera& KCamera::LookAt(const KVec3f& target)
+{
+    viewMatrix = KMath::LookAt(viewMatrix.Inverse() * KVec3f::zero, target).Inverse();
+    return *this;
+}
+
 KCameraTransformer::KCameraTransformer(KCamera& camera)
     : camera(camera) { }
 
 KVec3f KCameraTransformer::GetRight()
 {
     return camera.viewMatrix.Inverse() * KVec3f::right;
+}
+
+KVec3f KCameraTransformer::GetForward()
+{
+    return camera.viewMatrix.Inverse() * KVec3f::forward;
+}
+
+KVec3f KCameraTransformer::GetUp()
+{
+    return camera.viewMatrix.Inverse() * KVec3f::up;
+}
+
+void KCameraTransformer::MoveForward(float dis)
+{
+    MoveLocal(KVec3f::forward * dis);
+}
+
+void KCameraTransformer::MoveRight(float dis)
+{
+    MoveLocal(KVec3f::right * dis);
+}
+
+void KCameraTransformer::MoveUp(float dis)
+{
+    MoveLocal(KVec3f::up * dis);
+}
+
+void KCameraTransformer::MoveLocal(const KVec3f& vec)
+{
+    camera.viewMatrix = (camera.viewMatrix.Inverse() * MakeTranslateMatrix(vec)).Inverse();
+}
+
+void KCameraTransformer::RotateYaw(float angle)
+{
+    RotateLocal(KVec3f::up, angle);
+}
+
+void KCameraTransformer::RotatePitch(float angle)
+{
+    RotateLocal(KVec3f::right, angle);
+}
+
+void KCameraTransformer::RotateRoll(float angle)
+{
+    RotateLocal(KVec3f::forward, angle);
+}
+
+void KCameraTransformer::RotateLocal(const KVec3f& axis, float angle)
+{
+    camera.viewMatrix = (camera.viewMatrix.Inverse() * ToMatrix4(MakeRotateMatrix(axis, angle))).Inverse();
+}
+
+void KCameraTransformer::MoveThenLookAt(const KVec3f& vec, const KVec3f& point)
+{
+    MoveLocal(vec);
+    camera.LookAt(point);
 }
 
 }

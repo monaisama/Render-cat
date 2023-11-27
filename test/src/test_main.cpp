@@ -421,6 +421,24 @@ int main()
         c4f * perspCam.Matrix(),
         "\nend persp test.");
 
+    auto ShowLocation = [](KCameraTransformer& transformer)
+    {
+        KLog::Log("location ({0})", transformer.GetCameta().ViewMatrix().Inverse() * KVec3f::zero);
+    };
+
+    KLog::LogSimple("Start camera transformer:");
+    KCameraTransformer transformer(KCamera::Persp(90.f, 0.1, 100.f, 1).LookAt({-5,3,6}, KVec3f::zero));
+    ShowLocation(transformer);
+    transformer.MoveForward(5.f);
+    ShowLocation(transformer);
+    transformer.MoveRight(-3.f);
+    ShowLocation(transformer);
+
+    transformer.MoveThenLookAt({0,0,4}, KVec3f::zero);
+    ShowLocation(transformer);
+    
+    KLog::LogSimple("End camera transformer:\n");
+
 #endif
 
 #if test_file
