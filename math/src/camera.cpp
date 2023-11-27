@@ -74,4 +74,12 @@ KCamera& KCamera::LookAt(const KVec3f& location, const KVec3f& target)
     return *this;
 }
 
+KCameraTransformer::KCameraTransformer(KCamera& camera)
+    : camera(camera) { }
+
+KVec3f KCameraTransformer::GetRight()
+{
+    return camera.viewMatrix.Inverse() * KVec3f::right;
+}
+
 }

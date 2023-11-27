@@ -16,14 +16,11 @@ public:
     K_API static const KVec4 wzero;
     K_API static const KVec4 one;
 
+    GEN_DEFAULT_CONTRUCTOR_CODE_DEFAULT(KVec4)
+
 public:
-    KVec4() = default;
     KVec4(TReal x, TReal y, TReal z, TReal w) : x(x), y(y), z(z), w(w) { }
     explicit KVec4(const KVec3<TReal>& vec, TReal w = 0) : x(vec.X()), y(vec.Y()), z(vec.Z()), w(w) { }
-    KVec4(const KVec4&) = default;
-    KVec4(KVec4&&) = default;
-    KVec4& operator=(const KVec4&) = default;
-    KVec4& operator=(KVec4&&) = default;
 
     template<class TValue> requires std::is_arithmetic_v<TValue>
     KVec4 operator*(TValue value) const

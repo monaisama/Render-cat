@@ -1,5 +1,6 @@
 #pragma once
 #include "compile_header.h"
+#include "patterns.h"
 #include <type_traits>
 #include "mymath.h"
 #include "log.h"
@@ -22,14 +23,11 @@ public:
     K_API static const KVec3 wzero;
     K_API static const KVec3 one;
 
+    GEN_DEFAULT_CONTRUCTOR_CODE_DEFAULT(KVec3)
+
 public:
-    KVec3() = default;
     KVec3(TReal x, TReal y, TReal z) : x(x), y(y), z(z) { }
     explicit KVec3(const KVec2<TReal>& vec2, TReal w = 0) : x(vec2.X()), y(vec2.Y()), z(w) { }
-    KVec3(const KVec3&) = default;
-    KVec3(KVec3&&) = default;
-    KVec3& operator=(const KVec3&) = default;
-    KVec3& operator=(KVec3&&) = default;
 
     const TReal& X() const { return x; }
     const TReal& Y() const { return y; }

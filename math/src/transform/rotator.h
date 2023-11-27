@@ -2,6 +2,7 @@
 #include <type_traits>
 
 #include "compile_header.h"
+#include "patterns.h"
 #include "matrix.h"
 
 namespace KMath
@@ -14,13 +15,11 @@ class KRotator
 public:
     K_API static const KRotator zero;
 
-    KRotator() = default;
+    GEN_DEFAULT_CONTRUCTOR_CODE_DEFAULT(KRotator)
+
+public:
     KRotator(TAngle roll, TAngle pitch, TAngle yaw)
         : roll(roll), pitch(pitch), yaw(yaw) { }
-    KRotator(const KRotator&) = default;
-    KRotator(KRotator&&) = default;
-    KRotator& operator=(const KRotator&) = default;
-    KRotator& operator=(KRotator&&) = default;
 
     const TAngle& Yaw() const { return yaw; }
     const TAngle& Pitch() const { return pitch; }

@@ -4,6 +4,8 @@
 #include "log.h"
 #include <type_traits>
 #include <iostream>
+#include "patterns.h"
+#include "compile_header.h"
 
 namespace KMath
 {
@@ -18,13 +20,10 @@ public:
     K_API static const KVec2 zero;
     K_API static const KVec2 one;
 
+    GEN_DEFAULT_CONTRUCTOR_CODE_DEFAULT(KVec2)
+
 public:
-    KVec2() = default;
     KVec2(TReal x, TReal y) : x(x), y(y) { }
-    KVec2(const KVec2&) = default;
-    KVec2(KVec2&&) = default;
-    KVec2& operator=(const KVec2&) = default;
-    KVec2& operator=(KVec2&&) = default;
 
     const TReal& X() const { return x; }
     const TReal& Y() const { return y; }

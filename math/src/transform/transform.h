@@ -1,5 +1,6 @@
 #pragma once
 
+#include "patterns.h"
 #include "vec.h"
 #include "rotator.h"
 
@@ -10,14 +11,11 @@ template<class TReal = float, class TVec = KVec3<TReal>, class TRotator = KRotat
 requires std::is_arithmetic_v<TReal>
 class KTransform
 {
+    GEN_DEFAULT_CONTRUCTOR_CODE(KTransform)
 public:
     KTransform() : location(), rotation(), scale(TVec::one) { }
     KTransform(const TVec& location, const TRotator& rotation, const TVec& scale)
         : location(location), rotation(rotation), scale(scale) { }
-    KTransform(const KTransform&) = default;
-    KTransform(KTransform&&) = default;
-    KTransform& operator=(const KTransform&) = default;
-    KTransform& operator=(KTransform&&) = default;
     
     const TVec& GetLocation() const { return location; }
     const TRotator& GetRotation() const { return rotation; }

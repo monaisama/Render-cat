@@ -1,5 +1,6 @@
 #pragma once
 #include "compile_header.h"
+#include "patterns.h"
 #include "vec.h"
 #include <iostream>
 
@@ -15,13 +16,10 @@ public:
     K_API static const KMatrix2x2 identity;
     K_API static const KMatrix2x2 zero;
 
+    GEN_DEFAULT_CONTRUCTOR_CODE_DEFAULT(KMatrix2x2)
+
 public:
-    KMatrix2x2() = default;
     KMatrix2x2(const KVec2<TReal>& p, const KVec2<TReal>& q) : p(p), q(q) { }
-    KMatrix2x2(const KMatrix2x2&) = default;
-    KMatrix2x2(KMatrix2x2&&) = default;
-    KMatrix2x2& operator=(const KMatrix2x2&) = default;
-    KMatrix2x2& operator=(KMatrix2x2&&) = default;
 
     const KVec2<TReal>& P() const { return p; }
     const KVec2<TReal>& Q() const { return q; }

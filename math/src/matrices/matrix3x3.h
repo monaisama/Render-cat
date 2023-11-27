@@ -1,6 +1,7 @@
 #pragma once
 
 #include "compile_header.h"
+#include "patterns.h"
 #include "vec.h"
 #include "matrix2x2.h"
 #include <iostream>
@@ -17,18 +18,15 @@ public:
     K_API static const KMatrix3x3 identity;
     K_API static const KMatrix3x3 zero;
 
+    GEN_DEFAULT_CONTRUCTOR_CODE_DEFAULT(KMatrix3x3)
+
 public:
-    KMatrix3x3() = default;
     KMatrix3x3(const KVec3<TReal>& p, const KVec3<TReal>& q, const KVec3<TReal>& r)
         : p (p), q(q), r(r)
     { }
     explicit KMatrix3x3(const KMatrix2x2<TReal>& mat2)
         : p(mat2.P()), q(mat2.Q()), r(KVec2<TReal>::zero, 1)
     { }
-    KMatrix3x3(const KMatrix3x3&) = default;
-    KMatrix3x3(KMatrix3x3&&) = default;
-    KMatrix3x3& operator=(const KMatrix3x3&) = default;
-    KMatrix3x3& operator=(KMatrix3x3&&) = default;
 
     const KVec3<TReal>& P() const { return p; }
     const KVec3<TReal>& Q() const { return q; }
