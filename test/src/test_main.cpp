@@ -11,10 +11,12 @@
 #include <array>
 #include <any>
 #include <optional>
+#include <string>
 #include <string_view>
 #include <type_traits>
 
 #include <concepts>
+#include <ranges>
 
 #include "patterns.h"
 
@@ -141,6 +143,14 @@ void TestSingleTon::TemplateFunc(std::string p)
     KLog::LogSimple(p);
 }
 
+template<std::KReal real1, std::KReal real2>
+// requires std::is_floating_point_v<real1> && std::is_floating_point_v<real2>
+void AddFunc(real1 n1, real2 n2)
+{
+    // static_assert(std::same_as<real1, float>, "must be float");
+    KLog::LogSimple(n1 + n2);
+}
+
 int main()
 {
 #if test_temp
@@ -245,6 +255,24 @@ int main()
     ArgsFunc(1, 2, 3, 10.111f);
 
     KLog::Log("{0} {1}", 100, -1);
+
+    using namespace std::string_view_literals;
+    using namespace std::string_literals;
+    using namespace std::views;
+    using namespace std::ranges;
+
+    constexpr std::string_view sv1 = "string=split"sv;
+    // auto splitStr = sv1 |
+    //     std::ranges::views::split("=") |
+    //     std::ranges::views::transform([](auto&& rng) { std::string_view{&*rng.begin(), std::ranges::distance(rng)} });
+    // for (auto s : splitStr)
+    // {
+    //     KLog::LogSimple(&*s.begin());
+    // }
+
+    AddFunc(1.f, 2.f);
+    AddFunc(1, 0);
+
 #endif
 
 #if test_math

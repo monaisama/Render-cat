@@ -1,5 +1,6 @@
 #pragma once
 #include "compile_header.h"
+#include "patterns.h"
 #include <cstdint>
 #include <type_traits>
 #include <cmath>
@@ -47,8 +48,7 @@ inline bool NearlyZero(TFloat lhs, float error = epsilon)
     return lhs < static_cast<TFloat>(error);
 }
 
-template<class TNumber>
-requires std::is_arithmetic_v<TNumber>
+template<std::KReal TNumber>
 inline bool Equals(TNumber lhs, TNumber rhs)
 {
     if constexpr (std::is_floating_point_v<TNumber>)
@@ -59,8 +59,7 @@ inline bool Equals(TNumber lhs, TNumber rhs)
         throw std::exception("not support type in mymath::Equals");
 }
 
-template<class TNumber>
-requires std::is_arithmetic_v<TNumber>
+template<std::KReal TNumber>
 inline bool EqualsZero(TNumber lhs)
 {
     if constexpr (std::is_floating_point_v<TNumber>)

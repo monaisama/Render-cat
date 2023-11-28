@@ -11,8 +11,7 @@ namespace KMath
 {
 
 // 左手坐标系，并且z轴向上，x轴向前，y轴向右(按照面向来说)
-template<class TReal>
-requires std::is_arithmetic_v<TReal>
+template<std::KReal TReal>
 class KVec3
 {
 public:
@@ -48,7 +47,7 @@ public:
     KVec3& operator-() { return *this *= -1; }
     KVec3 operator-() const { return *this * -1; }
 
-    template<class TValue> requires std::is_arithmetic_v<TValue>
+    template<std::KReal TValue = TReal>
     KVec3 operator*(TValue value) const
     {
         return KVec3 {
@@ -57,7 +56,7 @@ public:
             static_cast<TReal>(value * z)
         };
     }
-    template<class TValue> requires std::is_arithmetic_v<TValue>
+    template<std::KReal TValue = TReal>
     KVec3& operator*=(TValue value)
     {
         x = static_cast<TReal>(value * x);
@@ -65,7 +64,7 @@ public:
         z = static_cast<TReal>(value * z);
         return *this;
     }
-    template<class TValue> requires std::is_arithmetic_v<TValue>
+    template<std::KReal TValue = TReal>
     KVec3 operator/(TValue value) const
     {
         if (EqualsZero(value))
@@ -79,7 +78,7 @@ public:
             static_cast<TReal>(z / value)
         };
     }
-    template<class TValue> requires std::is_arithmetic_v<TValue>
+    template<std::KReal TValue = TReal>
     KVec3& operator/=(TValue value)
     {
         if (EqualsZero(value))

@@ -2,6 +2,7 @@
 
 #include <array>
 #include <cstdint>
+#include <concepts>
 
 /*
 * Add some design patterns, singleton etc..
@@ -67,5 +68,10 @@ inline constexpr bool is_std_array = false;
 
 template<class T, std::size_t N>
 inline constexpr bool is_std_array<std::array<T, N>> = true;
+
+template<class T>
+concept KReal = requires (T number) {
+    std::is_arithmetic_v<T>;
+};
 
 }

@@ -10,8 +10,7 @@
 namespace KMath
 {
 
-template<class TReal>
-requires std::is_arithmetic_v<TReal>
+template<std::KReal TReal>
 class KMatrix4x4
 {
 public:
@@ -37,20 +36,20 @@ public:
     TReal operator[](int32_t subIndex) const { return matrix[subIndex / 10 - 1][subIndex % 10 - 1]; }
     TReal& operator[](int32_t subIndex) { return matrix[subIndex / 10 - 1][subIndex % 10 - 1]; }
 
-    template<class TValue> requires std::is_arithmetic_v<TValue>
+    template<std::KReal TValue = TReal>
     KMatrix4x4 operator*(TValue value) const
     {
         return KMatrix4x4 { p * value, q * value, r * value, w * value };
     }
-    template<class TValue> requires std::is_arithmetic_v<TValue>
+    template<std::KReal TValue = TReal>
     KMatrix4x4& operator*=(TValue value)
     {
         p *= value; q *= value; r *= value; w *= value;
         return *this;
     }
-    template<class TValue> requires std::is_arithmetic_v<TValue>
+    template<std::KReal TValue = TReal>
     KMatrix4x4 operator/(TValue value) const { return operator*(1 / static_cast<TReal>(value)); }
-    template<class TValue> requires std::is_arithmetic_v<TValue>
+    template<std::KReal TValue = TReal>
     KMatrix4x4& operator/=(TValue value) { return operator*=(operator*(1 / static_cast<TReal>(value))); }
 
     KMatrix4x4 operator*(const KMatrix4x4& rhs) const
@@ -73,7 +72,7 @@ public:
         return *this = *this * rhs;
     }
 
-    template<class TValue> requires std::is_arithmetic_v<TValue>
+    template<std::KReal TValue = TReal>
     KVec4<TValue> operator*(const KVec4<TValue>& rhs) const
     {
         return KVec4<TValue> {
@@ -83,14 +82,14 @@ public:
             static_cast<TValue>(rhs.X() * m14 + rhs.Y() * m24 + rhs.Z() * m34 + rhs.W() * m44)
         };
     }
-    template<class TValue> requires std::is_arithmetic_v<TValue>
+    template<std::KReal TValue = TReal>
     KVec3<TValue> operator*(const KVec3<TValue>& rhs) const
     {
         return ToVec3<TValue>(operator*(KVec4<TValue>(rhs, 1)));
     }
-    template<class TValue> requires std::is_arithmetic_v<TValue>
+    template<std::KReal TValue = TReal>
     KVec4<TValue> TransformVector(const KVec4<TValue>& rhs) const { return *this * rhs; }
-    template<class TValue> requires std::is_arithmetic_v<TValue>
+    template<std::KReal TValue = TReal>
     KVec3<TValue> TransformVector(const KVec3<TValue>& rhs) const { return *this * rhs; }
 
     // 转置

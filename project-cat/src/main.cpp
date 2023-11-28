@@ -179,7 +179,7 @@ int main()
         auto mosueDelta = GetMouseDelta(globalContext.deltaTime);
         transformer.MoveForward(moveDelta.Y());
         transformer.MoveRight(moveDelta.X());
-        transformer.RotatePitch(mosueDelta.Y());
+        transformer.RotatePitch(-mosueDelta.Y());
         transformer.RotateYaw(mosueDelta.X());
 
         glClearColor(0.f, 0.f, 0.f, 1.f);

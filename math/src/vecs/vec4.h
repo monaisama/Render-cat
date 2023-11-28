@@ -7,8 +7,7 @@
 namespace KMath
 {
 
-template<class TReal>
-requires std::is_arithmetic_v<TReal>
+template<std::KReal TReal>
 class KVec4
 {
 public:
@@ -22,7 +21,7 @@ public:
     KVec4(TReal x, TReal y, TReal z, TReal w) : x(x), y(y), z(z), w(w) { }
     explicit KVec4(const KVec3<TReal>& vec, TReal w = 0) : x(vec.X()), y(vec.Y()), z(vec.Z()), w(w) { }
 
-    template<class TValue> requires std::is_arithmetic_v<TValue>
+    template<std::KReal TValue = TReal>
     KVec4 operator*(TValue value) const
     {
         return KVec4 {
@@ -32,7 +31,7 @@ public:
             static_cast<TReal>(w * value)
         };
     }
-    template<class TValue> requires std::is_arithmetic_v<TValue>
+    template<std::KReal TValue = TReal>
     KVec4& operator*=(TValue value)
     {
         x = static_cast<TReal>(x * value);

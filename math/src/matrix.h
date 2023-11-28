@@ -18,75 +18,64 @@ using KMatrix3i = KMatrix3x3<int32_t>;
 using KMatrix4f = KMatrix4x4<float>;
 using KMatrix4i = KMatrix4x4<int32_t>;
 
-template<class TReal = float, class TReal2 = TReal>
-requires std::is_arithmetic_v<TReal> && std::is_arithmetic_v<TReal2>
+template<std::KReal TReal = float, std::KReal TReal2 = TReal>
 KVec2<TReal> operator*(const KVec2<TReal>& vec, const KMatrix2x2<TReal2>& matrix)
 {
     return matrix * vec;
 }
-template<class TReal = float, class TReal2 = TReal>
-requires std::is_arithmetic_v<TReal> && std::is_arithmetic_v<TReal2>
+template<std::KReal TReal = float, std::KReal TReal2 = TReal>
 KVec2<TReal>& operator*=(KVec2<TReal>& vec, const KMatrix2x2<TReal2>& matrix)
 {
     return vec = matrix * vec;
 }
 
-template<class TReal = float, class TReal2 = TReal>
-requires std::is_arithmetic_v<TReal> && std::is_arithmetic_v<TReal2>
+template<std::KReal TReal = float, std::KReal TReal2 = TReal>
 KVec2<TReal> operator*(const KVec2<TReal>& vec, const KMatrix3x3<TReal2>& matrix)
 {
     return matrix * vec;
 }
-template<class TReal = float, class TReal2 = TReal>
-requires std::is_arithmetic_v<TReal> && std::is_arithmetic_v<TReal2>
+template<std::KReal TReal = float, std::KReal TReal2 = TReal>
 KVec2<TReal>& operator*=(KVec2<TReal>& vec, const KMatrix3x3<TReal2>& matrix)
 {
     return vec = matrix * vec;
 }
 
-template<class TReal = float, class TReal2 = TReal>
-requires std::is_arithmetic_v<TReal> && std::is_arithmetic_v<TReal2>
+template<std::KReal TReal = float, std::KReal TReal2 = TReal>
 KVec3<TReal> operator*(const KVec3<TReal>& vec, const KMatrix3x3<TReal2>& matrix)
 {
     return matrix * vec;
 }
-template<class TReal = float, class TReal2 = TReal>
-requires std::is_arithmetic_v<TReal> && std::is_arithmetic_v<TReal2>
+template<std::KReal TReal = float, std::KReal TReal2 = TReal>
 KVec3<TReal>& operator*=(KVec3<TReal>& vec, const KMatrix3x3<TReal2>& matrix)
 {
     return vec = matrix * vec;
 }
 
-template<class TReal = float, class TReal2 = TReal>
-requires std::is_arithmetic_v<TReal> && std::is_arithmetic_v<TReal2>
+template<std::KReal TReal = float, std::KReal TReal2 = TReal>
 KVec3<TReal> operator*(const KVec3<TReal>& vec, const KMatrix4x4<TReal2>& matrix)
 {
     return matrix * vec;
 }
-template<class TReal = float, class TReal2 = TReal>
-requires std::is_arithmetic_v<TReal> && std::is_arithmetic_v<TReal2>
+template<std::KReal TReal = float, std::KReal TReal2 = TReal>
 KVec3<TReal>& operator*=(KVec3<TReal>& vec, const KMatrix4x4<TReal2>& matrix)
 {
     return vec = matrix * vec;
 }
 
-template<class TReal = float, class TReal2 = TReal>
-requires std::is_arithmetic_v<TReal> && std::is_arithmetic_v<TReal2>
+template<std::KReal TReal = float, std::KReal TReal2 = TReal>
 KVec4<TReal> operator*(const KVec4<TReal>& vec, const KMatrix4x4<TReal2>& matrix)
 {
     return matrix * vec;
 }
 
-template<class TReal = float, class TReal2 = TReal>
-requires std::is_arithmetic_v<TReal> && std::is_arithmetic_v<TReal2>
+template<std::KReal TReal = float, std::KReal TReal2 = TReal>
 KVec4<TReal>& operator*=(const KVec4<TReal>& vec, const KMatrix4x4<TReal2>& matrix)
 {
     return vec = matrix * vec;
 }
 
 // 构造出旋转任意角度的变换矩阵(angle是角度)
-template<class TReal = float, class TReal2 = float>
-requires std::is_arithmetic_v<TReal> && std::is_arithmetic_v<TReal2>
+template<std::KReal TReal = float, std::KReal TReal2 = TReal>
 KMatrix2x2<TReal> MakeRotateMatrix(TReal2 angle)
 {
     angle = static_cast<TReal2>(Radians(angle));
@@ -99,8 +88,7 @@ KMatrix2x2<TReal> MakeRotateMatrix(TReal2 angle)
 
 // 构造出绕任意轴旋转的变换矩阵(angle是角度)
 // 这里的所有向量都需要是单位向量，因为后面的公式都是用单位向量来推算出来的
-template<class TReal = float, class TReal2 = TReal, class TReal3 = float>
-requires std::is_arithmetic_v<TReal> && std::is_arithmetic_v<TReal2> && std::is_arithmetic_v<TReal3>
+template<std::KReal TReal = float, std::KReal TReal2 = TReal, std::KReal TReal3 = float>
 KMatrix3x3<TReal> MakeRotateMatrix(const KVec3<TReal2>& vec, TReal3 angle)
 {
     const_cast<KVec3<TReal2>&>(vec).Normalize();
@@ -135,8 +123,7 @@ KMatrix3x3<TReal> MakeRotateMatrix(const KVec3<TReal2>& vec, TReal3 angle)
 
 // 构造绕任意轴缩放的矩阵
 // 这里的缩放轴是根据单位向量推算的
-template<class TReal = float, class TReal2 = TReal, class TReal3 = TReal>
-requires std::is_arithmetic_v<TReal> && std::is_arithmetic_v<TReal2> && std::is_arithmetic_v<TReal3>
+template<std::KReal TReal = float, std::KReal TReal2 = TReal, std::KReal TReal3 = float>
 KMatrix2x2<TReal> MakeScaleMatrix(const KVec2<TReal2>& vec, TReal3 scale)
 {
     const_cast<KVec2<TReal2>&>(vec).Normalize();
@@ -151,8 +138,7 @@ KMatrix2x2<TReal> MakeScaleMatrix(const KVec2<TReal2>& vec, TReal3 scale)
     };
 }
 
-template<class TReal = float, class TReal2 = TReal, class TReal3 = TReal>
-requires std::is_arithmetic_v<TReal> && std::is_arithmetic_v<TReal2> && std::is_arithmetic_v<TReal3>
+template<std::KReal TReal = float, std::KReal TReal2 = TReal, std::KReal TReal3 = float>
 KMatrix3x3<TReal> MakeScaleMatrix(const KVec3<TReal2>& vec, TReal3 scale)
 {
     const_cast<KVec3<TReal2>&>(vec).Normalize();
@@ -168,8 +154,7 @@ KMatrix3x3<TReal> MakeScaleMatrix(const KVec3<TReal2>& vec, TReal3 scale)
     };
 }
 
-template<class TReal = float, class TReal2 = TReal>
-requires std::is_arithmetic_v<TReal> && std::is_arithmetic_v<TReal2>
+template<std::KReal TReal = float, std::KReal TReal2 = TReal>
 KMatrix3x3<TReal> MakeScaleMatrix(const KVec3<TReal2>& scale)
 {
     return KMatrix3x3<TReal> {
@@ -179,8 +164,7 @@ KMatrix3x3<TReal> MakeScaleMatrix(const KVec3<TReal2>& scale)
     };
 }
 
-template<class TReal = float, class TReal2 = TReal>
-requires std::is_arithmetic_v<TReal> && std::is_arithmetic_v<TReal2>
+template<std::KReal TReal = float, std::KReal TReal2 = TReal>
 KMatrix2x2<TReal> MakeScaleMatrix(const KVec2<TReal2>& scale)
 {
     return KMatrix2x2<TReal> {
@@ -189,8 +173,7 @@ KMatrix2x2<TReal> MakeScaleMatrix(const KVec2<TReal2>& scale)
     };
 }
 
-template<class TReal = float, class TReal2 = TReal>
-requires std::is_arithmetic_v<TReal> && std::is_arithmetic_v<TReal2>
+template<std::KReal TReal = float, std::KReal TReal2 = TReal>
 KMatrix3x3<TReal> MakeTranslateMatrix(const KVec2<TReal2>& vec)
 {
     KMatrix3x3<TReal> ret(KMatrix3x3<TReal>::identity);
@@ -199,8 +182,7 @@ KMatrix3x3<TReal> MakeTranslateMatrix(const KVec2<TReal2>& vec)
     return ret;
 }
 
-template<class TReal = float, class TReal2 = TReal>
-requires std::is_arithmetic_v<TReal> && std::is_arithmetic_v<TReal2>
+template<std::KReal TReal = float, std::KReal TReal2 = TReal>
 KMatrix4x4<TReal> MakeTranslateMatrix(const KVec3<TReal2>& vec)
 {
     KMatrix4x4<TReal> ret(KMatrix4x4<TReal>::identity);
@@ -210,8 +192,7 @@ KMatrix4x4<TReal> MakeTranslateMatrix(const KVec3<TReal2>& vec)
     return ret;
 }
 
-template<class TReal = float>
-requires std::is_arithmetic_v<TReal>
+template<std::KReal TReal = float>
 KMatrix4x4<TReal> ToMatrix4(const KMatrix3x3<TReal>& mat)
 {
     return KMatrix4x4<TReal> {
@@ -219,8 +200,7 @@ KMatrix4x4<TReal> ToMatrix4(const KMatrix3x3<TReal>& mat)
     };
 }
 
-template<class TReal = float>
-requires std::is_arithmetic_v<TReal>
+template<std::KReal TReal = float>
 KMatrix3x3<TReal> ToMatrix3(const KMatrix3x3<TReal>& mat)
 {
     return KMatrix3x3<TReal> {
@@ -228,8 +208,7 @@ KMatrix3x3<TReal> ToMatrix3(const KMatrix3x3<TReal>& mat)
     };
 }
 
-template<class TReal = float>
-requires std::is_arithmetic_v<TReal>
+template<std::KReal TReal = float>
 KMatrix4x4<TReal> LookAt(const KVec3<TReal>& location, const KVec3<TReal>& target)
 {
     auto forward = target - location;

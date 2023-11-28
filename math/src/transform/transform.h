@@ -7,8 +7,7 @@
 namespace KMath
 {
 
-template<class TReal = float, class TVec = KVec3<TReal>, class TRotator = KRotator<TReal>>
-requires std::is_arithmetic_v<TReal>
+template<std::KReal TReal = float, class TVec = KVec3<TReal>, class TRotator = KRotator<TReal>>
 class KTransform
 {
     GEN_DEFAULT_CONTRUCTOR_CODE(KTransform)

@@ -8,8 +8,7 @@
 namespace KMath
 {
 
-template<class TAngle = float>
-requires std::is_arithmetic_v<TAngle>
+template<std::KReal TAngle = float>
 class KRotator
 {
 public:
@@ -25,8 +24,7 @@ public:
     const TAngle& Pitch() const { return pitch; }
     const TAngle& Roll() const { return roll; }
 
-    template<class TReal = float>
-    requires std::is_arithmetic_v<TReal>
+    template<std::KReal TReal = float>
     KMatrix3x3<TReal> ToMatrix() const
     {
         return MakeRotateMatrix(KVec3<TReal>::up, yaw) *

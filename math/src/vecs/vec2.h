@@ -10,8 +10,7 @@
 namespace KMath
 {
 
-template<class TReal>
-requires std::is_arithmetic_v<TReal>
+template<std::KReal TReal>
 class KVec2
 {
 public:
@@ -42,12 +41,12 @@ public:
     KVec2& operator-() { return *this *= -1; }
     KVec2 operator-() const { return *this * -1; }
 
-    template<class TValue> requires std::is_arithmetic_v<TValue>
+    template<std::KReal TValue = TReal>
     KVec2 operator*(TValue value) const
     {
         return KVec2 { static_cast<TReal>(value * x), static_cast<TReal>(value * y) };
     }
-    template<class TValue> requires std::is_arithmetic_v<TValue>
+    template<std::KReal TValue = TReal>
     KVec2& operator*=(TValue value)
     {
         x = static_cast<TReal>(x * value);
@@ -55,7 +54,7 @@ public:
         return *this;
     }
 
-    template<class TValue> requires std::is_arithmetic_v<TValue>
+    template<std::KReal TValue = TReal>
     KVec2 operator/(TValue value) const
     {
         if (EqualsZero(value))
@@ -65,7 +64,7 @@ public:
         }
         return KVec2 { static_cast<TReal>(x / value), static_cast<TReal>(y / value) };
     }
-    template<class TValue> requires std::is_arithmetic_v<TValue>
+    template<std::KReal TValue = TReal>
     KVec2& operator/=(TValue value)
     {
         if (EqualsZero(value))

@@ -10,8 +10,7 @@ namespace KMath
 {
 
 // 矩阵使用行向量，也就是说需要向量左乘矩阵来变换
-template<class TReal>
-requires std::is_arithmetic_v<TReal>
+template<std::KReal TReal>
 class KMatrix3x3
 {
 public:
@@ -37,17 +36,17 @@ public:
     TReal operator[](int32_t subIndex) const { return matrix[subIndex / 10 - 1][subIndex % 10 - 1]; }
     TReal& operator[](int32_t subIndex) { return matrix[subIndex / 10 - 1][subIndex % 10 - 1]; }
 
-    template<class TValue> requires std::is_arithmetic_v<TValue>
+    template<std::KReal TValue = TReal>
     KMatrix3x3 operator*(TValue value) const { return KMatrix3x3 { p * value, q * value, r * value }; }
-    template<class TValue> requires std::is_arithmetic_v<TValue>
+    template<std::KReal TValue = TReal>
     KMatrix3x3& operator*=(TValue value)
     {
         p *= value; q *= value; r *= value;
         return *this;
     }
-    template<class TValue> requires std::is_arithmetic_v<TValue>
+    template<std::KReal TValue = TReal>
     KMatrix3x3 operator/(TValue value) const { return operator*(1 / static_cast<TReal>(value)); }
-    template<class TValue> requires std::is_arithmetic_v<TValue>
+    template<std::KReal TValue = TReal>
     KMatrix3x3& operator/=(TValue value) { return operator*=(1 / static_cast<TReal>(value)); }
 
     KMatrix3x3 operator*(const KMatrix3x3& rhs) const
@@ -69,7 +68,7 @@ public:
     KMatrix3x3& operator*=(const KMatrix3x3& rhs) { return *this = *this * rhs; }
 
     // 左乘一个变换的向量（变换到矩阵代表的空间中）
-    template<class TValue = TReal> requires std::is_arithmetic_v<TValue>
+    template<std::KReal TValue = TReal>
     KVec3<TValue> operator*(const KVec3<TValue>& rhs) const
     {
         return KVec3<TValue> {
@@ -78,14 +77,14 @@ public:
             static_cast<TValue>(rhs.X() * m13 + rhs.Y() * m23 + rhs.Z() * m33)
         };
     }
-    template<class TValue = TReal> requires std::is_arithmetic_v<TValue>
+    template<std::KReal TValue = TReal>
     KVec2<TValue> operator*(const KVec2<TValue>& rhs) const
     {
         return ToVec2<TValue>(operator*(KVec3<TValue>(rhs, 1)));
     }
-    template<class TValue = TReal> requires std::is_arithmetic_v<TValue>
+    template<std::KReal TValue = TReal>
     KVec3<TValue> TransformVector(const KVec3<TValue>& vec) const { return *this * vec; }
-    template<class TValue = TReal> requires std::is_arithmetic_v<TValue>
+    template<std::KReal TValue = TReal>
     KVec2<TValue> TransformVector(const KVec2<TValue>& vec) const { return *this * vec; }
 
     // 转置
