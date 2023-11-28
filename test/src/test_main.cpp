@@ -25,8 +25,8 @@
 using namespace KMath;
 using namespace KFileUtils;
 
-#define test_cxxfeature 0
-#define test_math 1
+#define test_cxxfeature 1
+#define test_math 0
 #define test_file 0
 #define test_log 0
 #define test_initializelist 0
@@ -144,11 +144,17 @@ void TestSingleTon::TemplateFunc(std::string p)
 }
 
 template<std::KReal real1, std::KReal real2>
-// requires std::is_floating_point_v<real1> && std::is_floating_point_v<real2>
+requires std::is_floating_point_v<real1> && std::is_floating_point_v<real2>
 void AddFunc(real1 n1, real2 n2)
 {
     // static_assert(std::same_as<real1, float>, "must be float");
-    KLog::LogSimple(n1 + n2);
+    KLog::LogSimple("test real ", n1 + n2);
+}
+
+template<std::KInteger int1, std::KInteger int2>
+void AddFunc(int1 n1, int2 n2)
+{
+    KLog::LogSimple("test integer ", n1 + n2);
 }
 
 int main()
@@ -232,6 +238,7 @@ int main()
 #endif
 
 #if test_cxxfeature
+{
     int32_t a = 10;
     std::reference_wrapper<int32_t>  ra = a;
     ra.get() = 100;
@@ -258,20 +265,24 @@ int main()
 
     using namespace std::string_view_literals;
     using namespace std::string_literals;
-    using namespace std::views;
-    using namespace std::ranges;
 
-    constexpr std::string_view sv1 = "string=split"sv;
-    // auto splitStr = sv1 |
-    //     std::ranges::views::split("=") |
-    //     std::ranges::views::transform([](auto&& rng) { std::string_view{&*rng.begin(), std::ranges::distance(rng)} });
-    // for (auto s : splitStr)
-    // {
-    //     KLog::LogSimple(&*s.begin());
-    // }
+    constexpr auto sv1 { "string=split_//_comment=none"sv };
+    auto splitStr = sv1 |
+        std::views::reverse |
+        std::views::drop(sv1.length() - sv1.find_first_of("//")) |
+        std::views::reverse |
+        std::views::split('=') |
+        std::views::transform([](auto&& rng) -> std::string_view { return std::string_view(&*rng.begin(), std::ranges::distance(rng)); });
+    for (auto s : splitStr)
+    {
+        KLog::LogSimple(s);
+    }
 
     AddFunc(1.f, 2.f);
     AddFunc(1, 0);
+
+    AddFunc(-1, 10);
+}
 
 #endif
 

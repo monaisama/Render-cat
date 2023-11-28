@@ -71,6 +71,7 @@
         "xlocmes": "cpp",
         "xlocmon": "cpp",
         "xloctime": "cpp",
-        "ranges": "cpp"
+        "ranges": "cpp",
+        "span": "cpp"
     }
 }

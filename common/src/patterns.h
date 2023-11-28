@@ -74,4 +74,10 @@ concept KReal = requires (T number) {
     std::is_arithmetic_v<T>;
 };
 
+template<class T>
+concept KFloat = std::is_floating_point_v<T>;
+
+template<class T>
+concept KInteger = std::is_integral_v<T>;
+
 }
