@@ -21,6 +21,7 @@
 #include "patterns.h"
 
 #include "test_header.h"
+#include "inifile.h"
 
 using namespace KMath;
 using namespace KFileUtils;
@@ -30,7 +31,7 @@ using namespace KFileUtils;
 #define test_file 0
 #define test_log 0
 #define test_initializelist 0
-#define test_temp 0
+#define test_temp 1
 #define test_arraytype 0
 #define test_stringview 0
 #define test_singleton 0
@@ -160,8 +161,23 @@ void AddFunc(int1 n1, int2 n2)
 int main()
 {
 #if test_temp
+{
+    using namespace std::string_view_literals;
     // tfunc<int32_t>(100);
     // func();
+
+    KIniFile file;
+    file.SetConfig(KIniFile::defaultSection, "test1", std::to_string(100));
+    file.SetConfig("test_section", "test1", "testttt");
+
+    file.Write("test_ini.txt"sv);
+
+    KIniFile file1("test_ini.txt"sv);
+    for (auto& pair : file1.GetConfig(KIniFile::defaultSection))
+    {
+        KLog::LogSimple(pair.first, pair.second);
+    }
+}
 #endif
 
 #if test_singleton

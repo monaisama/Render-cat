@@ -2,6 +2,7 @@
 #include "compile_header.h"
 #include <string>
 #include <fstream>
+#include <string_view>
 
 namespace KFileUtils
 {
@@ -20,19 +21,24 @@ class K_API KFile
 {
 public:
     KFile() = default;
-    KFile(const KFile&) = delete;
-    KFile(KFile&&) = delete;
-    bool Open(const std::string& fileName);
+    KFile(const KFile&) = default;
+    KFile(KFile&&);
+    KFile& operator=(const KFile&) = delete;
+    KFile& operator=(KFile&&);
+    ~KFile();
+
+    KFile& Open(std::string_view fileName);
     size_t Read(std::string& content);
-    void Write(const std::string& str);
+    void Write(std::string_view str);
     void Close();
 
-    std::fstream& GetStream() { return file; }
+    std::fstream& GetStream() { return stream; }
 
-    static std::string ReadFile(const std::string& fileName, int32_t* length = nullptr);
+    static std::string ReadFile(std::string_view fileName, int32_t* length = nullptr);
+    static KFile OpenFile(std::string_view filepath);
 
 protected:
-    std::fstream file;
+    std::fstream stream;
 };
 
 }
