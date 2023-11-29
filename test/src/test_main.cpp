@@ -14,6 +14,10 @@
 #include <string>
 #include <string_view>
 #include <type_traits>
+#include <vector>
+#include <set>
+#include <map>
+#include <tuple>
 
 #include <concepts>
 #include <ranges>
@@ -37,6 +41,7 @@ using namespace KFileUtils;
 #define test_arraytype 0
 #define test_stringview 0
 #define test_singleton 0
+#define calc_coding_line 1
 
 template<class... Args>
 void ArgsFunc(Args... args)
@@ -176,6 +181,103 @@ int main()
     }
 }
 #endif
+
+#if calc_coding_line
+{
+    namespace fs = std::filesystem;
+    using namespace KFileUtils;
+    struct
+    {
+        std::string_view operator()(std::string_view s, std::string_view sep, bool bReverse = true)
+        {
+            if (auto pos = s.find_first_of(sep); pos != std::string_view::npos)
+            {
+                if (bReverse)
+                {
+                    auto temp = s |
+                        std::views::reverse |
+                        std::views::drop(s.length() - pos) |
+                        std::views::reverse;
+                    return std::string_view(&*temp.begin(), std::ranges::distance(temp));
+                }
+                else
+                {
+                    auto temp = s |
+                        std::views::drop(pos + 1);
+                    return std::string_view(&*temp.begin(), std::ranges::distance(temp));
+                }
+            }
+            return s;
+        }
+    } remove;
+
+    bool bComment = false;
+
+    // 补充标准库中的string方法
+    auto trim = [](std::string_view s)
+    {
+        std::string str{s};
+        str.erase(str.begin(), std::find_if_not(str.begin(), str.end(), [](char c) { return std::isspace(c); }));
+        str.erase(std::find_if_not(str.rbegin(), str.rend(), [](char c) { return std::isspace(c); }).base(), str.end());
+        return str;
+    };
+
+    auto parseLine = [bComment, &trim, &remove](std::string_view line) -> int32_t
+    {
+        if (!bComment)
+            line = remove(line, "//"); // 不管 /**/ 了
+        auto str = trim(line);
+        if (str == "")
+            return 0;
+        return 1;
+    };
+    
+    auto calcSingleFile = [&parseLine](fs::path& path) -> int32_t
+    {
+        std::string content = KFile::ReadFile(path.generic_string());
+        std::stringstream ss(content);
+        std::string line;
+        int32_t num = 0;
+        while (std::getline(ss, line))
+        {
+            num += parseLine(line);
+        }
+        return num;
+    };
+
+    std::vector<std::string> folders { "common", "file", "log", "physics", "project-cat", "test" };
+    std::set<std::string> ext { ".h", ".cpp" };
+    auto calc = [&ext, &calcSingleFile](const std::string& inFolder)
+    {
+        std::string path = KPaths::ConcatPath({KPaths::ProjectPath(), inFolder});
+        int32_t filecount = 0, linecount = 0;
+        for (fs::directory_entry entry : fs::recursive_directory_iterator(fs::path{path}))
+        {
+            if (!entry.is_regular_file()) continue;
+            if (auto fp = entry.path(); fp.has_extension())
+            {
+                if (auto it = ext.find(fp.extension().generic_string()); it != ext.end())
+                {
+                    ++filecount;
+                    linecount += calcSingleFile(fp);
+                }
+            }
+        }
+        return std::tuple<int32_t, int32_t>(filecount, linecount);
+    };
+
+    int32_t filecount = 0, linecount = 0;
+    for (auto& folder : folders)
+    {
+        auto counter = calc(folder);
+        KLog::Log("start calc folder: |{0}|, files: {1}, lines: {2}", folder, std::get<0>(counter), std::get<1>(counter));
+        filecount += std::get<0>(counter);
+        linecount += std::get<1>(counter);
+    }
+    KLog::Log("total files: {0}, lines: {1}\n", filecount, linecount);
+}
+#endif
+
 #if test_file
 {
     std::string content1 = KFile::ReadFile("default.vs");
