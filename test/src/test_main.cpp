@@ -17,6 +17,7 @@
 
 #include <concepts>
 #include <ranges>
+#include <filesystem>
 
 #include "patterns.h"
 
@@ -26,7 +27,7 @@
 using namespace KMath;
 using namespace KFileUtils;
 
-#define test_cxxfeature 1
+#define test_cxxfeature 0
 #define test_math 0
 #define test_file 0
 #define test_log 0
@@ -166,17 +167,57 @@ int main()
     // tfunc<int32_t>(100);
     // func();
 
-    KIniFile file;
-    file.SetConfig(KIniFile::defaultSection, "test1", std::to_string(100));
-    file.SetConfig("test_section", "test1", "testttt");
+    auto filepath = "test_ini.txt"sv;
+    namespace fs = std::filesystem;
+    if (!fs::exists(fs::path{filepath}))
+    {
+        KIniFile file;
+        file.SetConfig(KIniFile::defaultSection, "test1", std::to_string(100));
+        file.SetConfig("test_section", "test1", "testttt");
 
-    file.Write("test_ini.txt"sv);
+        file.Write(filepath);
+    }
 
-    KIniFile file1("test_ini.txt"sv);
+    KIniFile file1(filepath);
     for (auto& pair : file1.GetConfig(KIniFile::defaultSection))
     {
         KLog::LogSimple(pair.first, pair.second);
     }
+
+    // using namespace std::string_literals;
+    // std::stringstream ss("helloworld\nhelloc++"s);
+    // std::string line;
+    // while (std::getline(ss, line))
+    // {
+    //     KLog::LogSimple("line: ", line);
+    // }
+    std::string content = KFile::ReadFile(filepath);
+    // KLog::LogSimple("read file\n", content);
+    KIniFile ini(content);
+    for (auto key : std::views::keys(ini.GetConfig()))
+    {
+        KLog::LogSimple("key: ", key);
+    }
+
+    std::string_view line = "hello=world//cc"sv;
+    if (auto pos = line.find_first_of("//"); pos != std::string_view::npos)
+    {
+        auto temp = line |
+            std::views::reverse |
+            std::views::drop(line.length() - pos) |
+            std::views::reverse;
+        line = std::string_view (&*temp.begin(), std::ranges::distance(temp));
+    }
+    auto split = line |
+        // std::ranges::views::reverse |
+        // std::ranges::views::drop(line.length() - line.find_first_of("//")) | // remove comment
+        // std::ranges::views::reverse |
+        std::ranges::views::split('=') |
+        std::ranges::views::transform([](auto&& rng) { return std::string_view(&*rng.begin(), std::ranges::distance(rng)); });
+    // for (auto sp : split)
+    // {
+    //     KLog::LogSimple("split: ", sp);
+    // }
 }
 #endif
 

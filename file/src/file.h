@@ -20,12 +20,15 @@ protected:
 class K_API KFile
 {
 public:
-    KFile() = default;
+    KFile();
     KFile(const KFile&) = default;
     KFile(KFile&&);
     KFile& operator=(const KFile&) = delete;
     KFile& operator=(KFile&&);
     ~KFile();
+
+    bool IsValid() const;
+    operator bool() const;
 
     KFile& Open(std::string_view fileName);
     size_t Read(std::string& content);

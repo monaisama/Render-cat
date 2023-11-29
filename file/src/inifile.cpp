@@ -47,7 +47,7 @@ void KIniFile::ParseContent(const std::string& content)
             auto value = pair.value();
             if (!value.second) // 新的section配置
             {
-                context.curSection = value.second.value();
+                context.curSection = value.first;
             }
             else // 真正的配置
             {
@@ -129,14 +129,37 @@ const KIniFile::ConfigValueType& KIniFile::GetConfig(const std::string& section)
     return ConfigValueType{};
 }
 
+const std::map<KIniFile::SectionType, KIniFile::ConfigValueType>& KIniFile::GetConfig() const
+{
+    return values;
+}
+
 std::optional<std::pair<std::string, std::optional<std::string>>> KIniFile::ParseLine(std::string_view line)
 {
-    auto split = line |
-        std::ranges::views::reverse |
-        std::ranges::views::drop(line.length() - line.find_first_of("//")) | // remove comment
-        std::ranges::views::reverse |
-        std::ranges::views::split('=') |
-        std::ranges::views::transform([](auto&& rng) { return std::string_view(&*rng.begin(), std::ranges::distance(rng)); });
+    struct
+    {
+        std::string_view operator()(std::string_view s, std::string_view sep, bool bReverse = true)
+        {
+            if (auto pos = s.find_first_of(sep); pos != std::string_view::npos)
+            {
+                if (bReverse)
+                {
+                    auto temp = s |
+                        std::views::reverse |
+                        std::views::drop(s.length() - pos) |
+                        std::views::reverse;
+                    return std::string_view(&*temp.begin(), std::ranges::distance(temp));
+                }
+                else
+                {
+                    auto temp = s |
+                        std::views::drop(pos + 1);
+                    return std::string_view(&*temp.begin(), std::ranges::distance(temp));
+                }
+            }
+            return s;
+        }
+    } remove;
 
     // 补充标准库中的string方法
     auto trim = [](std::string_view s)
@@ -146,14 +169,31 @@ std::optional<std::pair<std::string, std::optional<std::string>>> KIniFile::Pars
         str.erase(std::find_if_not(str.rbegin(), str.rend(), [](char c) { return std::isspace(c); }).base(), str.end());
         return str;
     };
+
+    auto split = remove(line, "//") |
+        std::views::split('=') |
+        std::views::transform([](auto&& rng) { return std::string_view(&*rng.begin(), std::ranges::distance(rng)); });
     
     std::size_t count = std::ranges::distance(split);
     if (count == 0)
         return {};
     else if (count == 2)
         return std::pair{trim(*split.begin()), trim(*(++split.begin()))};
-    else
-        KLog::LogError("ill-format ini file: {0} {1}", filePath, line);
+    else if (count == 1) // check section
+    {
+        std::string_view section = *split.begin();
+        KLog::LogSimple("section: ", section);
+        if (section.find_first_of("[") != std::string_view::npos && section.find_first_of("]") != std::string_view::npos)
+        {
+            section = remove(remove(section, "[", false), "]");
+            if (auto str = trim(section); str.size() != 0)
+            {
+                KLog::LogSimple("after section: ", str);
+                return std::pair<std::string, std::optional<std::string>>{std::move(str), {}};
+            }
+        }
+    }
+    KLog::LogError("ill-format ini file: {0} {1}", filePath, line);
     return {};
 }
 

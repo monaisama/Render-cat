@@ -2,6 +2,7 @@
 #include "log.h"
 
 #include <cstdint>
+#include <exception>
 
 namespace KFileUtils
 {
@@ -11,10 +12,26 @@ int32_t KFileTest::Int() const
     return ELe + 1;
 }
 
+KFile::KFile()
+    : stream {}
+{
+    auto mask = std::fstream::failbit | std::fstream::badbit;
+    stream.exceptions(mask);
+}
+
 KFile& KFile::Open(std::string_view fileName)
 {
-    // todo.. 需要判定文件是否存在，并且需要给定选项删除文件里面的内容再写入新的
-    stream = std::fstream(fileName.data(), std::fstream::in | std::fstream::out);
+    try
+    {
+        stream = std::fstream(fileName.data(), std::fstream::in | std::fstream::out);
+        if (!stream)
+            throw std::exception("create file stream failed.");
+    }
+    catch(const std::exception& e)
+    {
+        KLog::LogError("open file failed: path {0}, message {1}", fileName, e.what());
+    }
+    
     return *this;
 }
 
@@ -35,8 +52,23 @@ KFile& KFile::operator=(KFile&& file)
     return *this;
 }
 
+bool KFile::IsValid() const
+{
+    return stream && stream.is_open();
+}
+
+KFile::operator bool() const
+{
+    return IsValid();
+}
+
 size_t KFile::Read(std::string& content)
 {
+    if (!IsValid())
+    {
+        KLog::LogError("File is not valid to read.");
+        return 0;
+    }
     char cache[1024];
     size_t count = 0;
     while (stream.read(cache, 1024))
@@ -51,20 +83,40 @@ size_t KFile::Read(std::string& content)
 
 void KFile::Write(std::string_view str)
 {
+    if (!IsValid())
+    {
+        KLog::LogError("File is not valid to write");
+        return;
+    }
     stream.write(str.data(), str.length());
     stream.flush();
 }
 
 void KFile::Close()
 {
-    if (stream.is_open())
+    if (IsValid())
         stream.close();
 }
 
 std::string KFile::ReadFile(std::string_view fileName, int32_t* length)
 {
     KFile file;
-    file.Open(fileName);
+
+    try
+    {
+        file.Open(fileName);
+    }
+    catch(const std::exception& e)
+    {
+        KLog::LogError("file is not valid, readfile failed. {0}", fileName);
+        return {};
+    }
+    
+    if (!file)
+    {
+        KLog::LogError("file is not valid, readfile failed. {0}", fileName);
+        return {};
+    }
 
     std::string content;
     int32_t count = file.Read(content);

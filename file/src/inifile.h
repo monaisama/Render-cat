@@ -7,6 +7,8 @@
 #include <map>
 #include <utility>
 #include <optional>
+#include <vector>
+#include <ranges>
 
 namespace KFileUtils
 {
@@ -32,6 +34,8 @@ public:
     void SetConfig(const std::string& section, const std::string& key, const std::string& value);
     std::optional<std::string_view> GetConfig(const std::string& section, const std::string& key) const;
     const ConfigValueType& GetConfig(const std::string& section) const;
+
+    const std::map<SectionType, ConfigValueType>& GetConfig() const;
 
 private:
     void ParseContent(const std::string& content);
