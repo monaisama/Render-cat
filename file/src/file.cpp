@@ -14,11 +14,11 @@ KFile::KFile()
     stream.exceptions(mask);
 }
 
-KFile& KFile::Open(std::string_view fileName)
+KFile& KFile::Open(std::string_view fileName, std::ios::openmode mode)
 {
     try
     {
-        stream = std::fstream(fileName.data(), std::fstream::in | std::fstream::out);
+        stream = std::fstream(fileName.data(), mode);
         if (!stream)
             throw std::exception("create file stream failed.");
     }
@@ -99,7 +99,7 @@ std::string KFile::ReadFile(std::string_view fileName, int32_t* length)
 
     try
     {
-        file.Open(fileName);
+        file.Open(fileName, std::ios_base::in);
     }
     catch(const std::exception& e)
     {
@@ -122,9 +122,9 @@ std::string KFile::ReadFile(std::string_view fileName, int32_t* length)
     return content;
 }
 
-KFile KFile::OpenFile(std::string_view filepath)
+KFile KFile::OpenFile(std::string_view filepath, std::ios::openmode mode)
 {
-    return std::move(KFile{}.Open(filepath));
+    return std::move(KFile{}.Open(filepath, mode));
 }
 
 }

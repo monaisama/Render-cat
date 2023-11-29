@@ -20,7 +20,7 @@ public:
     bool IsValid() const;
     operator bool() const;
 
-    KFile& Open(std::string_view fileName);
+    KFile& Open(std::string_view fileName, std::ios::openmode mode = std::ios::out);
     size_t Read(std::string& content);
     void Write(std::string_view str);
     void Close();
@@ -28,7 +28,7 @@ public:
     std::fstream& GetStream() { return stream; }
 
     static std::string ReadFile(std::string_view fileName, int32_t* length = nullptr);
-    static KFile OpenFile(std::string_view filepath);
+    static KFile OpenFile(std::string_view filepath, std::ios::openmode mode = std::ios::out);
 
 protected:
     std::fstream stream;
