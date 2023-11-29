@@ -59,5 +59,5 @@ rule_end()
 add_rules('krule.include.self')
 add_rules('kmode.debug', 'kmode.release')
 includes('math', 'project-cat', 'file', 'log', 'physics')
-includes('resource')
+-- includes('resource') -- 不再拷贝，直接使用项目路径
 includes('test')

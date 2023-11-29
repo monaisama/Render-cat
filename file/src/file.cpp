@@ -7,11 +7,6 @@
 namespace KFileUtils
 {
 
-int32_t KFileTest::Int() const
-{
-    return ELe + 1;
-}
-
 KFile::KFile()
     : stream {}
 {
@@ -29,7 +24,7 @@ KFile& KFile::Open(std::string_view fileName)
     }
     catch(const std::exception& e)
     {
-        KLog::LogError("open file failed: path {0}, message {1}", fileName, e.what());
+        KLog::LogError("open file failed. path: {0}, message: {1}", fileName, e.what());
     }
     
     return *this;

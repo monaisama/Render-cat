@@ -1,15 +1,17 @@
 #include "utils.h"
+#include "paths.h"
 
 namespace KCore::KUtils
 {
 
+using namespace KFileUtils;
 KShaderMeta MakeMetaShader(std::string_view filePath, KShaderType type)
 {
     KShaderMeta meta;
     if (filePath.starts_with("shaders"))
         meta.filePath = filePath;
     else
-        meta.filePath = std::string{"shaders/"}.append(filePath);
+        meta.filePath = KPaths::ShaderPath(std::string{filePath}); // std::string{"shaders/"}.append(filePath);
     meta.type = type;
     return meta; // 这里其实不move 编译器会优化
 }
@@ -36,7 +38,7 @@ KTextureMeta MakeMetaTexture(std::string_view filepath, ETextureSampleType sampl
     if (filepath.starts_with("textures"))
         meta.filePath = filepath;
     else
-        meta.filePath = std::string{"textures/"}.append(filepath);
+        meta.filePath = KPaths::TexturePath(std::string{filepath}); // std::string{"textures/"}.append(filepath);
     meta.type = ETextureType::Texture2d;
     meta.bAutoMipmap = false;
     meta.sampleTypeMag = sampleType;

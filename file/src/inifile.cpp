@@ -182,13 +182,11 @@ std::optional<std::pair<std::string, std::optional<std::string>>> KIniFile::Pars
     else if (count == 1) // check section
     {
         std::string_view section = *split.begin();
-        KLog::LogSimple("section: ", section);
         if (section.find_first_of("[") != std::string_view::npos && section.find_first_of("]") != std::string_view::npos)
         {
             section = remove(remove(section, "[", false), "]");
             if (auto str = trim(section); str.size() != 0)
             {
-                KLog::LogSimple("after section: ", str);
                 return std::pair<std::string, std::optional<std::string>>{std::move(str), {}};
             }
         }

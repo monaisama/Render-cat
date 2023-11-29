@@ -7,16 +7,6 @@
 namespace KFileUtils
 {
 
-class K_API KFileTest
-{
-public:
-    KFileTest() = default;
-    int32_t Int() const;
-
-protected:
-    int32_t ELe;
-};
-
 class K_API KFile
 {
 public:

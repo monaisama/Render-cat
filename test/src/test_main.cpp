@@ -23,16 +23,17 @@
 
 #include "test_header.h"
 #include "inifile.h"
+#include "paths.h"
 
 using namespace KMath;
 using namespace KFileUtils;
 
 #define test_cxxfeature 0
 #define test_math 0
-#define test_file 0
+#define test_file 1
 #define test_log 0
 #define test_initializelist 0
-#define test_temp 1
+#define test_temp 0
 #define test_arraytype 0
 #define test_stringview 0
 #define test_singleton 0
@@ -163,7 +164,25 @@ int main()
 {
 #if test_temp
 {
+    namespace fs = std::filesystem;
     using namespace std::string_view_literals;
+    KLog::LogSimple(fs::current_path());
+    auto cur = fs::current_path();
+
+    while (cur.has_relative_path())
+    {
+        KLog::LogSimple(cur = cur.parent_path());
+        KLog::LogSimple(cur.filename());
+    }
+}
+#endif
+#if test_file
+{
+    std::string content1 = KFile::ReadFile("default.vs");
+    KLog::Log(content1);
+
+    using namespace std::string_view_literals;
+    using namespace std::string_literals;
     // tfunc<int32_t>(100);
     // func();
 
@@ -176,6 +195,19 @@ int main()
         file.SetConfig("test_section", "test1", "testttt");
 
         file.Write(filepath);
+    }
+
+    std::string configPath = KPaths::ConfigPath("default.ini"s);
+    if (!fs::exists(fs::path{configPath}))
+    {
+        KIniFile file;
+        file.SetConfig("screen", "width", std::to_string(800));
+        file.SetConfig("screen", "height", std::to_string(600));
+        file.SetConfig("camera", "fov", "90");
+        file.SetConfig("camera", "speed", "2.5");
+        file.SetConfig("camera", "sensitivity", "0.01");
+
+        file.Write(configPath);
     }
 
     KIniFile file1(filepath);
@@ -218,6 +250,11 @@ int main()
     // {
     //     KLog::LogSimple("split: ", sp);
     // }
+
+    KLog::LogSimple(KPaths::ProjectPath(), KPaths::ResourcePath(), KPaths::ConfigPath());
+    KLog::LogSimple("start test path\n",
+        KPaths::ConcatPath({KPaths::ProjectPath(), "file.cpp"}),
+        "\nend test path.");
 }
 #endif
 
@@ -534,15 +571,6 @@ int main()
     ShowLocation(transformer);
     
     KLog::LogSimple("End camera transformer:\n");
-
-#endif
-
-#if test_file
-
-    std::string content = KFile::ReadFile("default.vs");
-
-    KLog::Log(content);
-    KLog::Log(KFileTest{}.Int());
 
 #endif
 
