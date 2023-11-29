@@ -30,6 +30,22 @@ KIniFile::KIniFile(std::string_view filepath)
     ParseContent(KFile::ReadFile(filepath));
 }
 
+void KIniFile::Read()
+{
+    Read(filePath);
+}
+
+void KIniFile::Read(std::string_view filepath)
+{
+    if (filepath.empty())
+    {
+        KLog::LogWarning("cant read ini file valid filepath");
+        return;
+    }
+    filePath = filepath;
+    ParseContent(KFile::ReadFile(filepath));
+}
+
 void KIniFile::ParseContent(const std::string& content)
 {
     std::stringstream stream(content);
@@ -64,6 +80,7 @@ void KIniFile::Write(std::string_view filepath)
         KLog::LogWarning("invalid ini file path {0}", filepath);
         return;
     }
+    filePath = filepath;
     namespace fs = std::filesystem;
     auto path = fs::path{filepath};
     if (path.has_parent_path() && !fs::exists(path.parent_path()))

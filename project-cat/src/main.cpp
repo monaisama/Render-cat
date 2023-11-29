@@ -18,6 +18,7 @@
 
 #include <string>
 #include <map>
+#include "resource/config.h"
 
 // 这里直接写在这里省事 嘻嘻
 using namespace KCore;
@@ -126,13 +127,18 @@ void WindowMouse(GLFWwindow* window, double mouseX, double mouseY)
 int main()
 {
     TestCompileConfig();
+    KConfig::GetInstance().InitFromDefaultConfig();
+    globalContext.windowWidth = KConfig::GetInstance().GetValue<int32_t>(KConfig::screenSectionName, "width");
+    globalContext.windowHeight = KConfig::GetInstance().GetValue<int32_t>(KConfig::screenSectionName, "height");
+    movementContext.movementSpeed = KConfig::GetInstance().GetValue<float>(KConfig::cameraSectionName, "speed");
+    movementContext.sensitivity = KConfig::GetInstance().GetValue<float>(KConfig::cameraSectionName, "sensitivity");
 
     glfwInit();
     glfwWindowHint(GLFW_CONTEXT_VERSION_MAJOR, 3);
     glfwWindowHint(GLFW_CONTEXT_VERSION_MINOR, 3);
     glfwWindowHint(GLFW_OPENGL_PROFILE, GLFW_OPENGL_CORE_PROFILE);
 
-    GLFWwindow* window = glfwCreateWindow(800, 600, "project-cat", nullptr, nullptr);
+    GLFWwindow* window = glfwCreateWindow(globalContext.windowWidth, globalContext.windowHeight, "project-cat", nullptr, nullptr);
     if (!window)
     {
         KLog::LogError("glfw window created failed.");
@@ -167,7 +173,8 @@ int main()
     exercise.Setup();
 
     glEnable(GL_DEPTH_TEST);
-    KCamera mainCamera = KCamera::Persp(90.f, 0.1f, 1000.f, GetAspectRatio()).LookAt({-10,0,10}, KVec3f::zero);
+    float fov = KConfig::GetInstance().GetValue<float>(KConfig::cameraSectionName, "fov");
+    KCamera mainCamera = KCamera::Persp(fov, 0.1f, 1000.f, GetAspectRatio()).LookAt({-10,0,10}, KVec3f::zero);
     KCameraTransformer transformer(mainCamera);
     while (!glfwWindowShouldClose(window))
     {

@@ -28,6 +28,8 @@ public:
 
     void Write(std::string_view filepath);
     void Write();
+    void Read(std::string_view filepath);
+    void Read();
 
     static KIniFile Open(std::string_view filepath);
 
