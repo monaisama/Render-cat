@@ -245,7 +245,7 @@ int main()
         return num;
     };
 
-    std::vector<std::string> folders { "common", "file", "log", "physics", "project-cat", "test" };
+    std::vector<std::string> folders { "common", "file", "log", "math", "physics", "project-cat", "test" };
     std::set<std::string> ext { ".h", ".cpp" };
     auto calc = [&ext, &calcSingleFile](const std::string& inFolder)
     {
