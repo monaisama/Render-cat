@@ -37,7 +37,7 @@ using namespace KFileUtils;
 #define test_file 1
 #define test_log 0
 #define test_initializelist 0
-#define test_temp 0
+#define test_temp 1
 #define test_arraytype 0
 #define test_stringview 0
 #define test_singleton 0
@@ -165,10 +165,51 @@ void AddFunc(int1 n1, int2 n2)
     KLog::LogSimple("test integer ", n1 + n2);
 }
 
+class Base
+{
+protected:
+    int32_t baseValue;
+public:
+    Base() : baseValue{100} {}
+    Base(int32_t value) : baseValue(value) { }
+    void Func() { KLog::LogSimple("base func."); }
+    virtual void VFunc() { KLog::LogSimple("base virtual func"); }
+
+    virtual void Value() { KLog::Log("base {0}", baseValue); }
+};
+
+class Drived : public Base
+{
+protected:
+    int32_t drivedValue {-100};
+
+public:
+    using Base::Base;
+    // Drived() {}
+
+    virtual void VFunc() override { KLog::LogSimple("drived virtual func."); }
+
+    virtual void Value() override { KLog::Log("drived {0}", drivedValue); Base::Value(); }
+};
+
 int main()
 {
 #if test_temp
 {
+    // auto b = std::make_shared<Base>(new Drived{});
+    Base* b = new Drived{-1};
+    b->Func();
+    b->VFunc();
+    b->Value();
+
+    KLog::Log("--------");
+    Drived d;
+    d.Func();
+    d.VFunc();
+    d.Value();
+
+    delete b;
+
     namespace fs = std::filesystem;
     using namespace std::string_view_literals;
     KLog::LogSimple(fs::current_path());
