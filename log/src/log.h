@@ -18,7 +18,7 @@ void Log(const std::string& format, const Args&... args)
     {
         [&args](std::stringstream& outs)
         {
-            // å¦‚æœè¿™é‡Œæ˜¯nullptr, ç›´æ¥è¾“å‡ºä¼šcrashï¼Œéœ€è¦åšä¸€ä¸ªåˆ¤å®š
+            // Èç¹ûÕâÀïÊÇnullptr, Ö±½ÓÊä³ö»ácrash£¬ĞèÒª×öÒ»¸öÅĞ¶¨
             if constexpr (std::is_pointer_v<Args>) if (args == nullptr)
             {
                 outs << nullptr;
@@ -54,7 +54,7 @@ void Log(const std::string& format, const Args&... args)
 }
 
 template<class... Args>
-void LogSimple(const Args&... args) // todo.. è¿™é‡Œæ€ä¹ˆå°†å‡½æ•°åé‡è½½åˆ°Log
+void LogSimple(const Args&... args) // todo.. ÕâÀïÔõÃ´½«º¯ÊıÃûÖØÔØµ½Log
 {
     (void) std::initializer_list {
         ([&args](){

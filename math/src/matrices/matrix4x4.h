@@ -92,7 +92,7 @@ public:
     template<std::KReal TValue = TReal>
     KVec3<TValue> TransformVector(const KVec3<TValue>& rhs) const { return *this * rhs; }
 
-    // è½¬ç½®
+    // ×ªÖÃ
     KMatrix4x4 Transpose() const
     {
         return KMatrix4x4 {
@@ -103,13 +103,13 @@ public:
         };
     }
 
-    // é€† // ä¼´éšçŸ©é˜µé™¤ä»¥è¡Œåˆ—å¼
+    // Äæ // °éËæ¾ØÕó³ıÒÔĞĞÁĞÊ½
     KMatrix4x4 Inverse() const
     {
         return Adjugate() / Det();
     }
 
-    // ä½™å­å¼çŸ©é˜µ
+    // Óà×ÓÊ½¾ØÕó
     KMatrix4x4 CofactorMatrix() const
     {
         KMatrix4x4 cofMatrix;
@@ -137,17 +137,17 @@ public:
         return cofMatrix;
     }
 
-    // è¡Œåˆ—å¼ // ä»»é€‰ä¸€è¡Œæˆ–è€…ä¸€åˆ—æ±‚ä»£æ•°ä½™å­å¼å’Œæ­¤å…ƒç´ çš„ä¹˜ç§¯çš„å’Œ
+    // ĞĞÁĞÊ½ // ÈÎÑ¡Ò»ĞĞ»òÕßÒ»ÁĞÇó´úÊıÓà×ÓÊ½ºÍ´ËÔªËØµÄ³Ë»ıµÄºÍ
     TReal Det() const
     {
-        // è¿™é‡Œéšä¾¿é€‰å®šç¬¬ä¸€è¡Œ
+        // ÕâÀïËæ±ãÑ¡¶¨µÚÒ»ĞĞ
         return m11 * CofactorValue(m22, m23, m24, m32, m33, m34, m42, m43, m44, 1+1) +
             m12 * CofactorValue(m21, m23, m24, m31, m33, m34, m41, m43, m44, 1+2) +
             m13 * CofactorValue(m21, m22, m24, m31, m32, m34, m41, m42, m44, 1+3) +
             m14 * CofactorValue(m21, m22, m23, m31, m32, m33, m41, m42, m43, 1+4);
     }
 
-    // ä¼´éšçŸ©é˜µ // ä»£æ•°ä½™å­å¼çŸ©é˜µçš„è½¬ç½®
+    // °éËæ¾ØÕó // ´úÊıÓà×ÓÊ½¾ØÕóµÄ×ªÖÃ
     KMatrix4x4 Adjugate() const
     {
         return CofactorMatrix().Transpose();
@@ -168,12 +168,12 @@ protected:
         TReal x3, TReal y3, TReal z3,
         int32_t sumIndex) const
     {
-        // æœ‰ç¬¦å·è¡Œåˆ—å¼
+        // ÓĞ·ûºÅĞĞÁĞÊ½
         TReal cofValue = KMatrix3x3<TReal> {
             KVec3<TReal> {x1, y1, z1},
             KVec3<TReal> {x2, y2, z2},
             KVec3<TReal> {x3, y3, z3}
-        }.Det(); // è¡Œåˆ—å¼
+        }.Det(); // ĞĞÁĞÊ½
         return (sumIndex % 2 == 0) ? cofValue : -cofValue;
     }
 

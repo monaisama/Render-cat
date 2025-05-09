@@ -42,8 +42,8 @@ void KMat::SetVec3f(const std::string& name, const KMath::KVec3f& value) const
 }
 void KMat::SetMatrix4f(const std::string& name, const KMath::KMatrix4f& value) const
 {
-    // openglæ˜¯åˆ—å‘é‡ï¼Œmath libraryé‡Œé¢æ˜¯è¡Œå‘é‡
-    // ä½†æ˜¯è¿™é‡Œä¸è½¬ç½®ï¼Œå› ä¸ºåœ¨shaderé‡Œé¢éœ€è¦å·¦ä¹˜çŸ©é˜µ matrix * vecï¼Œå°±å¯ä»¥äº†ï¼ˆå¦‚æœè½¬ç½®äº†ï¼Œå°±éœ€è¦å³ä¹˜çŸ©é˜µäº† vec * matrixï¼‰
+    // openglÊÇÁĞÏòÁ¿£¬math libraryÀïÃæÊÇĞĞÏòÁ¿
+    // µ«ÊÇÕâÀï²»×ªÖÃ£¬ÒòÎªÔÚshaderÀïÃæĞèÒª×ó³Ë¾ØÕó matrix * vec£¬¾Í¿ÉÒÔÁË£¨Èç¹û×ªÖÃÁË£¬¾ÍĞèÒªÓÒ³Ë¾ØÕóÁË vec * matrix£©
     glUniformMatrix4fv(glGetUniformLocation(matObjectID, name.c_str()), 1, GL_FALSE, value.Matrix());
 }
 void KMat::SetMatrix3f(const std::string& name, const KMath::KMatrix3f& value) const

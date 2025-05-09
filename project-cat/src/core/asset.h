@@ -6,7 +6,7 @@
 namespace KCore
 {
 
-// æ‰€æœ‰metaä¿¡æ¯çš„åŸºç±»
+// ËùÓĞmetaĞÅÏ¢µÄ»ùÀà
 struct IMeta
 {};
 

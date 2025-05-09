@@ -9,7 +9,7 @@
 namespace KMath
 {
 
-// çŸ©é˜µä½¿ç”¨è¡Œå‘é‡ï¼Œä¹Ÿå°±æ˜¯è¯´éœ€è¦å‘é‡å·¦ä¹˜çŸ©é˜µæ¥å˜æ¢
+// ¾ØÕóÊ¹ÓÃĞĞÏòÁ¿£¬Ò²¾ÍÊÇËµĞèÒªÏòÁ¿×ó³Ë¾ØÕóÀ´±ä»»
 template<std::KReal TReal>
 class KMatrix3x3
 {
@@ -67,7 +67,7 @@ public:
     }
     KMatrix3x3& operator*=(const KMatrix3x3& rhs) { return *this = *this * rhs; }
 
-    // å·¦ä¹˜ä¸€ä¸ªå˜æ¢çš„å‘é‡ï¼ˆå˜æ¢åˆ°çŸ©é˜µä»£è¡¨çš„ç©ºé—´ä¸­ï¼‰
+    // ×ó³ËÒ»¸ö±ä»»µÄÏòÁ¿£¨±ä»»µ½¾ØÕó´ú±íµÄ¿Õ¼äÖĞ£©
     template<std::KReal TValue = TReal>
     KVec3<TValue> operator*(const KVec3<TValue>& rhs) const
     {
@@ -87,7 +87,7 @@ public:
     template<std::KReal TValue = TReal>
     KVec2<TValue> TransformVector(const KVec2<TValue>& vec) const { return *this * vec; }
 
-    // è½¬ç½®
+    // ×ªÖÃ
     KMatrix3x3 Transpose() const
     {
         return KMatrix3x3 {
@@ -97,26 +97,26 @@ public:
         };
     }
 
-    // çŸ©é˜µæ±‚é€† // ä¼´éšçŸ©é˜µé™¤ä»¥è¡Œåˆ—å¼
+    // ¾ØÕóÇóÄæ // °éËæ¾ØÕó³ıÒÔĞĞÁĞÊ½
     KMatrix3x3 Inverse() const { return Adjugate() / Det(); }
-    // è¡Œåˆ—å¼ // ä»»æ„é€‰æ‹©ä¸€è¡Œæˆ–è€…ä¸€åˆ—çš„å…ƒç´ ä¹˜ä»¥å¯¹åº”çš„ä½™å­å¼çŸ©é˜µçš„è¡Œåˆ—å¼
-    // 3x3ç›´æ¥å†™å…¬å¼
+    // ĞĞÁĞÊ½ // ÈÎÒâÑ¡ÔñÒ»ĞĞ»òÕßÒ»ÁĞµÄÔªËØ³ËÒÔ¶ÔÓ¦µÄÓà×ÓÊ½¾ØÕóµÄĞĞÁĞÊ½
+    // 3x3Ö±½ÓĞ´¹«Ê½
     TReal Det() const
     {
         return m11*m22*m33 + m12*m23* m31 + m13*m21*m32
             - m13*m22*m31 - m23*m32*m11 - m33*m12*m21;
     }
-    // æ˜¯å¦æ˜¯å¥‡å¼‚çŸ©é˜µ
+    // ÊÇ·ñÊÇÆæÒì¾ØÕó
     bool IsSingular() const { return EqualsZero(Det()); }
-    // ä¼´éšçŸ©é˜µ // ä»£æ•°ä½™å­å¼çŸ©é˜µçš„è½¬ç½®
+    // °éËæ¾ØÕó // ´úÊıÓà×ÓÊ½¾ØÕóµÄ×ªÖÃ
     KMatrix3x3 Adjugate() const { return CofactorMatrix().Transpose(); }
-    // ä½™å­å¼çŸ©é˜µ // ä»£æ•°ä½™å­å¼ = æœ‰ç¬¦å·çš„ä½™å­å¼çŸ©é˜µè¡Œåˆ—å¼
+    // Óà×ÓÊ½¾ØÕó // ´úÊıÓà×ÓÊ½ = ÓĞ·ûºÅµÄÓà×ÓÊ½¾ØÕóĞĞÁĞÊ½
     KMatrix3x3 CofactorMatrix() const
     {
         auto cofValue = [](TReal x1, TReal y1, TReal x2, TReal y2, int32_t indexSum)
         {
             TReal det = x1 * y2 - y1 * x2;
-            return (indexSum & 1 > 0) ? -det : det;
+            return ((indexSum & 1) > 0) ? -det : det;
         };
 
         TReal cof11 = cofValue(m22, m23, m32, m33, 1 + 1);

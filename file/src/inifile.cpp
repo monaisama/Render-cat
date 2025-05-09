@@ -58,14 +58,14 @@ void KIniFile::ParseContent(const std::string& content)
 
     while (std::getline(stream, line))
     {
-        if (auto pair = ParseLine(line); pair) // ä¸æ˜¯æ³¨é‡Šæˆ–è€…ç©ºè¡Œ
+        if (auto pair = ParseLine(line); pair) // ²»ÊÇ×¢ÊÍ»òÕß¿ÕĞĞ
         {
             auto value = pair.value();
-            if (!value.second) // æ–°çš„sectioné…ç½®
+            if (!value.second) // ĞÂµÄsectionÅäÖÃ
             {
                 context.curSection = value.first;
             }
-            else // çœŸæ­£çš„é…ç½®
+            else // ÕæÕıµÄÅäÖÃ
             {
                 SetConfig(context.curSection, value.first, value.second.value());
             }
@@ -178,7 +178,7 @@ std::optional<std::pair<std::string, std::optional<std::string>>> KIniFile::Pars
         }
     } remove;
 
-    // è¡¥å……æ ‡å‡†åº“ä¸­çš„stringæ–¹æ³•
+    // ²¹³ä±ê×¼¿âÖĞµÄstring·½·¨
     auto trim = [](std::string_view s)
     {
         std::string str{s};

@@ -80,19 +80,19 @@ public:
     bool operator==(const KVec2& rhs) const { return Equals(x, rhs.x) && Equals(y, rhs.y); }
     bool operator!=(const KVec2& rhs) const { return !(*this == rhs); }
 
-    // ç‚¹ä¹˜
+    // µã³Ë
     TReal operator*(const KVec2& rhs) const { return x * rhs.x + y * rhs.y; }
     static TReal Dot(const KVec2& lhs, const KVec2& rhs) { return lhs * rhs; }
 
-    // å‰ä¹˜
+    // ²æ³Ë
     /*[x1, y1] X [x2, y2] = ([x1, 0] + [0, y1]) X ([x2, 0] + [0, y2])
-    * ç”¨åˆ†é…ç‡å¹¶ä¸”ç”¨è½´æ¥è¡¨ç°(i, j, k ... æ¥è¡¨ç¤ºåæ ‡è½´çš„å•ä½å‘é‡) è®¡ç®—ä¹‹åå°±æ˜¯
+    * ÓÃ·ÖÅäÂÊ²¢ÇÒÓÃÖáÀ´±íÏÖ(i, j, k ... À´±íÊ¾×ø±êÖáµÄµ¥Î»ÏòÁ¿) ¼ÆËãÖ®ºó¾ÍÊÇ
     * x1_i X x2_i + x1_i X y2_j + y1_j X x2_i + y1_j X y2_j
-    * å†æ ¹æ® å’Œæ ‡é‡çš„ç»“åˆå¾‹ è¿˜æœ‰ i X i = 0 i X j = k j X i = -k (äºŒç»´ä¸­ä¹Ÿæ˜¯å‚ç›´äºij,ä½†æ˜¯æ— æ³•è¡¨ç¤ºï¼Œå¯ç”¨äºåˆ¤å®š)
+    * ÔÙ¸ù¾İ ºÍ±êÁ¿µÄ½áºÏÂÉ »¹ÓĞ i X i = 0 i X j = k j X i = -k (¶şÎ¬ÖĞÒ²ÊÇ´¹Ö±ÓÚij,µ«ÊÇÎŞ·¨±íÊ¾£¬¿ÉÓÃÓÚÅĞ¶¨)
     * 0 + x1y2_k - y1x2_k + 0
-    * å¾—åˆ° [x1y2, -y1x2]
+    * µÃµ½ [x1y2, -y1x2]
     */
-    // åœ¨ä¸‰ç»´ä¸­æ‰æœ‰æ„ä¹‰ï¼Œè¿™é‡Œå¾—å€¼è¦æ…ç”¨
+    // ÔÚÈıÎ¬ÖĞ²ÅÓĞÒâÒå£¬ÕâÀïµÃÖµÒªÉ÷ÓÃ
     KVec2 operator^(const KVec2& rhs) const { return KVec2 { x * rhs.y, -y * rhs.x}; }
     static KVec2 Cross(const KVec2& lhs, const KVec2& rhs) { return lhs ^ rhs; }
 

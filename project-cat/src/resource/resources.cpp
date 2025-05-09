@@ -6,7 +6,7 @@
 #include "log.h"
 #include "file.h"
 
-// è¿™é‡Œç”¨äºå°†æ¥çœ‹çœ‹æ€ä¹ˆå®šä¹‰instanceï¼ŒåŒä¸€ä¸ªæè´¨çš„ä¸åŒå®ä¾‹
+// ÕâÀïÓÃÓÚ½«À´¿´¿´ÔõÃ´¶¨Òåinstance£¬Í¬Ò»¸ö²ÄÖÊµÄ²»Í¬ÊµÀı
 #define MaterialInstance 0
 
 namespace KCore
@@ -52,7 +52,7 @@ std::shared_ptr<KMat> KResources::Load(const KMatMeta& meta)
         return nullptr;
 
 #if MaterialInstance
-    auto matIndex = std::string{meta.vertexShader.value().filePath}.append("_").append(meta.fragmentShader.value().filePath); // æ€§èƒ½ä¸ç®¡äº† todo..
+    auto matIndex = std::string{meta.vertexShader.value().filePath}.append("_").append(meta.fragmentShader.value().filePath); // ĞÔÄÜ²»¹ÜÁË todo..
     if (auto asset = TryFindResource(matIndex))
         return std::dynamic_pointer_cast<KMat>(asset);
 #endif

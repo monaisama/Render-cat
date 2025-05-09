@@ -18,10 +18,10 @@ void KPrimitive::Setup()
 
 void KPrimitive::InnerGenGLObject()
 {
-    // è¿™é‡Œå¯ä»¥ç”Ÿæˆå¾ˆå¤šä¸ªaboå¯¹è±¡ï¼Œç„¶åbindingå¤šä¸ªæ•°æ®å§ todo.. å¾…æµ‹è¯•ï¼Œä¸çŸ¥é“è¿™æ ·aboä¸­ä¼šä¸ä¼šå­˜å‚¨äº†unbindçš„ä¿¡æ¯
+    // ÕâÀï¿ÉÒÔÉú³ÉºÜ¶à¸öabo¶ÔÏó£¬È»ºóbinding¶à¸öÊı¾İ°É todo.. ´ı²âÊÔ£¬²»ÖªµÀÕâÑùaboÖĞ»á²»»á´æ´¢ÁËunbindµÄĞÅÏ¢
     std::vector<float> data;
     data.reserve(GetMeta()->vertexs.size() + GetMeta()->colors.size() + GetMeta()->corrds.size());
-    for (size_t i = 0; i < GetMeta()->vertexs.size(); i += 3) // è¿™é‡Œä¿è¯æ•°æ®ä¸€å®šæ˜¯æ­£ç¡®çš„
+    for (size_t i = 0; i < GetMeta()->vertexs.size(); i += 3) // ÕâÀï±£Ö¤Êı¾İÒ»¶¨ÊÇÕıÈ·µÄ
     {
         data.push_back(GetMeta()->vertexs.at(i));
         data.push_back(GetMeta()->vertexs.at(i+1));
@@ -104,7 +104,7 @@ void KPrimitive::InnerLoadShader()
 void KPrimitive::Render(const KRender& render)
 {
     RenderPhase(ERenderPhase::Begin, render);
-    if (mat) // è¿™é‡Œæ˜¯å¦ä¸€å®šä¸å†åˆ¤å®šdefault mat
+    if (mat) // ÕâÀïÊÇ·ñÒ»¶¨²»ÔÙÅĞ¶¨default mat
     {
         mat->Use();
         for (size_t i = 0; i < texs.size(); ++i)

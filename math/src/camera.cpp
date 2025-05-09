@@ -5,11 +5,11 @@
 namespace KMath
 {
 
-// å°†æˆ‘ä»¬è‡ªå·±å®šä¹‰çš„åæ ‡ç³»ï¼Œè½¬æ¢åˆ°openglçš„NDCå®šä¹‰çš„åæ ‡ç³»ä¸‹
-// y -> right åˆ° y -> up
-// x -> forward åˆ° x -> right
-// z -> up åˆ° z -> forward
-// ä»ç„¶æ˜¯å·¦æ‰‹åæ ‡ç³»ä¸‹
+// ½«ÎÒÃÇ×Ô¼º¶¨ÒåµÄ×ø±êÏµ£¬×ª»»µ½openglµÄNDC¶¨ÒåµÄ×ø±êÏµÏÂ
+// y -> right µ½ y -> up
+// x -> forward µ½ x -> right
+// z -> up µ½ z -> forward
+// ÈÔÈ»ÊÇ×óÊÖ×ø±êÏµÏÂ
 KMatrix4f GetCorrdConverter2OpenglNDC()
 {
     return KMatrix4f {
@@ -20,35 +20,35 @@ KMatrix4f GetCorrdConverter2OpenglNDC()
     };
 }
 
-// è½¬æ¢åˆ°è£å‰ªç©ºé—´çŸ©é˜µ ndcçš„æ­£æ–¹ä½“
-// è¿™é‡Œé‡‡ç”¨ç›´æ¥è½¬æ¢åˆ°openglçš„åæ ‡ç³»ä¸­
-// openglçš„NDCä½¿ç”¨xyz -> [-1, 1] å¹¶ä¸”zè½´å‘å±å¹•å†…ï¼Œyè½´å‘ä¸Šï¼Œxè½´å‘å³
-// æ‰€ä»¥è¿™é‡Œéœ€è¦å…ˆæ˜ å°„åˆ° [-1, 1]çš„æ­£æ–¹ä½“ä¸­
-// æ­£äº¤æŠ•å½±
+// ×ª»»µ½²Ã¼ô¿Õ¼ä¾ØÕó ndcµÄÕı·½Ìå
+// ÕâÀï²ÉÓÃÖ±½Ó×ª»»µ½openglµÄ×ø±êÏµÖĞ
+// openglµÄNDCÊ¹ÓÃxyz -> [-1, 1] ²¢ÇÒzÖáÏòÆÁÄ»ÄÚ£¬yÖáÏòÉÏ£¬xÖáÏòÓÒ
+// ËùÒÔÕâÀïĞèÒªÏÈÓ³Éäµ½ [-1, 1]µÄÕı·½ÌåÖĞ
+// Õı½»Í¶Ó°
 KMatrix4f MakeClipSpaceNDC_Ortho(float near, float far, float width, float height) // ortho
 {
     const float midz = (far - near) / 2;
-    KMatrix4f trans = MakeTranslateMatrix(KVec3f {midz, 0, 0}).Inverse(); // ä½ç§»åˆ°åŸç‚¹
-    KMatrix4f scale = ToMatrix4(MakeScaleMatrix(KVec3f(midz, width / 2, height / 2)).Inverse()); // ç¼©æ”¾åˆ°æ­£æ–¹ä½“ä¸­
+    KMatrix4f trans = MakeTranslateMatrix(KVec3f {midz, 0, 0}).Inverse(); // Î»ÒÆµ½Ô­µã
+    KMatrix4f scale = ToMatrix4(MakeScaleMatrix(KVec3f(midz, width / 2, height / 2)).Inverse()); // Ëõ·Åµ½Õı·½ÌåÖĞ
 
     // KLog::LogSimple("trans & scale:\n", trans, scale);
-    return trans * scale * GetCorrdConverter2OpenglNDC(); // è½¬æ¢åæ ‡ç³»
+    return trans * scale * GetCorrdConverter2OpenglNDC(); // ×ª»»×ø±êÏµ
 }
 
-// é€è§†æŠ•å½±
-// è¿™é‡Œå‡å®šæŠ•å½±å¹³é¢æ˜¯è·ç¦»åŸç‚¹ä½ç½®d = 1(è¿™ä¸ªè·ç¦»ä¸é‡è¦ï¼Œä¸åŒè·ç¦»å¯¹åº”å¤§å°åœ¨å±å¹•çš„å æ¯”æ˜¯ä¸€è‡´çš„)
+// Í¸ÊÓÍ¶Ó°
+// ÕâÀï¼Ù¶¨Í¶Ó°Æ½ÃæÊÇ¾àÀëÔ­µãÎ»ÖÃd = 1(Õâ¸ö¾àÀë²»ÖØÒª£¬²»Í¬¾àÀë¶ÔÓ¦´óĞ¡ÔÚÆÁÄ»µÄÕ¼±ÈÊÇÒ»ÖÂµÄ)
 KMatrix4f MakeClipSpaceNDC_Persp(float fov, float near, float far, float aspect)
 {
-    // ç¼©æ”¾åˆ°æ­£æ–¹ä½“ä¸­ // è¿™é‡Œå…¶å®å°±æ˜¯å°†è§†é”¥ä½“å‹ç¼©åˆ°ç«‹æ–¹ä½“ä¸­
-    // è¿‘è£å‰ªé¢ n è¿œè£å‰ªé¢ f, æ ¹æ®(n,0,0,1) æ˜ å°„å nä¸å˜ï¼Œï¼ˆf,0,0,1ï¼‰ æ˜ å°„åfä¸å˜
-    // æ ¹æ®ç›¸ä¼¼ä¸‰è§’å½¢æ¥è®¡ç®—å¯¹åº”çš„çŸ©é˜µ y` = y * n/xï¼Œç„¶åç›´æ¥å…¶æ¬¡åæ ‡å˜æˆ(x`,y,z,x)
+    // Ëõ·Åµ½Õı·½ÌåÖĞ // ÕâÀïÆäÊµ¾ÍÊÇ½«ÊÓ×¶ÌåÑ¹Ëõµ½Á¢·½ÌåÖĞ
+    // ½ü²Ã¼ôÃæ n Ô¶²Ã¼ôÃæ f, ¸ù¾İ(n,0,0,1) Ó³Éäºó n²»±ä£¬£¨f,0,0,1£© Ó³Éäºóf²»±ä
+    // ¸ù¾İÏàËÆÈı½ÇĞÎÀ´¼ÆËã¶ÔÓ¦µÄ¾ØÕó y` = y * n/x£¬È»ºóÖ±½ÓÆä´Î×ø±ê±ä³É(x`,y,z,x)
     KMatrix4f zoom {
         KVec4f {near + far, 0, 0, 1},
         KVec4f {0, near, 0, 0},
         KVec4f {0, 0, near, 0},
         KVec4f {-near * far, 0, 0, 0},
     };
-    // å‹ç¼©æˆä¸€ä¸ªç«‹æ–¹ä½“ä¹‹åï¼Œéœ€è¦æ‰§è¡Œæ­£äº¤æŠ•å½±å˜æ¢
+    // Ñ¹Ëõ³ÉÒ»¸öÁ¢·½ÌåÖ®ºó£¬ĞèÒªÖ´ĞĞÕı½»Í¶Ó°±ä»»
     float radian = Radians(fov / 2.f);
     float height = 2 * near / tan(radian);
     return zoom * MakeClipSpaceNDC_Ortho(near, far, height * aspect, height);

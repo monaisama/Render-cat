@@ -17,9 +17,9 @@ class K_API KCamera
     GEN_DEFAULT_CONTRUCTOR_CODE(KCamera)
 
 public:
-    // 姝ｄ氦鎶曞奖鐩告満
+    // 正交投影相机
     static KCamera Ortho(float near, float far, float width, float height);
-    // 閫忚鎶曞奖鐩告満
+    // 透视投影相机
     static KCamera Persp(float fov, float near, float far, float aspect);
 
     KCamera& LookAt(const KVec3f& location, const KVec3f& target);
@@ -37,7 +37,7 @@ protected:
     KMatrix4f clipMatrix;
 };
 
-// 涓存椂鐢ㄤ簬涓诲姩鎿嶄綔鐩告満绉诲姩鐨勫惂 todo..
+// 临时用于主动操作相机移动的吧 todo..
 class K_API KCameraTransformer final
 {
     GEN_DELETE_CONTRUCTOR_CODE_DELETE(KCameraTransformer)

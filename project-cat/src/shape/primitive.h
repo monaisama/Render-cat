@@ -10,10 +10,10 @@
 namespace KCore
 {
 
-// todo.. è¿™é‡Œçš„metaä¹Ÿæ²¡æå¤ªæ¸…æ¥š çå†™çš„
+// todo.. ÕâÀïµÄmetaÒ²Ã»¸ãÌ«Çå³ş Ï¹Ğ´µÄ
 struct KShapeMeta : IMeta
 {
-    // ä¹Ÿè®¸åé¢åº”è¯¥æ˜¯èµ„æºä¸ªæ˜¯å•¥çš„
+    // Ò²ĞíºóÃæÓ¦¸ÃÊÇ×ÊÔ´¸öÊÇÉ¶µÄ
     std::vector<float> vertexs;
     std::vector<float> colors;
     std::vector<float> corrds;
@@ -24,7 +24,7 @@ struct KShapeMeta : IMeta
 };
 
 /* 
-* å®šä¹‰é¡¶ç‚¹ï¼Œé¢œè‰²ï¼Œmatrialï¼Œrender ç­‰ç­‰
+* ¶¨Òå¶¥µã£¬ÑÕÉ«£¬matrial£¬render µÈµÈ
 */
 class KPrimitive : public KAsset
 {

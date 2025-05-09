@@ -10,7 +10,7 @@
 namespace KMath
 {
 
-// å·¦æ‰‹åæ ‡ç³»ï¼Œå¹¶ä¸”zè½´å‘ä¸Šï¼Œxè½´å‘å‰ï¼Œyè½´å‘å³(æŒ‰ç…§é¢å‘æ¥è¯´)
+// ×óÊÖ×ø±êÏµ£¬²¢ÇÒzÖáÏòÉÏ£¬xÖáÏòÇ°£¬yÖáÏòÓÒ(°´ÕÕÃæÏòÀ´Ëµ)
 template<std::KReal TReal>
 class KVec3
 {
@@ -95,11 +95,11 @@ public:
     bool operator==(const KVec3& rhs) const { return Equals(x, rhs.x) && Equals(y, rhs.y) && Equals(z, rhs.z); }
     bool operator!=(const KVec3& rhs) const { return !(*this == rhs); }
 
-    // ç‚¹ä¹˜
+    // µã³Ë
     TReal operator*(const KVec3& rhs) const { return x * rhs.x + y * rhs.y + z * rhs.z; }
     static TReal Dot(const KVec3& lhs, const KVec3& rhs) { return lhs * rhs; }
 
-    // å‰ä¹˜ æ¨å¯¼ç±»ä¼¼vec2 ä¹Ÿæ˜¯ç”¨åˆ†é…ç‡å±•å¼€ï¼Œç„¶åæ ¹æ®ijkä¸‰ä¸ªè½´æ¶ˆé™¤
+    // ²æ³Ë ÍÆµ¼ÀàËÆvec2 Ò²ÊÇÓÃ·ÖÅäÂÊÕ¹¿ª£¬È»ºó¸ù¾İijkÈı¸öÖáÏû³ı
     KVec3 operator^(const KVec3& rhs) const
     {
         return KVec3 {

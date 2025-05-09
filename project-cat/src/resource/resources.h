@@ -36,7 +36,7 @@ protected:
     bool Validate(std::string_view);
 
 protected:
-    std::shared_ptr<KAsset> TryFindResource(std::string_view filePath); // è·¯å¾„æŸ¥æ‰¾æ‰€æœ‰
+    std::shared_ptr<KAsset> TryFindResource(std::string_view filePath); // Â·¾¶²éÕÒËùÓĞ
     std::map<std::string, std::shared_ptr<KAsset>> assets;
 };
 

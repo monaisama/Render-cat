@@ -4,9 +4,9 @@
 namespace KMath
 {
 
-/* ill-format è¿™é‡Œ dynamic-initializationé¡ºåºä¸ç¡®å®šï¼Œæ‰€ä»¥å¯èƒ½forwardå¯èƒ½è¿˜æ²¡æœ‰åˆå§‹åŒ–å®Œæ¯•
-* 1, å°† right forward è¿™äº›å†™åœ¨å¯¹åº”vecçš„template çš„.h æ–‡ä»¶ä¸­ ä¸å¯¼å‡ºï¼Œè¿™æ ·çš„è¯å°±å¯ä»¥æ¯ä¸€ä¸ªç¼–è¯‘å•å…ƒè‡ªå·±ä¸€ä»½å¸¸é‡
-* 2, ä¾ç„¶å¯¼å‡ºï¼Œä½†æ˜¯ä¸èƒ½åœ¨dynamicåˆå§‹åŒ–ä¸­æœ‰ä¾èµ–é¡ºåºï¼ˆè¦ä¹ˆcompilation-initializationç¼–è¯‘å™¨åˆå§‹åŒ–ï¼ˆå› ä¸ºå°±åœ¨ä¸€ä¸ªç¼–è¯‘å•å…ƒé‡Œé¢ï¼‰ï¼‰
+/* ill-format ÕâÀï dynamic-initializationË³Ğò²»È·¶¨£¬ËùÒÔ¿ÉÄÜforward¿ÉÄÜ»¹Ã»ÓĞ³õÊ¼»¯Íê±Ï
+* 1, ½« right forward ÕâĞ©Ğ´ÔÚ¶ÔÓ¦vecµÄtemplate µÄ.h ÎÄ¼şÖĞ ²»µ¼³ö£¬ÕâÑùµÄ»°¾Í¿ÉÒÔÃ¿Ò»¸ö±àÒëµ¥Ôª×Ô¼ºÒ»·İ³£Á¿
+* 2, ÒÀÈ»µ¼³ö£¬µ«ÊÇ²»ÄÜÔÚdynamic³õÊ¼»¯ÖĞÓĞÒÀÀµË³Ğò£¨ÒªÃ´compilation-initialization±àÒëÆ÷³õÊ¼»¯£¨ÒòÎª¾ÍÔÚÒ»¸ö±àÒëµ¥ÔªÀïÃæ£©£©
 * https://pabloariasal.github.io/2020/01/02/static-variable-initialization/
 const KMatrix3f KMatrix3f::identity { KVec3f::forward, KVec3f::right, KVec3f::up };
 const KMatrix3f KMatrix3f::zero {};

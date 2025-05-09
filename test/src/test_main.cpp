@@ -254,7 +254,7 @@ int main()
 
     bool bComment = false;
 
-    // è¡¥å……æ ‡å‡†åº“ä¸­çš„stringæ–¹æ³•
+    // ²¹³ä±ê×¼¿âÖĞµÄstring·½·¨
     auto trim = [](std::string_view s)
     {
         std::string str{s};
@@ -266,7 +266,7 @@ int main()
     auto parseLine = [bComment, &trim, &remove](std::string_view line) -> int32_t
     {
         if (!bComment)
-            line = remove(line, "//"); // ä¸ç®¡ /**/ äº†
+            line = remove(line, "//"); // ²»¹Ü /**/ ÁË
         auto str = trim(line);
         if (str == "")
             return 0;

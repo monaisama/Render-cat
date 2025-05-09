@@ -20,7 +20,7 @@
 #include <map>
 #include "resource/config.h"
 
-// 杩欓噷鐩存帴鍐欏湪杩欓噷鐪佷簨 鍢诲樆
+// 这里直接写在这里省事 嘻嘻
 using namespace KCore;
 using namespace KMath;
 

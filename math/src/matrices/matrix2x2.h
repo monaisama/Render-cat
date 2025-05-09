@@ -7,7 +7,7 @@
 namespace KMath
 {
 
-// è¡Œå‘é‡
+// ĞĞÏòÁ¿
 template<std::KReal TReal>
 class KMatrix2x2
 {
@@ -65,7 +65,7 @@ public:
         return *this * vec;
     }
 
-    // çŸ©é˜µè½¬ç½®
+    // ¾ØÕó×ªÖÃ
     KMatrix2x2 Transpose() const
     {
         return KMatrix2x2 {
@@ -74,16 +74,16 @@ public:
         };
     }
 
-    // è®¡ç®—å‡º2x2çŸ©é˜µçš„è¡Œåˆ—å¼
+    // ¼ÆËã³ö2x2¾ØÕóµÄĞĞÁĞÊ½
     TReal Det() const { return m11 * m22 - m12 * m21; }
-    // è®¡ç®—æ˜¯å¦æ˜¯å¥‡å¼‚çŸ©é˜µ
-    bool IsSingular() const { return EqualsZero(Det()); } // è¡Œåˆ—å¼ä¸º0
+    // ¼ÆËãÊÇ·ñÊÇÆæÒì¾ØÕó
+    bool IsSingular() const { return EqualsZero(Det()); } // ĞĞÁĞÊ½Îª0
 
-    // çŸ©é˜µæ±‚é€† // éœ€è¦ç¡®ä¿è¿™é‡Œä¸æ˜¯å¥‡å¼‚çŸ©é˜µ // è¿™é‡Œå‡å®šä¸€å®šæ˜¯æ­£äº¤çŸ©é˜µå—ï¼Ÿè¿˜æ˜¯è¯´ä¸€å®šç”¨ä¼´éšçŸ©é˜µæ±‚è§£
-    // æ–½å¯†ç‰¹æ­£äº¤åŒ– todo..
-    // é€†çŸ©é˜µæ˜¯ä¼´éšçŸ©é˜µé™¤ä»¥è¡Œåˆ—å¼
+    // ¾ØÕóÇóÄæ // ĞèÒªÈ·±£ÕâÀï²»ÊÇÆæÒì¾ØÕó // ÕâÀï¼Ù¶¨Ò»¶¨ÊÇÕı½»¾ØÕóÂğ£¿»¹ÊÇËµÒ»¶¨ÓÃ°éËæ¾ØÕóÇó½â
+    // Ê©ÃÜÌØÕı½»»¯ todo..
+    // Äæ¾ØÕóÊÇ°éËæ¾ØÕó³ıÒÔĞĞÁĞÊ½
     KMatrix2x2 Inverse() const { return Adjugate() / Det(); }
-    // ä»£æ•°ä½™å­å¼çŸ©é˜µ
+    // ´úÊıÓà×ÓÊ½¾ØÕó
     KMatrix2x2 CofactorMatrix() const
     {
         KMatrix2x2 cof;
@@ -95,7 +95,7 @@ public:
         }
         return cof;
     }
-    // ä¼´éšçŸ©é˜µæ˜¯ä»£æ•°ä½™å­å¼çŸ©é˜µçš„è½¬ç½®çŸ©é˜µ
+    // °éËæ¾ØÕóÊÇ´úÊıÓà×ÓÊ½¾ØÕóµÄ×ªÖÃ¾ØÕó
     KMatrix2x2 Adjugate() const { return CofactorMatrix().Transpose(); }
 
 protected:

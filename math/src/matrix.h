@@ -74,7 +74,7 @@ KVec4<TReal>& operator*=(const KVec4<TReal>& vec, const KMatrix4x4<TReal2>& matr
     return vec = matrix * vec;
 }
 
-// æ„é€ å‡ºæ—‹è½¬ä»»æ„è§’åº¦çš„å˜æ¢çŸ©é˜µ(angleæ˜¯è§’åº¦)
+// ¹¹Ôì³öĞı×ªÈÎÒâ½Ç¶ÈµÄ±ä»»¾ØÕó(angleÊÇ½Ç¶È)
 template<std::KReal TReal = float, std::KReal TReal2 = TReal>
 KMatrix2x2<TReal> MakeRotateMatrix(TReal2 angle)
 {
@@ -86,8 +86,8 @@ KMatrix2x2<TReal> MakeRotateMatrix(TReal2 angle)
     };
 }
 
-// æ„é€ å‡ºç»•ä»»æ„è½´æ—‹è½¬çš„å˜æ¢çŸ©é˜µ(angleæ˜¯è§’åº¦)
-// è¿™é‡Œçš„æ‰€æœ‰å‘é‡éƒ½éœ€è¦æ˜¯å•ä½å‘é‡ï¼Œå› ä¸ºåé¢çš„å…¬å¼éƒ½æ˜¯ç”¨å•ä½å‘é‡æ¥æ¨ç®—å‡ºæ¥çš„
+// ¹¹Ôì³öÈÆÈÎÒâÖáĞı×ªµÄ±ä»»¾ØÕó(angleÊÇ½Ç¶È)
+// ÕâÀïµÄËùÓĞÏòÁ¿¶¼ĞèÒªÊÇµ¥Î»ÏòÁ¿£¬ÒòÎªºóÃæµÄ¹«Ê½¶¼ÊÇÓÃµ¥Î»ÏòÁ¿À´ÍÆËã³öÀ´µÄ
 template<std::KReal TReal = float, std::KReal TReal2 = TReal, std::KReal TReal3 = float>
 KMatrix3x3<TReal> MakeRotateMatrix(const KVec3<TReal2>& vec, TReal3 angle)
 {
@@ -121,8 +121,8 @@ KMatrix3x3<TReal> MakeRotateMatrix(const KVec3<TReal2>& vec, TReal3 angle)
     };
 }
 
-// æ„é€ ç»•ä»»æ„è½´ç¼©æ”¾çš„çŸ©é˜µ
-// è¿™é‡Œçš„ç¼©æ”¾è½´æ˜¯æ ¹æ®å•ä½å‘é‡æ¨ç®—çš„
+// ¹¹ÔìÈÆÈÎÒâÖáËõ·ÅµÄ¾ØÕó
+// ÕâÀïµÄËõ·ÅÖáÊÇ¸ù¾İµ¥Î»ÏòÁ¿ÍÆËãµÄ
 template<std::KReal TReal = float, std::KReal TReal2 = TReal, std::KReal TReal3 = float>
 KMatrix2x2<TReal> MakeScaleMatrix(const KVec2<TReal2>& vec, TReal3 scale)
 {

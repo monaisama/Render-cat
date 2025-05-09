@@ -8,7 +8,7 @@ namespace KCore
 
 struct KRenderContext
 {
-    KMath::KMatrix4f vpMatrix; // ä¸–ç•Œåæ ‡åˆ°è£å‰ªç©ºé—´åæ ‡è½¬æ¢
+    KMath::KMatrix4f vpMatrix; // ÊÀ½ç×ø±êµ½²Ã¼ô¿Õ¼ä×ø±ê×ª»»
 };
 
 class KRender : public KObject
